@@ -132,7 +132,48 @@ def turnoutpage(t):
 
 
 def statspage(d,t):
-    return '<div class="columns">'+panel('연령별 투표율 · 전체 선거인 표본조사',''.join(barrow(a,v) for a,v in t['age'].items()))+panel('전국 비례대표 정당 득표율 · 유효투표 기준',''.join(barrow(x['party'],x['share']) for x in d['proportional']['nation']['parties'][:10]))+'</div>'+panel('시·도별 확정 투표율 · 실제 집계',''.join(barrow(a,v) for a,v in t['region_actual'].items()))
+    # Original NEC figure 15 (printed p.29) contains a complete 17-region x sex table.
+    # Never infer a region x age x sex cube: those cross-tab cells are not in this source.
+    cross = """<style>
+    .cross-guide{font-size:13px;color:#b4cbdc;line-height:1.7;margin:0 0 12px}
+    .cross-toolbar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin-bottom:15px}
+    .cross-toolbar button{border:1px solid #4787aa;color:#e1faff;background:#194660;border-radius:6px;padding:8px 12px}
+    .cross-toolbar button:disabled{opacity:.4;cursor:default}
+    .cross-grid{display:grid;grid-template-columns:minmax(0,1.8fr) minmax(270px,1fr);gap:14px}
+    .cross-box{background:#102238;border:1px solid #34536e;border-radius:9px;padding:17px;min-width:0}
+    .cross-box h3{font-size:15px;margin:0 0 12px}
+    .cross-reg-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+    .cross-reg-item{min-width:0}
+    .cross-reg-btn{width:100%;text-align:left;color:#e3f5ff;background:#182d47;border:1px solid #2d4a65;border-radius:6px;padding:6px 8px;cursor:pointer}
+    .cross-reg-btn:hover,.cross-reg-btn.is-selected{outline:2px solid #60dff5;background:#204b60}
+    .cross-reg-name{display:block;font-size:12px;margin-bottom:4px}
+    .cross-reg-contents{display:flex;flex-direction:column;gap:3px}
+    .cross-reg-bar{height:19px;border-radius:3px;position:relative;min-width:56px;display:block}
+    .cross-reg-bar span{display:block;white-space:nowrap;color:#fff;font-size:11px;line-height:19px;padding-left:6px;text-shadow:0 1px 2px #001}
+    .is-male{background:#1877da}.is-female{background:#db6643}
+    .cross-sex-btn{display:grid;grid-template-columns:35px 1fr 65px;align-items:center;gap:8px;width:100%;padding:11px;background:#182d47;border:1px solid #344c66;border-radius:6px;color:white;margin-bottom:9px;cursor:pointer;text-align:left}
+    .cross-sex-btn.is-selected,.cross-sex-btn:hover{outline:2px solid #60dff5}
+    .cross-sex-track{height:16px;overflow:hidden;border-radius:3px;background:#2b4057}
+    .cross-sex-fill{display:block;height:100%}
+    .cross-sex-btn strong{text-align:right;font-size:14px}
+    .cross-status{background:#142e41;padding:11px;border-radius:5px;color:#c9e6ee;line-height:1.6;font-size:13px}
+    .cross-source{margin-top:14px;font-size:12px;color:#acc3dc}
+    @media(max-width:850px){.cross-grid{grid-template-columns:1fr}}
+    @media(max-width:550px){.cross-reg-list{grid-template-columns:1fr}}
+    </style>
+    <section class="panel" data-turnout-crossfilter>
+      <h2>지역·성별 투표율 교차 분석</h2>
+      <p class="cross-guide">지역 또는 성별 그래프의 막대를 클릭하면 다른 그래프도 함께 변경됩니다. 원자료: 전체 선거인 표본조사(전국 1,505개 투표구).</p>
+      <div class="cross-toolbar"><strong id="cross-selection">지역: 전체 · 성별: 전체</strong><button type="button" id="cross-reset" disabled>선택 초기화</button></div>
+      <div class="cross-grid">
+        <div class="cross-box"><h3>시·도별 남녀 투표율 비교</h3><p class="note">지역을 클릭하면 오른쪽에 해당 지역 남녀 투표율이 표시됩니다.</p><div id="cross-region-bars" class="cross-reg-list" aria-label="시도별 성별 투표율"></div></div>
+        <div class="cross-box"><h3 id="cross-sex-title">전국 성별 투표율</h3><p class="note">남성 또는 여성 막대를 클릭하면 왼쪽 지역별 자료가 해당 성별로 바뀝니다.</p><div id="cross-sex-bars" aria-label="남녀 투표율"></div><p id="cross-message" class="cross-status" aria-live="polite">원본 데이터를 불러오는 중입니다.</p></div>
+      </div>
+      <p class="cross-source">자료: 중앙선관위 「제22대 국회의원선거 투표율 분석」 인쇄 29쪽(그림 15) · <a href="/api/real/turnout-report.pdf#page=37" target="_blank" rel="noopener noreferrer">원자료 확인</a><br>지역별 최종 확정 투표율과 표본조사의 성별 투표율은 집계 방식이 다르므로 서로 합산하지 않습니다.</p>
+    </section>
+    <script src="/static/turnout_crossfilter_2024.js" defer></script>"""
+    legacy = '<div class="columns">'+panel('연령별 투표율 · 전체 선거인 표본조사',''.join(barrow(a,v) for a,v in t['age'].items()))+panel('전국 비례대표 정당 득표율 · 유효투표 기준',''.join(barrow(x['party'],x['share']) for x in d['proportional']['nation']['parties'][:10]))+'</div>'+panel('시·도별 확정 투표율 · 실제 집계',''.join(barrow(a,v) for a,v in t['region_actual'].items()))
+    return cross + legacy
 
 
 def articlepage(d,region='',district=''):
@@ -182,8 +223,18 @@ def trainingpage():
 
 
 def mediapage():
-    media=[('control_room_cg.jpg','관제실 교육용 이미지'),('regional_graphics_cg.jpg','지역 CG 교육용 이미지'),('studio_photo.jpg','스튜디오 교육용 이미지')]
-    return panel('사진·영상 자료','<div class="gallery">'+''.join(f'<div><a href="/static/media/{filename}"><img alt="{e(label)}" src="/static/media/{filename}" loading="lazy"></a><p>{e(label)}</p></div>' for filename,label in media)+'</div><p class="note">교육용 참고 자료입니다. 저작권·출처 원장은 기존 프로젝트의 미디어 문서를 참고하세요.</p>')
+    # Existing screenshots of the project's real-data dashboard; not fictional
+    # polling-place photographs and not videos.
+    media=[
+        ('dashboard_actual.png','2024년 실제 개표 결과 화면','실제 확정 개표 데이터로 구성한 프로젝트 대시보드'),
+        ('analytics_actual.png','투표율 분석 화면','중앙선관위 원자료 기반 통계 분석 결과'),
+        ('district_actual.png','지역구 개표 결과 화면','실제 선거구별 후보 및 득표 자료 조회 화면'),
+        ('articles_actual.png','근거 기반 기사 초안 화면','확정 결과에 대한 검수 전 기사 작성 화면'),
+    ]
+    cards=''.join(
+        f'<div class="panel" style="margin:0"><a href="/safe2024/visuals/{filename}" target="_blank" rel="noopener noreferrer"><img alt="{e(label)}" src="/safe2024/visuals/{filename}" loading="lazy" style="width:100%;height:auto;border-radius:7px"></a><h3 style="margin-top:13px">{e(label)}</h3><p class="note">{e(desc)}</p><p><a href="/safe2024/visuals/{filename}" target="_blank" rel="noopener noreferrer">원본 이미지 열기</a></p></div>'
+        for filename,label,desc in media)
+    return panel('선거 데이터 시각자료','<p class="note">프로젝트의 실제 선거 데이터 화면 캡처입니다. 개표 현장을 촬영한 사진은 아니며 출처 및 이용권한이 확인되지 않은 현장 사진은 포함하지 않았습니다.</p><div class="gallery" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr))">'+cards+'</div><p class="note">영상은 추후 제작 후 추가합니다. 기존 교육용 이미지 파일은 삭제하지 않고 프로젝트 내부에 보존했습니다.</p>')
 
 
 def errorpage(message):
@@ -238,6 +289,13 @@ def bind_safe(app):
             return errorpage('서버의 자료 처리 오류가 발생했습니다. 실행창의 로그를 확인해 주세요.')
         subtitle=('중앙선거관리위원회 제22대 국회의원선거 최종 집계 · PostgreSQL '+postgres_data.SCHEMA+' 테이블 사용')
         return HTMLResponse(layout(page,dict(NAV)[page],subtitle,body),headers={'Cache-Control':'no-store'})
+
+    @router.get('/safe2024/visuals/{filename}')
+    def existing_visual(filename: str):
+        allowed={'dashboard_actual.png','analytics_actual.png','district_actual.png','articles_actual.png'}
+        if filename not in allowed:
+            raise HTTPException(404,'등록된 선거 시각자료가 아닙니다.')
+        return FileResponse(real_api.ROOT.parent/'screenshots_2024'/filename,media_type='image/png',headers={'Cache-Control':'public, max-age=3600'})
 
     @router.get('/safe2024/turnout-methodology.pdf')
     def methodology_pdf():
