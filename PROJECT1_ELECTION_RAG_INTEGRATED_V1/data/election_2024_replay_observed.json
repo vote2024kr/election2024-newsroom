@@ -308,6 +308,22 @@
       "proportional_display": "7.88%"
     },
     {
+      "id": "p13",
+      "time": "2024-04-10 23:30",
+      "phase": "counting",
+      "series": "proportional",
+      "turnout": 67,
+      "counting": 60.09,
+      "proportional": 10.6,
+      "source": "https://news.nate.com/view/20240411n06706",
+      "source_label": "네이트 게재 당시 비례대표 집계 · 23:30 기준",
+      "note": "4월 10일 밤 23:30 비례대표 개표율 10.6%",
+      "time_kind": "당시 개표 기준",
+      "proportional_display": "10.6%",
+      "counting_asof": "2024-04-10 23:20",
+      "proportional_asof": "2024-04-10 23:30"
+    },
+    {
       "id": "p06",
       "time": "2024-04-11 00:11",
       "phase": "counting",
