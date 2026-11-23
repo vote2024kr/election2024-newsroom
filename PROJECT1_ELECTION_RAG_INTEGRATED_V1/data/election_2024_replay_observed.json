@@ -452,6 +452,22 @@
       "proportional_display": "48.75%"
     },
     {
+      "id": "p14",
+      "time": "2024-04-11 03:37",
+      "phase": "counting",
+      "series": "proportional",
+      "turnout": 67,
+      "counting": 90.7,
+      "proportional": 59.18,
+      "source": "https://zdnet.co.kr/view/?no=20240411033733",
+      "source_label": "지디넷코리아 03:37 입력 기사 · 비례대표 개표율 59.18%",
+      "note": "기사에 비례대표 개표율 59.18%가 기재됨. 03:37은 기사 입력시각(03:38 수정)이며 선관위 집계의 정확한 기준시각은 확인되지 않음.",
+      "time_kind": "기사 입력시각 기준 · 실제 집계 기준시각 미확인",
+      "proportional_display": "59.18%",
+      "counting_asof": "2024-04-11 02:21",
+      "proportional_asof": "2024-04-11 03:37 (기사 보도 기준)"
+    },
+    {
       "id": "p03",
       "time": "2024-04-11 03:45",
       "phase": "counting",
