@@ -10,7 +10,7 @@ if not exist "%PY%" (
   py -3.12 -m venv .venv
   if errorlevel 1 goto failed
 )
-"%PY%" -c "import fastapi,pandas,sklearn,bs4,tzdata,uvicorn,httpx,pytest,multipart,scipy,openpyxl" 2>nul
+"%PY%" -c "import pypdf,fastapi,pandas,sklearn,bs4,tzdata,uvicorn,httpx,pytest,multipart,scipy,openpyxl" 2>nul
 if errorlevel 1 (
   echo 필요한 패키지를 설치합니다. 인터넷 연결이 필요합니다.
   "%PY%" -m pip install -r requirements.txt
