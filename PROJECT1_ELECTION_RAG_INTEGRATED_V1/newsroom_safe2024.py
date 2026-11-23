@@ -79,7 +79,7 @@ def layout(page,title,subtitle,content,status='PostgreSQL DB 조회 성공'):
     footer_note = '확인된 과거 시점의 투표율·전국 지역구 개표율을 재생합니다. 브라우저의 작은 시간재생 기능만 사용하며 모의개표 프로그램은 실행하지 않습니다.' if is_replay else '중앙선거관리위원회 제22대 국회의원선거 최종 개표자료 및 투표율 분석자료 · PostgreSQL 조회 · 기존 모의 개표 미실행'
     return f'''<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Cache-Control" content="no-store"><title>{e(title)} | 22대 총선 데이터 상황실</title><style>{CSS}</style></head>
 <body><header><div><strong>▣ 22대 총선 데이터 상황실</strong><br><small>2024년 제22대 국회의원선거 · 과거 기록 재현</small></div><div class="hstatus">● {e(status)} · {e(state_note)}</div></header>
-<div class="layout"><nav><p class="sidetitle">BROADCAST DESK</p>{menu}<div class="extra"><a href="/legacy-newsroom">기존 NEWSROOM LAB 화면(별도)</a><a href="/project1?mode=real">기존 통합운영실(별도)</a></div></nav>
+<div class="layout"><nav><p class="sidetitle">BROADCAST DESK</p>{menu}</nav>
 <main><div class="eyebrow">{e(eyebrow)}</div><h1>{e(title)}</h1><p class="sub">{e(subtitle)}</p>{content}<footer>{e(footer_note)}</footer></main></div></body></html>'''
 
 
@@ -127,7 +127,7 @@ def turnoutpage(t):
     na=t['national'];cards='<div class="grid4">'+metric('전국 실제 최종 투표율',pp(na['final']),'실제 집계')+metric('전국 표본 투표율',pp(na['sample']),'전체 선거인 10.1% 표본')+metric('사전투표율',pp(na['early']),'통합선거인명부 전수조사')+metric('선거일 투표율',pp(t['election_day']['all']),'선거일 투표 대상 표본 기준')+'</div>'
     panels=panel('연령별 전체 투표율 · 표본조사',''.join(barrow(a,v) for a,v in t['age'].items()),'1,505개 투표구 표본조사 · 선관위 PDF 인쇄 23쪽')+panel('성별 전체 투표율 · 표본조사',''.join(barrow(a,v) for a,v in t['sex'].items())+'<h3>사전투표율 · 전수조사</h3>'+''.join(barrow(a,v) for a,v in t['early_sex'].items()))
     region=panel('시·도별 전체 투표율',table(['시·도','실제 투표율','표본 투표율','사전투표율'],[(e(name),pp(v),pp(t['region_sample'].get(name)),pp(t['region_early'].get(name))) for name,v in t['region_actual'].items()]))
-    methods='<p class="box-note">연령·성별 전체 투표율은 표본조사 결과입니다. 사전투표율은 통합선거인명부 전수집계 결과입니다. 표본 투표율 67.2%와 실제 최종 투표율 67.0%를 혼동하지 않습니다.</p><p><a href="/api/real/turnout-report.pdf" target="_blank">선관위 「제22대 국회의원선거 투표율 분석」 PDF 원문</a></p>'
+    methods='<p class="box-note">연령·성별 전체 투표율은 표본조사 결과이며 사전투표율은 통합선거인명부 전수조사 결과입니다. 표본조사 투표율 67.2%와 실제 최종 투표율 67.0%는 서로 다른 자료입니다.</p><p><a href="/safe2024/turnout-methodology.pdf" target="_blank" rel="noopener noreferrer">조사방법 확인</a></p><p><a href="/api/real/turnout-report.pdf" target="_blank">선관위 「제22대 국회의원선거 투표율 분석」 PDF 원문</a></p>'
     return cards+'<div class="columns">'+panels+'</div>'+region+panel('자료의 분모와 조사 방법',methods)
 
 
@@ -190,6 +190,22 @@ def errorpage(message):
     return HTMLResponse(layout('home','DB 조회 확인 필요','PostgreSQL 조회 중 문제가 발생했습니다.',f'<section class="panel"><h2>데이터를 표시하지 못했습니다</h2><p>{e(message)}</p><p class="note">PostgreSQL에 직접 연결되는 안전 화면입니다. 오류가 있으면 기존 JSON으로 자동 전환하지 않습니다.</p></section>',status='DB 조회 오류'),status_code=503)
 
 
+@lru_cache(maxsize=1)
+def extract_methodology_pdf():
+    """Original NEC turnout-analysis PDF pages 12-14, not the 190-page original."""
+    from pypdf import PdfReader, PdfWriter
+    source=real_api.DATA/'turnout_report_2024.pdf'
+    reader=PdfReader(str(source))
+    if len(reader.pages)<14:
+        raise ValueError('원본 PDF에서 조사방법 12~14페이지를 확인할 수 없습니다.')
+    writer=PdfWriter()
+    for page_index in (11,12,13):
+        writer.add_page(reader.pages[page_index])
+    out=io.BytesIO()
+    writer.write(out)
+    return out.getvalue()
+
+
 def bind_safe(app):
     @router.get('/safe2024',response_class=HTMLResponse)
     def stable(page:str='home',region:str='',district:str='',area:str='',q:str=''):
@@ -222,6 +238,18 @@ def bind_safe(app):
             return errorpage('서버의 자료 처리 오류가 발생했습니다. 실행창의 로그를 확인해 주세요.')
         subtitle=('중앙선거관리위원회 제22대 국회의원선거 최종 집계 · PostgreSQL '+postgres_data.SCHEMA+' 테이블 사용')
         return HTMLResponse(layout(page,dict(NAV)[page],subtitle,body),headers={'Cache-Control':'no-store'})
+
+    @router.get('/safe2024/turnout-methodology.pdf')
+    def methodology_pdf():
+        """Serve only source PDF pages 12-14 (report printed pages 4-6)."""
+        try:
+            content=extract_methodology_pdf()
+        except (OSError, ValueError, ImportError) as exc:
+            raise HTTPException(503, '조사방법 PDF 3쪽을 생성하지 못했습니다. 실행환경과 원본을 확인해 주세요.') from exc
+        return Response(content,media_type='application/pdf',headers={
+            'Content-Disposition':'inline; filename="turnout_methodology_2024.pdf"',
+            'Cache-Control':'public, max-age=3600',
+        })
 
     @router.get('/safe2024/api/replay/{index}')
     def replay_tick(index: int):
