@@ -1,6 +1,7 @@
 {
-  "description": "22대 총선: 검증된 전국 투표율 시간별 수치와 전국 지역구 개표율 일부 당시 보도 시점. 2026년에 재생하는 역사적 기록이며 실시간이 아님. 지역구 후보의 중간 득표수 및 비례대표 시각별 집계 미포함.",
+  "description": "2024년 22대 총선 역사적 기록 재생. 선관위 발표 투표율과 당시 언론 보도로 확인된 지역구 개표율 및 비례대표 개표율만 사용. 미확인 시각의 수치는 새로 추정하거나 보간하지 않음. 이전 시점의 잔여 표시 값은 별도 기준시각(asof)으로 구분.",
   "turnout_source": "https://www.ohmynews.com/NWS_Web/Event/Elect/2024/counting.aspx",
+  "final_time_basis": "동아일보 10:25경 · 이데일리 10:26 완료 보도. 화면의 10:25는 재현용 표기이며 선관위 분 단위 종료 공식 확인이 아님.",
   "events": [
     {
       "id": "t01",
@@ -10,7 +11,12 @@
       "counting": null,
       "source": "https://www.ohmynews.com/NWS_Web/Event/Elect/2024/counting.aspx",
       "source_label": "중앙선관위 제공 시간별 투표율 — 오마이뉴스 기록",
-      "note": "당일 본투표 투표율 · 사전투표 등 미합산"
+      "note": "당일 본투표 투표율 · 사전투표 등 미합산",
+      "series": "turnout",
+      "time_kind": "당시 집계 기준",
+      "proportional": null,
+      "counting_asof": null,
+      "proportional_asof": null
     },
     {
       "id": "t02",
@@ -20,7 +26,12 @@
       "counting": null,
       "source": "https://www.ohmynews.com/NWS_Web/Event/Elect/2024/counting.aspx",
       "source_label": "중앙선관위 제공 시간별 투표율 — 오마이뉴스 기록",
-      "note": "당일 본투표 투표율 · 사전투표 등 미합산"
+      "note": "당일 본투표 투표율 · 사전투표 등 미합산",
+      "series": "turnout",
+      "time_kind": "당시 집계 기준",
+      "proportional": null,
+      "counting_asof": null,
+      "proportional_asof": null
     },
     {
       "id": "t03",
@@ -30,7 +41,12 @@
       "counting": null,
       "source": "https://www.ohmynews.com/NWS_Web/Event/Elect/2024/counting.aspx",
       "source_label": "중앙선관위 제공 시간별 투표율 — 오마이뉴스 기록",
-      "note": "당일 본투표 투표율 · 사전투표 등 미합산"
+      "note": "당일 본투표 투표율 · 사전투표 등 미합산",
+      "series": "turnout",
+      "time_kind": "당시 집계 기준",
+      "proportional": null,
+      "counting_asof": null,
+      "proportional_asof": null
     },
     {
       "id": "t04",
@@ -40,7 +56,12 @@
       "counting": null,
       "source": "https://www.ohmynews.com/NWS_Web/Event/Elect/2024/counting.aspx",
       "source_label": "중앙선관위 제공 시간별 투표율 — 오마이뉴스 기록",
-      "note": "당일 본투표 투표율 · 사전투표 등 미합산"
+      "note": "당일 본투표 투표율 · 사전투표 등 미합산",
+      "series": "turnout",
+      "time_kind": "당시 집계 기준",
+      "proportional": null,
+      "counting_asof": null,
+      "proportional_asof": null
     },
     {
       "id": "t05",
@@ -50,7 +71,12 @@
       "counting": null,
       "source": "https://www.ohmynews.com/NWS_Web/Event/Elect/2024/counting.aspx",
       "source_label": "중앙선관위 제공 시간별 투표율 — 오마이뉴스 기록",
-      "note": "당일 본투표 투표율 · 사전투표 등 미합산"
+      "note": "당일 본투표 투표율 · 사전투표 등 미합산",
+      "series": "turnout",
+      "time_kind": "당시 집계 기준",
+      "proportional": null,
+      "counting_asof": null,
+      "proportional_asof": null
     },
     {
       "id": "t06",
@@ -60,7 +86,12 @@
       "counting": null,
       "source": "https://www.ohmynews.com/NWS_Web/Event/Elect/2024/counting.aspx",
       "source_label": "중앙선관위 제공 시간별 투표율 — 오마이뉴스 기록",
-      "note": "당일 본투표 투표율 · 사전투표 등 미합산"
+      "note": "당일 본투표 투표율 · 사전투표 등 미합산",
+      "series": "turnout",
+      "time_kind": "당시 집계 기준",
+      "proportional": null,
+      "counting_asof": null,
+      "proportional_asof": null
     },
     {
       "id": "t07",
@@ -70,7 +101,12 @@
       "counting": null,
       "source": "https://www.ohmynews.com/NWS_Web/Event/Elect/2024/counting.aspx",
       "source_label": "중앙선관위 제공 시간별 투표율 — 오마이뉴스 기록",
-      "note": "사전·거소·선상·재외투표를 포함해 합산한 수치"
+      "note": "사전·거소·선상·재외투표를 포함해 합산한 수치",
+      "series": "turnout",
+      "time_kind": "당시 집계 기준",
+      "proportional": null,
+      "counting_asof": null,
+      "proportional_asof": null
     },
     {
       "id": "t08",
@@ -80,7 +116,12 @@
       "counting": null,
       "source": "https://www.ohmynews.com/NWS_Web/Event/Elect/2024/counting.aspx",
       "source_label": "중앙선관위 제공 시간별 투표율 — 오마이뉴스 기록",
-      "note": "사전·거소·선상·재외투표를 포함해 합산한 수치"
+      "note": "사전·거소·선상·재외투표를 포함해 합산한 수치",
+      "series": "turnout",
+      "time_kind": "당시 집계 기준",
+      "proportional": null,
+      "counting_asof": null,
+      "proportional_asof": null
     },
     {
       "id": "t09",
@@ -90,7 +131,12 @@
       "counting": null,
       "source": "https://www.ohmynews.com/NWS_Web/Event/Elect/2024/counting.aspx",
       "source_label": "중앙선관위 제공 시간별 투표율 — 오마이뉴스 기록",
-      "note": "사전·거소·선상·재외투표를 포함해 합산한 수치"
+      "note": "사전·거소·선상·재외투표를 포함해 합산한 수치",
+      "series": "turnout",
+      "time_kind": "당시 집계 기준",
+      "proportional": null,
+      "counting_asof": null,
+      "proportional_asof": null
     },
     {
       "id": "t10",
@@ -100,7 +146,12 @@
       "counting": null,
       "source": "https://www.ohmynews.com/NWS_Web/Event/Elect/2024/counting.aspx",
       "source_label": "중앙선관위 제공 시간별 투표율 — 오마이뉴스 기록",
-      "note": "사전·거소·선상·재외투표를 포함해 합산한 수치"
+      "note": "사전·거소·선상·재외투표를 포함해 합산한 수치",
+      "series": "turnout",
+      "time_kind": "당시 집계 기준",
+      "proportional": null,
+      "counting_asof": null,
+      "proportional_asof": null
     },
     {
       "id": "t11",
@@ -110,97 +161,342 @@
       "counting": null,
       "source": "https://www.ohmynews.com/NWS_Web/Event/Elect/2024/counting.aspx",
       "source_label": "중앙선관위 제공 시간별 투표율 — 오마이뉴스 기록",
-      "note": "사전·거소·선상·재외투표를 포함해 합산한 수치"
+      "note": "사전·거소·선상·재외투표를 포함해 합산한 수치",
+      "series": "turnout",
+      "time_kind": "당시 집계 기준",
+      "proportional": null,
+      "counting_asof": null,
+      "proportional_asof": null
     },
     {
       "id": "t12",
       "phase": "turnout",
       "time": "2024-04-10 18:00",
-      "turnout": 67.0,
+      "turnout": 67,
       "counting": null,
       "source": "https://www.ohmynews.com/NWS_Web/Event/Elect/2024/counting.aspx",
       "source_label": "중앙선관위 제공 시간별 투표율 — 오마이뉴스 기록",
-      "note": "사전·거소·선상·재외투표를 포함해 합산한 수치"
+      "note": "사전·거소·선상·재외투표를 포함해 합산한 수치",
+      "series": "turnout",
+      "time_kind": "당시 집계 기준",
+      "proportional": null,
+      "counting_asof": null,
+      "proportional_asof": null
     },
     {
       "id": "c01",
       "phase": "counting",
       "time": "2024-04-10 21:00",
-      "turnout": 67.0,
+      "turnout": 67,
       "counting": 16.14,
       "source": "https://v.daum.net/v/20240410211042470?f=p",
       "source_label": "당시 전국 지역구 개표율 보도",
-      "note": "전국 지역구 개표 진행률(확인된 시점) · 비례대표 개표율과 별도"
+      "note": "전국 지역구 개표 진행률(확인된 시점) · 비례대표 개표율과 별도",
+      "series": "constituency",
+      "time_kind": "당시 집계 기준",
+      "proportional": null,
+      "counting_asof": "2024-04-10 21:00",
+      "proportional_asof": null
     },
     {
       "id": "c02",
       "phase": "counting",
       "time": "2024-04-10 21:25",
-      "turnout": 67.0,
+      "turnout": 67,
       "counting": 23.77,
       "source": "https://www.news1.kr/politics/assembly/5380508",
       "source_label": "당시 전국 지역구 개표율 보도",
-      "note": "전국 지역구 개표 진행률(확인된 시점) · 비례대표 개표율과 별도"
+      "note": "전국 지역구 개표 진행률(확인된 시점) · 비례대표 개표율과 별도",
+      "series": "constituency",
+      "time_kind": "당시 집계 기준",
+      "proportional": null,
+      "counting_asof": "2024-04-10 21:25",
+      "proportional_asof": null
     },
     {
       "id": "c03",
       "phase": "counting",
       "time": "2024-04-10 21:40",
-      "turnout": 67.0,
-      "counting": 30.0,
+      "turnout": 67,
+      "counting": 30,
       "source": "https://www.etnews.com/20240410000176",
       "source_label": "당시 전국 지역구 개표율 보도",
-      "note": "전국 지역구 개표 진행률(확인된 시점) · 비례대표 개표율과 별도"
+      "note": "전국 지역구 개표 진행률(확인된 시점) · 비례대표 개표율과 별도",
+      "series": "constituency",
+      "time_kind": "당시 집계 기준",
+      "proportional": null,
+      "counting_asof": "2024-04-10 21:40",
+      "proportional_asof": null
     },
     {
       "id": "c04",
       "phase": "counting",
       "time": "2024-04-10 22:11",
-      "turnout": 67.0,
+      "turnout": 67,
       "counting": 40.08,
       "source": "https://www.hankyung.com/article/2024041023347",
       "source_label": "당시 전국 지역구 개표율 보도",
-      "note": "전국 지역구 개표 진행률(확인된 시점) · 비례대표 개표율과 별도"
+      "note": "전국 지역구 개표 진행률(확인된 시점) · 비례대표 개표율과 별도",
+      "series": "constituency",
+      "time_kind": "당시 집계 기준",
+      "proportional": null,
+      "counting_asof": "2024-04-10 22:11",
+      "proportional_asof": null
     },
     {
       "id": "c05",
       "phase": "counting",
       "time": "2024-04-10 22:44",
-      "turnout": 67.0,
+      "turnout": 67,
       "counting": 50.18,
       "source": "https://www.hankyung.com/article/2024041023717",
       "source_label": "당시 전국 지역구 개표율 보도",
-      "note": "전국 지역구 개표 진행률(확인된 시점) · 비례대표 개표율과 별도"
+      "note": "전국 지역구 개표 진행률(확인된 시점) · 비례대표 개표율과 별도",
+      "series": "constituency",
+      "time_kind": "당시 집계 기준",
+      "proportional": null,
+      "counting_asof": "2024-04-10 22:44",
+      "proportional_asof": null
+    },
+    {
+      "id": "p01",
+      "time": "2024-04-10 23:00",
+      "phase": "counting",
+      "series": "proportional",
+      "turnout": 67,
+      "counting": 50.18,
+      "proportional": 7.88,
+      "source": "https://www.donga.com/news/Politics/article/all/20240410/124417704/2",
+      "source_label": "동아일보 4월 10일 23시 기준",
+      "note": "정당투표 개표율 7.88%",
+      "time_kind": "당시 집계 기준",
+      "counting_asof": "2024-04-10 22:44",
+      "proportional_asof": "2024-04-10 23:00"
     },
     {
       "id": "c06",
       "phase": "counting",
       "time": "2024-04-10 23:20",
-      "turnout": 67.0,
+      "turnout": 67,
       "counting": 60.09,
       "source": "https://www.wikileaks-kr.org/news/articleView.html?idxno=151820",
       "source_label": "당시 전국 지역구 개표율 보도",
-      "note": "전국 지역구 개표 진행률(확인된 시점) · 비례대표 개표율과 별도"
+      "note": "전국 지역구 개표 진행률(확인된 시점) · 비례대표 개표율과 별도",
+      "series": "constituency",
+      "time_kind": "당시 집계 기준",
+      "proportional": 7.88,
+      "counting_asof": "2024-04-10 23:20",
+      "proportional_asof": "2024-04-10 23:00"
     },
     {
       "id": "c07",
       "phase": "counting",
       "time": "2024-04-11 01:00",
-      "turnout": 67.0,
+      "turnout": 67,
       "counting": 82.1,
       "source": "https://www.donga.com/news/Politics/article/all/20240411/124418760/2",
       "source_label": "당시 전국 지역구 개표율 보도",
-      "note": "전국 지역구 개표 진행률(확인된 시점) · 비례대표 개표율과 별도"
+      "note": "전국 지역구 개표 진행률(확인된 시점) · 비례대표 개표율과 별도",
+      "series": "constituency",
+      "time_kind": "당시 집계 기준",
+      "proportional": 7.88,
+      "counting_asof": "2024-04-11 01:00",
+      "proportional_asof": "2024-04-10 23:00"
+    },
+    {
+      "id": "r08",
+      "time": "2024-04-11 02:21",
+      "phase": "counting",
+      "series": "constituency",
+      "turnout": 67,
+      "counting": 90.7,
+      "proportional": 7.88,
+      "source": "https://v.daum.net/v/GGXWhxKG3r",
+      "source_label": "뉴스1 4월 11일 02:21 기준",
+      "note": "지역구 개표율 90.70%",
+      "time_kind": "당시 집계 기준",
+      "counting_asof": "2024-04-11 02:21",
+      "proportional_asof": "2024-04-10 23:00"
+    },
+    {
+      "id": "p02",
+      "time": "2024-04-11 02:33",
+      "phase": "counting",
+      "series": "proportional",
+      "turnout": 67,
+      "counting": 90.7,
+      "proportional": 48.75,
+      "source": "https://www.inews24.com/view/1706914",
+      "source_label": "아이뉴스24 4월 11일 02:33 기준",
+      "note": "비례대표 개표율 48.75%",
+      "time_kind": "당시 집계 기준",
+      "counting_asof": "2024-04-11 02:21",
+      "proportional_asof": "2024-04-11 02:33"
+    },
+    {
+      "id": "p03",
+      "time": "2024-04-11 03:45",
+      "phase": "counting",
+      "series": "proportional",
+      "turnout": 67,
+      "counting": 90.7,
+      "proportional": 70.1,
+      "source": "https://www.khan.co.kr/article/202404110359011/amp",
+      "source_label": "경향신문 4월 11일 03:45 기준",
+      "note": "비례대표 개표율 70.10%",
+      "time_kind": "당시 집계 기준",
+      "counting_asof": "2024-04-11 02:21",
+      "proportional_asof": "2024-04-11 03:45"
+    },
+    {
+      "id": "r09",
+      "time": "2024-04-11 04:03",
+      "phase": "counting",
+      "series": "constituency",
+      "turnout": 67,
+      "counting": 97.28,
+      "proportional": 70.1,
+      "source": "https://www.newsis.com/view/NISX20240411_0002695268",
+      "source_label": "뉴시스 4월 11일 04:03 기준",
+      "note": "전국 개표율 97.28%",
+      "time_kind": "당시 집계 기준",
+      "counting_asof": "2024-04-11 04:03",
+      "proportional_asof": "2024-04-11 03:45"
+    },
+    {
+      "id": "r10",
+      "time": "2024-04-11 05:05",
+      "phase": "counting",
+      "series": "constituency",
+      "turnout": 67,
+      "counting": 99.04,
+      "proportional": 70.1,
+      "source": "https://www.etoday.co.kr/news/view/2349427",
+      "source_label": "이투데이 선관위 05:05 기준",
+      "note": "전국 개표율 99.04%",
+      "time_kind": "당시 집계 기준",
+      "counting_asof": "2024-04-11 05:05",
+      "proportional_asof": "2024-04-11 03:45"
+    },
+    {
+      "id": "p04",
+      "time": "2024-04-11 05:05",
+      "phase": "counting",
+      "series": "proportional",
+      "turnout": 67,
+      "counting": 99.04,
+      "proportional": 87.09,
+      "source": "https://www.etoday.co.kr/news/view/2349427",
+      "source_label": "이투데이 선관위 05:05 기준",
+      "note": "비례대표 개표율 87.09%",
+      "time_kind": "당시 집계 기준",
+      "counting_asof": "2024-04-11 05:05",
+      "proportional_asof": "2024-04-11 05:05"
+    },
+    {
+      "id": "r11",
+      "time": "2024-04-11 05:20",
+      "phase": "counting",
+      "series": "constituency",
+      "turnout": 67,
+      "counting": 99.05,
+      "proportional": 87.09,
+      "source": "https://www.yna.co.kr/view/AKR20240411031700001",
+      "source_label": "연합뉴스 4월 11일 05:20 기준",
+      "note": "전국 개표율 99.05%",
+      "time_kind": "당시 집계 기준",
+      "counting_asof": "2024-04-11 05:20",
+      "proportional_asof": "2024-04-11 05:05"
+    },
+    {
+      "id": "r12",
+      "time": "2024-04-11 06:00",
+      "phase": "counting",
+      "series": "constituency",
+      "turnout": 67,
+      "counting": 99.6,
+      "proportional": 87.09,
+      "source": "https://www.donga.com/news/List/Politics/?m=&p=101&prod=news&ymd=20240411",
+      "source_label": "동아일보 4월 11일 06:00 기준",
+      "note": "전국 개표율 99.60%",
+      "time_kind": "당시 집계 기준",
+      "counting_asof": "2024-04-11 06:00",
+      "proportional_asof": "2024-04-11 05:05"
+    },
+    {
+      "id": "r13",
+      "time": "2024-04-11 07:00",
+      "phase": "counting",
+      "series": "constituency",
+      "turnout": 67,
+      "counting": 99.78,
+      "proportional": 87.09,
+      "source": "https://www.newsis.com/people/top/?cid=16000&date=20240411&sscid=",
+      "source_label": "뉴시스 4월 11일 07:00 기준",
+      "note": "전국 개표율 99.78%",
+      "time_kind": "당시 집계 기준",
+      "counting_asof": "2024-04-11 07:00",
+      "proportional_asof": "2024-04-11 05:05"
+    },
+    {
+      "id": "r14",
+      "time": "2024-04-11 08:00",
+      "phase": "counting",
+      "series": "constituency",
+      "turnout": 67,
+      "counting": 99.87,
+      "proportional": 87.09,
+      "source": "https://ir.newspim.com/news/view/20240411000174",
+      "source_label": "뉴스핌 4월 11일 08:00 기준",
+      "note": "지역구 개표율 99.87%",
+      "time_kind": "당시 집계 기준",
+      "counting_asof": "2024-04-11 08:00",
+      "proportional_asof": "2024-04-11 05:05"
+    },
+    {
+      "id": "p05",
+      "time": "2024-04-11 08:00",
+      "phase": "counting",
+      "series": "proportional",
+      "turnout": 67,
+      "counting": 99.87,
+      "proportional": 99.57,
+      "source": "https://ir.newspim.com/news/view/20240411000174",
+      "source_label": "뉴스핌 4월 11일 08:00 기준",
+      "note": "비례대표 개표율 99.57%",
+      "time_kind": "당시 집계 기준",
+      "counting_asof": "2024-04-11 08:00",
+      "proportional_asof": "2024-04-11 08:00"
+    },
+    {
+      "id": "r15",
+      "time": "2024-04-11 09:25",
+      "phase": "counting",
+      "series": "constituency",
+      "turnout": 67,
+      "counting": 99.88,
+      "proportional": 99.57,
+      "source": "https://www.donga.com/news/Politics/article/all/20240411/124428680/1",
+      "source_label": "동아일보 4월 11일 09:25 기준",
+      "note": "지역구 개표율 99.88%",
+      "time_kind": "당시 집계 기준",
+      "counting_asof": "2024-04-11 09:25",
+      "proportional_asof": "2024-04-11 08:00"
     },
     {
       "id": "final",
+      "time": "2024-04-11 10:25",
       "phase": "final",
-      "time": "최종 확정 (시각 미확인)",
-      "turnout": 67.0,
-      "counting": 100.0,
-      "source": "https://www.ohmynews.com/NWS_Web/Event/Elect/2024/counting.aspx",
-      "source_label": "중앙선관위 최종 집계 — 오마이뉴스 기록",
-      "note": "최종 확정 집계이며 개표 종료 시각은 확인되지 않아 표시하지 않음"
+      "series": "final",
+      "turnout": 67,
+      "counting": 100,
+      "proportional": 100,
+      "source": "https://www.donga.com/news/Politics/article/all/20240411/124427748/2",
+      "source_label": "동아일보 2024-04-11 10:25경 완료 보도",
+      "note": "화면에서는 10:25로 재현하며 출처 보도에는 10:25경으로 표기되어 있음. 이는 선관위가 인증한 분 단위 종료시각이 아님.",
+      "time_kind": "당시 보도 기반 재현 시각",
+      "counting_asof": "2024-04-11 10:25",
+      "proportional_asof": "2024-04-11 10:25"
     }
   ]
 }
