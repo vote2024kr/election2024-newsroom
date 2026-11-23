@@ -13,11 +13,13 @@ from newsroom.real_data_api import _local_vote_data
 
 def test_archive_uses_real_snapshots_only():
     rows = _validated_rows()
-    assert len(rows) == 33
+    assert len(rows) == 40
     assert sum(x['phase'] == 'turnout' for x in rows) == 12
     assert sum(x['series'] == 'constituency' for x in rows) == 15
-    assert sum(x['series'] == 'proportional' for x in rows) == 5
+    assert sum(x['series'] == 'proportional' for x in rows) == 12
     assert rows[0]['time'] == '2024-04-10 07:00' and rows[0]['turnout'] == 1.8
+    assert next(x for x in rows if x['time']=='2024-04-11 00:30' and x['series']=='proportional')['proportional'] == 20.56
+    assert next(x for x in rows if x['time']=='2024-04-11 01:30' and x['series']=='proportional')['proportional_display'] == '약 33%'
     assert rows[6]['time'] == '2024-04-10 13:00' and rows[6]['turnout'] == 53.4
     assert rows[-1]['time'] == '2024-04-11 10:25'
     assert rows[-1]['counting'] == rows[-1]['proportional'] == 100
@@ -41,6 +43,8 @@ def test_landing_page_avoids_bulk_db_and_hides_final_map():
     assert '2024 투개표 상황' in html.text
     assert 'id="replay-final-map" class="replay-finale" hidden' in html.text
     assert 'id="replay-pr"' in html.text
+    assert 'id="replay-pr">개표 전' in html.text
+    assert '당시 기록 미확인' in html.text
     assert '/safe2024/api/replay/' in html.text
 
 
@@ -92,7 +96,7 @@ def test_map_geometry_matches_254_real_district_ids():
 
 
 def test_invalid_sequence_rejected():
-    for n in (-1, 33, 9999):
+    for n in (-1, 40, 9999):
         try:
             pg_replay_observation(n)
         except HTTPException as exc:
