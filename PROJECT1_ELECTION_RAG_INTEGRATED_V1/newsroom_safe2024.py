@@ -77,8 +77,8 @@ def layout(page,title,subtitle,content,status='PostgreSQL DB 조회 성공'):
     state_note = '과거 기록 자동 재생 / 실시간 아님' if is_replay else '최종 확정자료 / 실시간 아님'
     eyebrow = '2024 · HISTORICAL REPLAY' if is_replay else '2024 · FINAL RESULTS · SERVER-RENDERED'
     footer_note = '확인된 과거 시점의 투표율·전국 지역구 개표율을 재생합니다. 브라우저의 작은 시간재생 기능만 사용하며 모의개표 프로그램은 실행하지 않습니다.' if is_replay else '중앙선거관리위원회 제22대 국회의원선거 최종 개표자료 및 투표율 분석자료 · PostgreSQL 조회 · 기존 모의 개표 미실행'
-    return f'''<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Cache-Control" content="no-store"><title>{e(title)} | NEWSROOM LAB</title><style>{CSS}</style></head>
-<body><header><div><strong>▣ NEWSROOM <span style="color:#45d3ed">LAB</span></strong><br><small>2024 ELECTION CONTROL CENTER · STABLE VIEW</small></div><div class="hstatus">● {e(status)} · {e(state_note)}</div></header>
+    return f'''<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Cache-Control" content="no-store"><title>{e(title)} | 22대 총선 데이터 상황실</title><style>{CSS}</style></head>
+<body><header><div><strong>▣ 22대 총선 데이터 상황실</strong><br><small>2024년 제22대 국회의원선거 · 과거 기록 재현</small></div><div class="hstatus">● {e(status)} · {e(state_note)}</div></header>
 <div class="layout"><nav><p class="sidetitle">BROADCAST DESK</p>{menu}<div class="extra"><a href="/legacy-newsroom">기존 NEWSROOM LAB 화면(별도)</a><a href="/project1?mode=real">기존 통합운영실(별도)</a></div></nav>
 <main><div class="eyebrow">{e(eyebrow)}</div><h1>{e(title)}</h1><p class="sub">{e(subtitle)}</p>{content}<footer>{e(footer_note)}</footer></main></div></body></html>'''
 
