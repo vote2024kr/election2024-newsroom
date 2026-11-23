@@ -1,0 +1,37 @@
+digraph flow {
+	graph [bgcolor=white fontname=NanumSquare fontsize=19 label="NEWSROOM LAB V0.7 처리 흐름 · 현재 구현" labelloc=t nodesep=0.5 rankdir=LR ranksep=0.8 splines=spline]
+	node [fontname=NanumSquare fontsize=11 margin="0.18,0.12" shape=box style="rounded,filled"]
+	edge [arrowsize=0.7 color="#70859a" fontname=NanumSquare]
+	source [label="교육용 모의 선거
+난수 생성기" fillcolor="#d8ebff"]
+	state [label="server.py state
+254개 선거구
+120단계 이력" fillcolor="#e2f3ff"]
+	api [label="/api/analytics
+통계 계산 8종" fillcolor="#d6f5ea"]
+	ui [label="app.js
+조건 선택 · API 호출" fillcolor="#fff0c7"]
+	display [label="그래프 / 8개 KPI /
+계산 근거 표 / CSV" fillcolor="#fff0c7"]
+	ws [label="/ws WebSocket
+모의 2초 갱신" fillcolor="#d6f5ea"]
+	csv [label="사용자 CSV 업로드
+과거 확정 결과" fillcolor="#eadfff"]
+	of [label="official_store
+별도 메모리 저장" fillcolor="#eadfff"]
+	ofapi [label="/api/official/analyze
+분석 12종" fillcolor="#eadfff"]
+	ofui [label="official.js
+공식 CSV 분석 화면" fillcolor="#eadfff"]
+	source -> state
+	state -> api
+	api -> ui
+	ui -> display
+	state -> ws
+	ws -> ui
+	csv -> of
+	of -> ofapi
+	ofapi -> ofui
+	state -> api [label="읽기 전용"]
+	of -> state [label="합산 금지" color="#c4373e" dir=none style=dashed]
+}

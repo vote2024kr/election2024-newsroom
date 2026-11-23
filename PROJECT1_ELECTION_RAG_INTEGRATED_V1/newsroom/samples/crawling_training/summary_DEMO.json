@@ -1,0 +1,10 @@
+{
+  "mode": "OFFLINE_LOCAL_CONTENT_ONLY",
+  "source_verified": false,
+  "llm_called": false,
+  "crawling_executed": false,
+  "total": 12,
+  "accepted": 10,
+  "rejected_count": 2,
+  "notice": "교재의 수집·정제·검수 형식을 재현. 실제 기관 자료 수집, 출처 검증, AI 호출이나 학습 수행 아님."
+}

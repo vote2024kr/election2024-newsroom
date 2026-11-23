@@ -1,0 +1,11 @@
+﻿data_kind,method,label,value,unit
+SYNTHETIC_SAMPLE_NOT_OFFICIAL,vote_distribution,0~800표,0,선거구
+SYNTHETIC_SAMPLE_NOT_OFFICIAL,vote_distribution,801~1601표,0,선거구
+SYNTHETIC_SAMPLE_NOT_OFFICIAL,vote_distribution,1602~2402표,0,선거구
+SYNTHETIC_SAMPLE_NOT_OFFICIAL,vote_distribution,2403~3203표,0,선거구
+SYNTHETIC_SAMPLE_NOT_OFFICIAL,vote_distribution,3204~4004표,5,선거구
+SYNTHETIC_SAMPLE_NOT_OFFICIAL,vote_distribution,4005~4805표,12,선거구
+SYNTHETIC_SAMPLE_NOT_OFFICIAL,vote_distribution,4806~5606표,23,선거구
+SYNTHETIC_SAMPLE_NOT_OFFICIAL,vote_distribution,5607~6407표,13,선거구
+SYNTHETIC_SAMPLE_NOT_OFFICIAL,vote_distribution,6408~7208표,12,선거구
+SYNTHETIC_SAMPLE_NOT_OFFICIAL,vote_distribution,7209~8009표,3,선거구

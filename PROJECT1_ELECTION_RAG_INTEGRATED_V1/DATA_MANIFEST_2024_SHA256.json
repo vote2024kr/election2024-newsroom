@@ -1,0 +1,790 @@
+{
+  "version": "V1.2",
+  "description": "2024 actual election results plus historic simulation preserved",
+  "files": [
+    {
+      "path": "CHECK_ALL_TESTS_WINDOWS.bat",
+      "sha256": "5e644cb1f62731d041e2f1bebf6c4ac796057b3c66b000c7102a8a20d6f83444"
+    },
+    {
+      "path": "CHECK_PROJECT1_TESTS.bat",
+      "sha256": "3663de28438e7d2d99b53585ea64c82ef313751d413f8963efd79b634ae50d3a"
+    },
+    {
+      "path": "FILE_MANIFEST_SHA256.json",
+      "sha256": "4d4d5a6621520744d2642b4d2191dab09db6ef3a42f921feb0fe0d0ab5042c87"
+    },
+    {
+      "path": "FILE_MANIFEST_V11_SHA256.json",
+      "sha256": "df7ea41190fd24c7340c6781df871f15b015a331642b4955d6500604df07c2e6"
+    },
+    {
+      "path": "README.md",
+      "sha256": "8c588e35cf7ab14fdcf5d8e9c3e70e648636f05fc5eed0cfd496416b5b48f082"
+    },
+    {
+      "path": "README_2024_REAL_DATA_V1_2.txt",
+      "sha256": "06e9569540c8082ca330141cff0b081bd45ad48389a22ce950206a515b500d78"
+    },
+    {
+      "path": "START_PROJECT1_WINDOWS.bat",
+      "sha256": "0df3d2e1524bd26af2b4a5afce80a6392190ec639f62172fce19f2e361b6eec8"
+    },
+    {
+      "path": "docs/DATA_DICTIONARY.csv",
+      "sha256": "865763f70c03cf73117406c0363ae1fe66ca37c7c1743c008f58a6a41fdedcd0"
+    },
+    {
+      "path": "docs/DEMO_SCENARIOS.md",
+      "sha256": "742e057c42f387f980f904b29124be6c7c1bd8e9fdb52717241f2c31935ea3bc"
+    },
+    {
+      "path": "docs/ERD_ACTUAL_V11.dot",
+      "sha256": "64436cc6f8bdb3d04b7b9f1900c2dba385b97b856f24fcea4c5c26e5df141336"
+    },
+    {
+      "path": "docs/ERD_ACTUAL_V11.png",
+      "sha256": "68673466846d63bd980732ff132a297b56a40c2c49b02943698cad41116fae5f"
+    },
+    {
+      "path": "docs/ERD_ACTUAL_V11.svg",
+      "sha256": "9705cfa431182013f2c467762ea3caee1b72366dd6e79321d2224c825914995b"
+    },
+    {
+      "path": "docs/ERD_TARGET_V11.dot",
+      "sha256": "fb9733983df59bbe7540c15f569240cc720b51d503ceb1a3e699ad1d78a8c40e"
+    },
+    {
+      "path": "docs/ERD_TARGET_V11.png",
+      "sha256": "56583ff024b39f98c99bf72712d47aa0b311611e5072a12996bff714a9c97841"
+    },
+    {
+      "path": "docs/ERD_TARGET_V11.svg",
+      "sha256": "00fca9ef2a3eab0282498b457f516a6726b3d280774a6fabcc183b6a1e1500b8"
+    },
+    {
+      "path": "docs/FLOW_LOGIC_V11.dot",
+      "sha256": "18c546f8545ec3e81774ca4e8a00124737e7d4758476458618eb5972574b6c39"
+    },
+    {
+      "path": "docs/FLOW_LOGIC_V11.png",
+      "sha256": "ae3917e9fec35ff98c50dd03ca5f81ce54fbcbdbc3020415f00a0f5e7912ab90"
+    },
+    {
+      "path": "docs/FLOW_LOGIC_V11.svg",
+      "sha256": "d2c3228bf94e018cfcdcb6dd9e195b6bc0953c5db23ad49c6e7d027f82524541"
+    },
+    {
+      "path": "docs/LOGIC_QA_V11.md",
+      "sha256": "3bd2434bde20be9d851385964e5ce6d62f2a644455f7b86e43871bc9d12be4de"
+    },
+    {
+      "path": "docs/PRESERVATION_VERIFY.json",
+      "sha256": "50b9af783c43256cff95bf0bbf0ed362b8b82b46bfe4b2a7fe6fb04b7fc1c10a"
+    },
+    {
+      "path": "docs/PROJECT1_ARCHITECTURE.md",
+      "sha256": "ad3f96d1c752c01598f68c3d5a36812052028da859dae1a734cf38e2c2588ea7"
+    },
+    {
+      "path": "docs/PROJECT1_ELECTION_METHODS_V11.md",
+      "sha256": "5742e52b691369969fa8f3da31e8c268ec2f37230af25e86875750b1c60d648b"
+    },
+    {
+      "path": "docs/PROJECT1_ERD.dot",
+      "sha256": "f18744dc5bae730fada9b92946ab12ac604b5c0c2a3dbc0baa504c8ac629f770"
+    },
+    {
+      "path": "docs/PROJECT1_ERD.png",
+      "sha256": "3d2aaf9ccf0b08b15965c3c32f283fb824629a4abcbee40659292a4481bb1485"
+    },
+    {
+      "path": "docs/PROJECT1_FLOW.dot",
+      "sha256": "d93f6fd69891cf9130731ca670d1e76494e1cb1c410abdba3bbb7c4547a20595"
+    },
+    {
+      "path": "docs/PROJECT1_FLOW.png",
+      "sha256": "d178744d74d54e080c132536d9ccdb7e3eba880c5169b4f92208c4779badabbb"
+    },
+    {
+      "path": "docs/PROJECT1_IMPLEMENTATION_REPORT.docx",
+      "sha256": "8f9df38646839658d839ba8a379c22240acfb75d930a3c0f10330047c20f0ec0"
+    },
+    {
+      "path": "docs/PROJECT1_REQUIREMENTS_CHECK.csv",
+      "sha256": "7ac8eba57c45c47a05877bb8f51b12f15738d332d4703b66ad86c2d1fa2b0e89"
+    },
+    {
+      "path": "docs/TEST_REPORT.md",
+      "sha256": "38935804734d7ae612836eac828e88019894dfd84a215f4f31cef81f3a770899"
+    },
+    {
+      "path": "docs/TEST_SUMMARY.json",
+      "sha256": "816530f82b76b1122fbb9fcddbf7fbcd67b5cbf1a2d894167f97d583c43817b7"
+    },
+    {
+      "path": "evidence/PROJECT1_CHAOS_BLOCK_DOM.png",
+      "sha256": "6a5a05f9d456b992b80c229ddc74456b19f9560e4f3431cb20a650c85492a847"
+    },
+    {
+      "path": "evidence/PROJECT1_INTEGRATION_DOM.png",
+      "sha256": "1ae9b83c8fe2f370b1ce1a199cbba4aa699e55c5b2989db3ac2cc5cc2314f826"
+    },
+    {
+      "path": "evidence/PROJECT1_STAT_WORKBENCH_DOM.png",
+      "sha256": "3e2a53c699767afbca878b296c8f1c3e5454f3418b7a80d910e2509df1dd8a13"
+    },
+    {
+      "path": "newsroom/.gitignore",
+      "sha256": "80a3443923afa02d77e05c5cdc981e39c8ed014f02d6d509dd200fb34a2dd814"
+    },
+    {
+      "path": "newsroom/ASSIGNMENT_CHECKLIST.md",
+      "sha256": "605a5feb237fafa90b480d6bf4681104bf9c3a209e01a3151d77389201465d2a"
+    },
+    {
+      "path": "newsroom/FIX_WINDOWS_TZDATA.md",
+      "sha256": "a2a264168687a22156e5715fbb2328d46d03422ae378ef4e3178b5f8e5b1552b"
+    },
+    {
+      "path": "newsroom/MEDIA_README.md",
+      "sha256": "1f7c9eabf3b1782524306e37fb1b06f11699c7bd6f76c2bf3684618553957fd4"
+    },
+    {
+      "path": "newsroom/MEDIA_SHA256.json",
+      "sha256": "a347009ec3517f39f6f3a44fcc5bc72ac8ee8963bfb1b2d145a629ae09f1fc79"
+    },
+    {
+      "path": "newsroom/README.md",
+      "sha256": "473a5dc77940c8d942bdb02954cf7641c651aa009f2b068b6d8da47f90a1ef53"
+    },
+    {
+      "path": "newsroom/README_LOCAL_V04.md",
+      "sha256": "473a5dc77940c8d942bdb02954cf7641c651aa009f2b068b6d8da47f90a1ef53"
+    },
+    {
+      "path": "newsroom/README_PREVIOUS_V03.md",
+      "sha256": "cfdf4d2bda592ba807e9ca6f16b56dfe66e8d2739ff9df7dcaa2f7926c4b0f16"
+    },
+    {
+      "path": "newsroom/README_V05_CRAWLING.md",
+      "sha256": "0a69da0a3e4763e4c455a30a9ac9cf15ef8f099bf8b5f92ab3f75b7a498caa23"
+    },
+    {
+      "path": "newsroom/README_V06_DATA_REPAIR.md",
+      "sha256": "690b6a98f6636cc0669e002984b950391c116d78691229f1c101b0ef73489b57"
+    },
+    {
+      "path": "newsroom/README_V07_FIX.md",
+      "sha256": "8b040a906c0375f91226b3cf530f8a630bd8fe9f06e9f69133aee9cdad0ba2ba"
+    },
+    {
+      "path": "newsroom/START_NEWSROOM_LAB_V06.bat",
+      "sha256": "b1ce16e2f63adfbfe214a64e5f68240ae603d8f2a7a571a521ced5018ba6cb47"
+    },
+    {
+      "path": "newsroom/START_NEWSROOM_LAB_V07.bat",
+      "sha256": "201ab4fc516bedcec4ff78f172c030032bb7e9a0f12b81f455c81eb1a2070990"
+    },
+    {
+      "path": "newsroom/analytics.py",
+      "sha256": "0447956450fd8ff9e58a2d8ab033da82854df8100c94e1d9a258f6792ed779c2"
+    },
+    {
+      "path": "newsroom/build_samples.py",
+      "sha256": "fc4e8889b4ed2ee4108aeeb71c53ca61427e87150eed8ebe81d9f7887a133d2c"
+    },
+    {
+      "path": "newsroom/data/mock_documents.json",
+      "sha256": "fb2b9f50c249adeba13d550fa33176cf33e628db2afda3c3350cbb52510397dc"
+    },
+    {
+      "path": "newsroom/deliverables/#Uc120#Uac70#Ubc29#Uc1a1_#Uc0ac#Uc9c4CG_#Uc81c#Uc791#Uac80#Uc218#Ubcf4#Uace0#Uc11c.docx",
+      "sha256": "7820abbcd6083e4fa745694ba0d4f8bb2c5b32cddf9a86ede2f769ac4c8d0655"
+    },
+    {
+      "path": "newsroom/deliverables/#Uc120#Uac70#Ubc29#Uc1a1_#Ud504#Ub85c#Uc81d#Ud2b8_#Ubc1c#Ud45c#Ucd08#Uc548_#Uc601#Uc0c1#Ubcf4#Ub958.pptx",
+      "sha256": "153eda96ca89f535bedd40aa97e85d27b0164f77938d86305a54d1548976f136"
+    },
+    {
+      "path": "newsroom/docs/#Uac80#Uc218_#Uc2dc#Ud5d8#Ud45c.csv",
+      "sha256": "f19faf00f2f2b52753d2178a826098e10a16f7e07e89ba242ccfc7921f4de82b"
+    },
+    {
+      "path": "newsroom/docs/#Uacf5#Uc2dd#Uc120#Uac70_#Ub370#Uc774#Ud130#Uc0ac#Uc804.csv",
+      "sha256": "657e504554782f01a82588f831a3c665bce2618b1a12e3f5c304508f81c1a199"
+    },
+    {
+      "path": "newsroom/docs/#Uacf5#Uc2dd#Uc120#Uac70_#Ub370#Uc774#Ud130#Ucd9c#Ucc98#Uc7a5#Ubd80.csv",
+      "sha256": "92d72a3353c9386cdb84fe616ac5ea121f45dab33ed5d6be43291f132876faae"
+    },
+    {
+      "path": "newsroom/docs/#Uc120#Uac70#Ub370#Uc774#Ud130_#Uc6f9#Uc0ac#Uc774#Ud2b8_#Uae30#Ud68d#Uc11c_V0.4.docx",
+      "sha256": "f45bf0966141fa7d0df1c8ff0cc4b4845aa259612f904f29b9a9ce8491ec4d08"
+    },
+    {
+      "path": "newsroom/docs/#Uc120#Uac70#Ub370#Uc774#Ud130_#Ud1b5#Uacc4#Uae30#Ubc95_#Uc801#Uc6a9#Uad00#Ub9ac#Ud45c_V0.4.xlsx",
+      "sha256": "915ca8c8b8a3ab9f16672feec1a5ccc82857ae293a7329be28342b81d5c852b4"
+    },
+    {
+      "path": "newsroom/docs/#Uc120#Uac70#Ud1b5#Uacc4_#Uae30#Ubc95#Ubcc4_#Uae30#Uc220#Ubd84#Uc11d#Uc11c_V0.4.docx",
+      "sha256": "e89af0587bcd3af3634461f3107d260e2c47ca032bbd9b19c6dce6214d5c8e86"
+    },
+    {
+      "path": "newsroom/docs/#Uc120#Uac70#Ud1b5#Uacc4_#Uae30#Ubc95#Ubcc4_#Uc801#Uc6a9#Ud45c.csv",
+      "sha256": "04000654f0b2f0264a0bb329bd7878045713312b7a1555c7a5823348f0f53c81"
+    },
+    {
+      "path": "newsroom/docs/#Ud06c#Ub864#Ub9c1_#Ud559#Uc2b5#Ub370#Uc774#Ud130_#Uc801#Uc6a9#Ubd84#Uc11d#Ud45c_V05.md",
+      "sha256": "8e2dca8e9031eeb14c28a00e55be620973294468cc54078db1b9718036799290"
+    },
+    {
+      "path": "newsroom/docs/ANALYTICS_METHOD_CHECK_V07.csv",
+      "sha256": "2c9788d2733f3dc40a7f483d163b63b163a146f286a96ebbffa22a736feb6214"
+    },
+    {
+      "path": "newsroom/docs/ANALYTICS_RENDER_VERIFICATION.png",
+      "sha256": "613f20cf2e4227cab428a5c335878691de19891180b7dc8e88340402473ecc4e"
+    },
+    {
+      "path": "newsroom/docs/DATA_FLOW_V07.dot",
+      "sha256": "f6f447f00ffb3872feb7aabb5ca25e7615ccb0210e4d6f46a97242435c2595c5"
+    },
+    {
+      "path": "newsroom/docs/DATA_FLOW_V07.png",
+      "sha256": "5e39cdca7bb883a7eef1a018786d500f321bca2d897f0a705f234afe2cfe06ad"
+    },
+    {
+      "path": "newsroom/docs/ERD_AND_SCHEMA_V07.md",
+      "sha256": "cfde6ed7a1a9c77972bbffc6617efa4fb73554471951885cbf6740dc17da87b7"
+    },
+    {
+      "path": "newsroom/docs/ERD_PROPOSED_V07.dot",
+      "sha256": "455b8271e3935b5096c77f5e2911f4a6a32c5ab4d9e6b42655aaf1e55a6b0671"
+    },
+    {
+      "path": "newsroom/docs/ERD_PROPOSED_V07.png",
+      "sha256": "285aa099b9e0a679149dba54ff79e14819f670cdf7829a646dadc679032a1def"
+    },
+    {
+      "path": "newsroom/docs/Election_Press_Crawling_Training_Integration_V05.docx",
+      "sha256": "7ad9d6b18635644bb13d3545b904d1360c10d3bcd770a05e57cedae495604ecb"
+    },
+    {
+      "path": "newsroom/docs/LOGIC_AND_QA_V07.md",
+      "sha256": "7b7d0d7de824d7b35581e210ea4a1b5e8772788aac94ee3e1921baee36ffd493"
+    },
+    {
+      "path": "newsroom/engine.py",
+      "sha256": "a10f1b8959720a8ef56dcd2a2dfa4d6d91a439b7e3847eef3c49a255f065ef78"
+    },
+    {
+      "path": "newsroom/evidence/browser_test_status.md",
+      "sha256": "e623769ed35675fb8ad64c4fbfe748a25858f122e41e8ab2c894a44a507ec155"
+    },
+    {
+      "path": "newsroom/evidence/browser_test_status_v06.md",
+      "sha256": "7a83edc82d66b59bbdfcba265fc7efd051276720bad98d2ef287a6ddd5349d56"
+    },
+    {
+      "path": "newsroom/evidence/pytest_v02_photo_first.txt",
+      "sha256": "89ffc85f54763e507ba9da22fc70f132b5b798bef0754bf69d0f23dee386bee2"
+    },
+    {
+      "path": "newsroom/evidence/pytest_v04_local.txt",
+      "sha256": "dd17da4dc91d8609153d8c7d806ab6dab20225d1fb52aa3f6848bddb7b34cdf5"
+    },
+    {
+      "path": "newsroom/evidence/pytest_v05_local.txt",
+      "sha256": "ae72c2311508df46b73d841cb59b0d29c22708c876d00e4b113f1e5930416030"
+    },
+    {
+      "path": "newsroom/evidence/pytest_v06_local.txt",
+      "sha256": "d3a78dfacc22fc6b05de769a5bc7bdcf8390e8ae1372b5bed902c1480f367251"
+    },
+    {
+      "path": "newsroom/manifest.json",
+      "sha256": "430dcbc05d0919e3ed07e14603875a7ed03e1845867f208d178e73577a402a41"
+    },
+    {
+      "path": "newsroom/manifest_v04.json",
+      "sha256": "f0a7315a0b00de95e21d8155885093b9b96c58052cf309fd21c27850049c8480"
+    },
+    {
+      "path": "newsroom/official_results.py",
+      "sha256": "3a7173bba92428cc7695e45b8eafac4e70dce0493b5ec66ef0d080f4c556e464"
+    },
+    {
+      "path": "newsroom/rag_demo.py",
+      "sha256": "492ef9bbab56ca4c455b50aecfb171236676ebb6d332dd859b45f036e03bac32"
+    },
+    {
+      "path": "newsroom/real_data/election_2024.json",
+      "sha256": "cb5be12bdc5dc35077981c9be0e59221c62ae2c07d7ca4f46b16412baac546f8"
+    },
+    {
+      "path": "newsroom/real_data/turnout_2024.json",
+      "sha256": "6b959fb36a6a3e68d2e86762de76c447354b517189b7d24f753651bad26e8414"
+    },
+    {
+      "path": "newsroom/real_data/turnout_pdf_pages.json",
+      "sha256": "5262b78cef35975ca0f937d9c80644458e8c657362db30ec2115ce38e799fb88"
+    },
+    {
+      "path": "newsroom/real_data/turnout_report_2024.pdf",
+      "sha256": "a3a34a102426aae0d1cacea2e465eb7139d55bd0acda648d26ff798904e7f988"
+    },
+    {
+      "path": "newsroom/real_data_api.py",
+      "sha256": "3eebc5e31bc2c1af7ab6822ec4e66c98b34b9450e4bd6ef08cacee71d14b4bbe"
+    },
+    {
+      "path": "newsroom/requirements.txt",
+      "sha256": "4b83ec1a988c42b2280dfbee74d0d0c966bcb998a387ef442a187eac6b3acb93"
+    },
+    {
+      "path": "newsroom/samples/DEMO_ONLY_#Uad6c#Uc870#Uc608#Uc2dc.csv",
+      "sha256": "3dc34f6470552b3bd30bac91d0cbed0c24e63835da549f7b1a3f05e048e94e16"
+    },
+    {
+      "path": "newsroom/samples/README.txt",
+      "sha256": "cabb7906dcf55d2f6b9051c436504b47432894e272170ced0ca91fdc5bfe2581"
+    },
+    {
+      "path": "newsroom/samples/SIMULATION_ONLY_nationwide_17regions_68districts.csv",
+      "sha256": "0d2e4e0206a11d05a048438fd3d5911fc58213f23742be249660b0f283b0f4b5"
+    },
+    {
+      "path": "newsroom/samples/analysis_results_SIMULATION_ONLY/candidate_count.csv",
+      "sha256": "28edfe3ff57ec773151eb37d18858e0198c496cf17f1334d67c4efb63a415671"
+    },
+    {
+      "path": "newsroom/samples/analysis_results_SIMULATION_ONLY/candidate_share.csv",
+      "sha256": "c53301f34bcfe21eec64bd5f5d3368e451ed1072e22bbd17e147d7fe58b61f40"
+    },
+    {
+      "path": "newsroom/samples/analysis_results_SIMULATION_ONLY/candidate_vote_distribution.csv",
+      "sha256": "a87a4b6148898ec5521b336c9e6ea1795fb460bf04354d6006a6455c98cc3b49"
+    },
+    {
+      "path": "newsroom/samples/analysis_results_SIMULATION_ONLY/close_races.csv",
+      "sha256": "268d24fa0493027b5aa70ef6b894b1a4c1639035fe8b6da5bdd3b0e9af7478b3"
+    },
+    {
+      "path": "newsroom/samples/analysis_results_SIMULATION_ONLY/district_leader_share.csv",
+      "sha256": "3883cfb925f69061f98cbe9db02765d02c081f26a53d6673f01aeaa4bb018fb1"
+    },
+    {
+      "path": "newsroom/samples/analysis_results_SIMULATION_ONLY/district_votes.csv",
+      "sha256": "c0abe5740f0490bab1457a849f00a5178ab0fbfaf2f49a6e065a2b53728eec88"
+    },
+    {
+      "path": "newsroom/samples/analysis_results_SIMULATION_ONLY/lead_margin.csv",
+      "sha256": "30ca4342008173a0d9c41a5369b4ccddeacf05a26b5ee463ea3854fce115cd7a"
+    },
+    {
+      "path": "newsroom/samples/analysis_results_SIMULATION_ONLY/margin_distribution.csv",
+      "sha256": "8efed32e79de46e71cf99a7a88fd790599f1ff0cfd59512608ac4e99cfda02de"
+    },
+    {
+      "path": "newsroom/samples/analysis_results_SIMULATION_ONLY/region_avg_votes.csv",
+      "sha256": "30738dae9bfd19031673f917733b112481928ecfb1ecb2c14904cfb88ae6ce6d"
+    },
+    {
+      "path": "newsroom/samples/analysis_results_SIMULATION_ONLY/region_district_count.csv",
+      "sha256": "1514af78d3892facc3a75c467828402866bb1150131b359afb8628629043544a"
+    },
+    {
+      "path": "newsroom/samples/analysis_results_SIMULATION_ONLY/region_votes.csv",
+      "sha256": "610cd1b2db40eab747463392ea161611087bedd4b99de516c05d00508691357a"
+    },
+    {
+      "path": "newsroom/samples/analysis_results_SIMULATION_ONLY/vote_distribution.csv",
+      "sha256": "78ddc490c1a44739f4b2652d58a2f057a3713c21ef4b7b022105ea984e519525"
+    },
+    {
+      "path": "newsroom/samples/crawling_training/RIGHTS_AND_SOURCE_LEDGER.md",
+      "sha256": "5f58f809f6281aa38bde5eda9c75a9ff26e9bd47e9421449ceba81c4e891577d"
+    },
+    {
+      "path": "newsroom/samples/crawling_training/exclusions_DEMO.json",
+      "sha256": "e9077a4795e83caf10af996cb70838d1f02763107c63f59ed80fef535b549a0b"
+    },
+    {
+      "path": "newsroom/samples/crawling_training/lead_draft_UNREVIEWED.jsonl",
+      "sha256": "6680f02ee6e4cfc67acafa4cbb1a66612218368519a9f640cfb60c5232bfff00"
+    },
+    {
+      "path": "newsroom/samples/crawling_training/pairs_draft_UNREVIEWED.csv",
+      "sha256": "d4e87286301205138017c8bbe6cbf1e2c324bba8f31bd5401bf213941901de2c"
+    },
+    {
+      "path": "newsroom/samples/crawling_training/press_clean_DEMO.csv",
+      "sha256": "d4e87286301205138017c8bbe6cbf1e2c324bba8f31bd5401bf213941901de2c"
+    },
+    {
+      "path": "newsroom/samples/crawling_training/press_raw_DEMO.csv",
+      "sha256": "03911c65abc5b627bc0d333007da0657b2df505ee12ff9852dbea6b848fe4c45"
+    },
+    {
+      "path": "newsroom/samples/crawling_training/press_sample_DEMO.html",
+      "sha256": "e550863a71c095c02f30cc7b24aaf58465c50c4baa8c4fdba7cc76c3abd37017"
+    },
+    {
+      "path": "newsroom/samples/crawling_training/summary_DEMO.json",
+      "sha256": "f7582a6b08f45ff4794bb5efef88e3475a929b0cdaa79e4055c8a1cdb1fb75b8"
+    },
+    {
+      "path": "newsroom/server.py",
+      "sha256": "adfd24179cc98b01279bfda1fca62df5978983e75588a4aab0692b101f267232"
+    },
+    {
+      "path": "newsroom/start_windows.bat",
+      "sha256": "3f8dcd7b5a6e5cdc568a9f7a6e5d84b194af5b6e41c8d853101d97c9a94be057"
+    },
+    {
+      "path": "newsroom/static/app.js",
+      "sha256": "b121eaa4b7685ec05caa6f6bad24d4038a5c1fe92685f2234e422537336c3f78"
+    },
+    {
+      "path": "newsroom/static/docs/20minute_storyboard.csv",
+      "sha256": "fea171d1f110fc69f68a7f4d28916484202972bcc6d0a6078d71b798840dd0ab"
+    },
+    {
+      "path": "newsroom/static/docs/anchor_script.md",
+      "sha256": "765421d99c162831317c33c8f9de4aee41cd9f9bc70f3154d84795af81ea09d5"
+    },
+    {
+      "path": "newsroom/static/docs/media_rights_ledger.csv",
+      "sha256": "9eae29859e2f4a80c648367dc7d977db222ce9a0ee80c3a4421e3dc5b2ce00f4"
+    },
+    {
+      "path": "newsroom/static/docs/production_checklist.md",
+      "sha256": "359d53dce86bd2b4b61b96512dc7488d579de45ae0cf9b7a3692da543bdab802"
+    },
+    {
+      "path": "newsroom/static/index.html",
+      "sha256": "d1c1f3d88c11dae6ff43c5ef0a0382cce17e81b0530801810aed021816ddf991"
+    },
+    {
+      "path": "newsroom/static/media/control_room_cg.jpg",
+      "sha256": "2f2aa978cefa6f107eb6acde1f953b5281cb2185ce27a097233783b75bc8d32c"
+    },
+    {
+      "path": "newsroom/static/media/media_manifest.json",
+      "sha256": "467a6f6a4c7b49b1da6f5f19be41af7ef47017205cb877cd5fb4cc4480d259a2"
+    },
+    {
+      "path": "newsroom/static/media/regional_graphics_cg.jpg",
+      "sha256": "73ad69a582e5ddb31733710d27bd1394fbf413736c2c52ac50a7026ef119afef"
+    },
+    {
+      "path": "newsroom/static/media/studio_photo.jpg",
+      "sha256": "43330491325607d5c7cf1c2efb6b5bbb79f2e0ad300fcb91be7b74c62cd56232"
+    },
+    {
+      "path": "newsroom/static/official.js",
+      "sha256": "450750d855f1bc53b31e6e374ba029db8a778c8a06e9c07b17bcb4852f53f8f1"
+    },
+    {
+      "path": "newsroom/static/real_results.css",
+      "sha256": "efa4ec2ff3e684ed684c8df2a1250d2395d09537cc265918292b396f53bdbad9"
+    },
+    {
+      "path": "newsroom/static/real_results.js",
+      "sha256": "72467714e0c7cfa6a7de90f2365968560ac005f995c4071aa242ee425fa69e17"
+    },
+    {
+      "path": "newsroom/static/style.css",
+      "sha256": "55d28c96fb11137c2741664e04272c2166dfc89cc8e23728ad1b202cf48f15d8"
+    },
+    {
+      "path": "newsroom/static/training/lead_draft_UNREVIEWED.jsonl",
+      "sha256": "6680f02ee6e4cfc67acafa4cbb1a66612218368519a9f640cfb60c5232bfff00"
+    },
+    {
+      "path": "newsroom/static/training/press_raw_DEMO.csv",
+      "sha256": "03911c65abc5b627bc0d333007da0657b2df505ee12ff9852dbea6b848fe4c45"
+    },
+    {
+      "path": "newsroom/static/training/press_sample_DEMO.html",
+      "sha256": "e550863a71c095c02f30cc7b24aaf58465c50c4baa8c4fdba7cc76c3abd37017"
+    },
+    {
+      "path": "newsroom/static/training.js",
+      "sha256": "bc2db4ef824789fd26705dbc77c1f8fe793f2df19d1f1ccabf19b9eaadebe217"
+    },
+    {
+      "path": "newsroom/tests/test_api.py",
+      "sha256": "e4bcccfe1918e5b31f7daec5d1e3cc0af8088db4302a6528666d2043db9e7641"
+    },
+    {
+      "path": "newsroom/tests/test_engine.py",
+      "sha256": "5de2b86712c1278d38a80d8adfc2763a76975b072fa13bf155213cbc7f01bec7"
+    },
+    {
+      "path": "newsroom/tests/test_media.py",
+      "sha256": "00a41936df60ed447c8c961a2cb89852bfdd5b84e664674ba807256ab4ea3d86"
+    },
+    {
+      "path": "newsroom/tests/test_official_results.py",
+      "sha256": "354f6042ecd27f14d1066f914260add6876bfd615486f9d498265a6298ceed0d"
+    },
+    {
+      "path": "newsroom/tests/test_training_pipeline.py",
+      "sha256": "2cea154481efdce5e81563837dd04749a04a03dcba0c1bf7882b618acfc85ad6"
+    },
+    {
+      "path": "newsroom/tests/test_v06_data_visible.py",
+      "sha256": "6576520c69263da5b1b89c1440ab0ef16bd5d545f25125491f882e0ec9ecf5ed"
+    },
+    {
+      "path": "newsroom/tests/test_v07_analytics_ui.py",
+      "sha256": "22d52478a5380818df7e19ae852bad8cce3a2e51352d86614e74bb2e3e5b8b15"
+    },
+    {
+      "path": "newsroom/training_pipeline.py",
+      "sha256": "7ad63c373825f483d227644e4404d54592902a8560f0a2be1f74d0279fbf20f4"
+    },
+    {
+      "path": "project1_app.py",
+      "sha256": "f8f53d107832e2480819deaca0ebb6feebf20bc91c81a6f46d8783a93eab04fc"
+    },
+    {
+      "path": "project1_audit.py",
+      "sha256": "946712fb097f4612369d63ebd0bd10134992d098fe4cca432cb9a1ec6dd1f7e5"
+    },
+    {
+      "path": "project1_sparse_retrieval.py",
+      "sha256": "8cde434a9034b64b054d9e5d56ed4ee633299bb16f3edaa755f35f62b1e54e8e"
+    },
+    {
+      "path": "project1_ui/broadcast_live.css",
+      "sha256": "706ba9924d42821ca5df873999fad87567d0aa916cce3929c572d89772e2ed74"
+    },
+    {
+      "path": "project1_ui/broadcast_live.js",
+      "sha256": "6ec2a16d663b0499659e8cd31c166ff8de584877b41805d1738fba695f824bd0"
+    },
+    {
+      "path": "project1_ui/election_stats.css",
+      "sha256": "cca3ff06f50fc5f80102154802f829588a05c6d413216917c34f13febcd5222a"
+    },
+    {
+      "path": "project1_ui/election_stats.js",
+      "sha256": "79b8e4c9df25bcc7eafe01a1311feb004112b581edd1bc90b2d1a832a05b30da"
+    },
+    {
+      "path": "project1_ui/index.html",
+      "sha256": "0352f712cc597d6da05d5db039151659ba863ed3981633fb1677102b8e7ac4f7"
+    },
+    {
+      "path": "project1_ui/project1.css",
+      "sha256": "2c982859621b11e40a074d765285aacc4646632cf491cf0a0069b6acbc7f5609"
+    },
+    {
+      "path": "project1_ui/project1.js",
+      "sha256": "5eb097aac08dff1778e809c62c6f3d4ff8e7682aecb712dd9d99ac9a4c532055"
+    },
+    {
+      "path": "requirements.txt",
+      "sha256": "468f37621b690bdee8bf43f8ec2c482df0c352078dc6685e914fb564c1431e4c"
+    },
+    {
+      "path": "screenshots_2024/analytics_actual.png",
+      "sha256": "1cc61e418d4243413ea7806a1b35bf8b8610ef8727d1e525398bdcf1a957c763"
+    },
+    {
+      "path": "screenshots_2024/articles_actual.png",
+      "sha256": "53e1f9e47e72ed0a9823bb76084ca1dbcfb3bd1b82b0c10c07213a4cd1ed2b0e"
+    },
+    {
+      "path": "screenshots_2024/dashboard_actual.png",
+      "sha256": "bbd0774a2036c6d1b5eb9b6a081d8f0f3f63fd129e06db966d09861a35d76a53"
+    },
+    {
+      "path": "screenshots_2024/district_actual.png",
+      "sha256": "7c119129c3f506d0443c5fa330b3dad3c0e9cba922d94b8cd0013a12bfaebb21"
+    },
+    {
+      "path": "source_originals/original_results.xlsx",
+      "sha256": "8e5e45ce4862d6e697ba69a9e95d7c88a612866c4e3cf9bf74527a70a4dd4a1e"
+    },
+    {
+      "path": "source_originals/turnout_tables_original.zip",
+      "sha256": "e9cea67b9957fb51a00b025a0f1bb039a8506690f60e76117ccd57f57d75d56e"
+    },
+    {
+      "path": "tests/test_project1_full_flow.py",
+      "sha256": "da5a974e214c363cbcde2210f0ffb3091fa73d4f66e7bcff9f41c53586287b23"
+    },
+    {
+      "path": "tests/test_project1_integration.py",
+      "sha256": "cf98f01dab48188baca922d9bd71df90a82d58ce6499b2a029d05e4eda5adac3"
+    },
+    {
+      "path": "tests/test_real_2024.py",
+      "sha256": "7b92de3faee25d577822f98696077ae01ce441e5c0974b6591cf5736f6e916bf"
+    },
+    {
+      "path": "workbench/.gitignore",
+      "sha256": "666fe8a041809505175d123b9c678a5aae02973b34d7f2745231327b236b249e"
+    },
+    {
+      "path": "workbench/CHECK_TESTS_WINDOWS.bat",
+      "sha256": "8b9bee7ec476ea866d173ddb2b0537533d6400bb42ec8a0d506a3b5c094e4d40"
+    },
+    {
+      "path": "workbench/README.md",
+      "sha256": "0b39283de4e602b2d2997afe4837c974c8561491fafe55bcfacac73a37a16d85"
+    },
+    {
+      "path": "workbench/START_WINDOWS.bat",
+      "sha256": "3a6470e375162900b58a9f7dc8a51253187e50aa8cdab729bf7da7cae91c7ccb"
+    },
+    {
+      "path": "workbench/app/__init__.py",
+      "sha256": "8ea4e354aba7c733d87737c82679f2da67d8aece26cb2e105fb121d79e40ade0"
+    },
+    {
+      "path": "workbench/app/catalog.py",
+      "sha256": "272b6f2b5679e1980ea7dd889dad9ccc059b9195dc3c8415e0d3368ea4516ae7"
+    },
+    {
+      "path": "workbench/app/engine.py",
+      "sha256": "610542ad7fec830e2db9cc45c287139529f496daab79c3fa86b08dc89094c52f"
+    },
+    {
+      "path": "workbench/app/server.py",
+      "sha256": "86424619de1b390ab551d4de8ce287837d2720d40c9a5b39239ee34d83ccc45d"
+    },
+    {
+      "path": "workbench/app/static/app.js",
+      "sha256": "79ca7883c4bbe680c947e90e7df632f337030fc3756a999ccdbc1b370446cbc8"
+    },
+    {
+      "path": "workbench/app/static/index.html",
+      "sha256": "0233d8284c731407503b622aa3a8a7a95f051317f77437c79d725728e4cef84b"
+    },
+    {
+      "path": "workbench/app/static/style.css",
+      "sha256": "a6964a67e791cf58f0e59ec09e4d74b3f87fd494931dd7108c719cc526336c53"
+    },
+    {
+      "path": "workbench/docs/ARCHITECTURE.md",
+      "sha256": "03576872f52702995e90bedf697c55fc39ec6a27a71a94c819b1531ef184ee14"
+    },
+    {
+      "path": "workbench/docs/ERD_AND_DATA_DICTIONARY.md",
+      "sha256": "3de08cebc5c9285144e9cd97e24a64d9d21ac7af760164adf0890c79b520a61e"
+    },
+    {
+      "path": "workbench/docs/ERD_PROPOSED.dot",
+      "sha256": "916def701ebc5168c21500108f1a05afe98ced4cfc1661a491e5c2146625c919"
+    },
+    {
+      "path": "workbench/docs/ERD_PROPOSED.png",
+      "sha256": "5bf99db4d06ea0b5a73b9ea17e731443ee868f4bd398bd2b0fb99fd5aa7c0216"
+    },
+    {
+      "path": "workbench/docs/LEGACY_SHA256.txt",
+      "sha256": "c3ae5957102e4287d7b4597d227eaf0abe599a51c00b34cf94852300d0c25954"
+    },
+    {
+      "path": "workbench/docs/METHOD_MATRIX.csv",
+      "sha256": "1d0f11c3bdd1279fcd50bdb497501fc269fa76c4576d2019d04efca14341a65e"
+    },
+    {
+      "path": "workbench/docs/PIPELINE.dot",
+      "sha256": "c9d159746780f2d812ac95c2e69f1dce26b49af730046f8db4dcda1377832763"
+    },
+    {
+      "path": "workbench/docs/PIPELINE.png",
+      "sha256": "cf8c1d919dd2c8bfe283931f5d5a0f0fd4104f12a97a4f01d45399470b07f8de"
+    },
+    {
+      "path": "workbench/docs/PROCESS_FLOW.md",
+      "sha256": "b1d4625960ce4dfed0034b736fa81780ed1ba08ca83361c07546192bbb4fb8f7"
+    },
+    {
+      "path": "workbench/docs/ROADMAP.md",
+      "sha256": "f6ba1e5a2139081de8259e6a0717e3132a31df3f5424ec1bc224db1e6784dd95"
+    },
+    {
+      "path": "workbench/docs/SAMPLE_DATA_DICTIONARY.csv",
+      "sha256": "03e0565f08c52e3049b81c18114d5f17b839fef931e2528f3bd8a722c594ce63"
+    },
+    {
+      "path": "workbench/docs/SAMPLE_RUN_MATRIX.csv",
+      "sha256": "fba619f7cc152056a9845331eda059de83c20a57b7a5c24bcff6d80a3404bbfc"
+    },
+    {
+      "path": "workbench/docs/SAMPLE_RUN_RESULTS.json",
+      "sha256": "256622ac06e29b4be5734ed96b3ec6f183129ee82a9239cf7a11750706bf25bb"
+    },
+    {
+      "path": "workbench/docs/TEST_RESULT.txt",
+      "sha256": "0193519668954a2aca90bca8352adb380d62db62ed099e38326c17a9376de4c0"
+    },
+    {
+      "path": "workbench/docs/VALIDATION.md",
+      "sha256": "db859c5f1e18b24ef9f710c142cb79ccf2df4908b31e08d0300752774d7f140b"
+    },
+    {
+      "path": "workbench/launcher.py",
+      "sha256": "34542304d1c300f587ef44ca1af91fa242fdf96ace036252092bedd7cb777102"
+    },
+    {
+      "path": "workbench/legacy/NEWSROOM_LAB_ELECTION_V07_Fixed_Analytics_ERD_LocalOnly.zip",
+      "sha256": "50ce09bd0f99038d6b2fe5cda5a6fdf9f80e501b48a96c4c7562d384ace3d5ce"
+    },
+    {
+      "path": "workbench/legacy/STAT_METHOD_ENGINE_V12_RELEASE_CANDIDATE.zip",
+      "sha256": "adbdca08b406ef773df75d023a7674fce1012736e3db54e31e367690d442627d"
+    },
+    {
+      "path": "workbench/manifest.json",
+      "sha256": "b5b91977226b9365571e9dab15aa29e93ae19f182df2d6abf047c95c79d0b37d"
+    },
+    {
+      "path": "workbench/output/.gitkeep",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "workbench/output/BROWSER_RENDER_01_ELECTION.png",
+      "sha256": "7b5960078a20c4c8d857eb66fe06f178fe9cf65d2cce3bcded0ff355894b5e01"
+    },
+    {
+      "path": "workbench/output/BROWSER_RENDER_02_CORRELATION.png",
+      "sha256": "0b9d34d8de28078ca289bef1195c0725e0ad8499a622333ca07edaf3e30735f4"
+    },
+    {
+      "path": "workbench/requirements.txt",
+      "sha256": "6951c724e220364f7b82d805d5b5806b064d93e78b943d05d9c16731f5583cd9"
+    },
+    {
+      "path": "workbench/samples/sample_air.csv",
+      "sha256": "b7c52199a8534453becf930429364ffc7ee92b3df81b3ee8b8bffb1954b8ac8b"
+    },
+    {
+      "path": "workbench/samples/sample_election.csv",
+      "sha256": "134995cf3ef34d3a25cc520b3ff38d78791c53c80e69d7961dcce85665666643"
+    },
+    {
+      "path": "workbench/samples/sample_news.jsonl",
+      "sha256": "cba920489a7bda97069af9cfdb0b875f5b8760ee9d92f67721596e84b5ac62d8"
+    },
+    {
+      "path": "workbench/samples/sample_sales.csv",
+      "sha256": "859fb567ae12acaad4c306d760eba9fb0491cf3b267d97aa7610d04967943c72"
+    },
+    {
+      "path": "workbench/tests/test_api.py",
+      "sha256": "d4d3e4a4b94d303e1e6624f4466b7c8d0f0d24a3e8f6d34b49560b19448d2b3e"
+    },
+    {
+      "path": "workbench/tests/test_engine.py",
+      "sha256": "644eba912b09e8b5035a46c2bdca6bdecf13c0b914a847b10b65a104569aa444"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "name": "Unified Statistics Workbench",
+  "version": "1.0.0",
+  "packaging": "Windows 11 local-only Python 3.12",
+  "methods": 17,
+  "samples": 4,
+  "api_entry": "app.server:app",
+  "start": "START_WINDOWS.bat",
+  "port": 8530,
+  "verification": "44 pytest passed; JS syntax passed; two injected-network Chromium DOM screens passed; Windows native untested",
+  "github_uploaded": false,
+  "media_created": false,
+  "legacy_originals_sha256": {
+    "NEWSROOM_LAB_ELECTION_V07_Fixed_Analytics_ERD_LocalOnly.zip": "50ce09bd0f99038d6b2fe5cda5a6fdf9f80e501b48a96c4c7562d384ace3d5ce",
+    "STAT_METHOD_ENGINE_V12_RELEASE_CANDIDATE.zip": "adbdca08b406ef773df75d023a7674fce1012736e3db54e31e367690d442627d"
+  }
+}

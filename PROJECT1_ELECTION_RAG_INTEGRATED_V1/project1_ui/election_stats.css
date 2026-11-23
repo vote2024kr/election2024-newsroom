@@ -1,0 +1,66 @@
+/* Additive styles for the Project 1 election-only statistical selector. */
+.election-analysis{margin-top:15px;border-top:1px solid #36516d;padding-top:14px}
+.election-analysis button{width:100%}
+#analysisScope{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+#analysisScope[hidden]{display:none}
+#analysisStatus{font-size:11px;line-height:1.6;margin-top:9px}
+#analysisResults{max-height:410px}
+.analysis-bar{margin:8px 0}
+.analysis-bar-head{display:flex;justify-content:space-between;gap:9px;align-items:center}
+.analysis-bar-head span{overflow-wrap:anywhere}
+.analysis-bar-track{height:9px;background:#30415b;border-radius:6px;margin:4px 0;overflow:hidden}
+.analysis-bar-track i{display:block;height:100%;background:linear-gradient(90deg,#1aa6c1,#80e3b7)}
+.analysis-table{width:100%;border-collapse:collapse;margin-top:12px}
+.analysis-table th,.analysis-table td{padding:7px 5px;border-bottom:1px solid #344962;text-align:left;font-size:11px}
+.analysis-chart{max-width:100%;height:auto;display:block;margin:10px 0}
+.analysis-note{color:#ffdbb7;font-size:11px;margin-top:10px}
+@media(max-width:400px){#analysisScope{grid-template-columns:1fr}}
+
+/* V1.1 Project 1 dashboard polish. Overrides only the integration page. */
+:root{color-scheme:dark}
+body{background:radial-gradient(circle at 15% 0%,#172840 0%,#0b1423 36%,#09111e 100%);color:#e9f4ff;line-height:1.55;font-family:'Pretendard','Noto Sans KR','Malgun Gothic',system-ui,sans-serif}
+header{background:linear-gradient(112deg,#132c49 0%,#101f35 55%,#0c1a2e 100%);border-bottom:1px solid #315472;padding:25px max(24px,calc((100vw - 1440px)/2 + 24px));box-shadow:0 8px 32px #02081735}
+header h1{font-size:clamp(23px,2.6vw,31px);font-weight:800;letter-spacing:-.8px;line-height:1.25;margin:9px 0}
+header p{font-size:13px;letter-spacing:.1px;color:#afc7df}
+header small{display:inline-flex;align-items:center;background:#22435d;padding:5px 10px;border-radius:999px;color:#95f0ec;letter-spacing:.8px}
+header .btn{white-space:nowrap}
+.warning{background:#3b2a28;border-bottom:1px solid #7b4a39;padding:13px max(24px,calc((100vw - 1440px)/2 + 24px));line-height:1.65;font-size:12.5px}
+.warning b{color:#ffdab5}
+main{max-width:1440px;padding:26px 24px 50px}
+.stats{gap:14px;margin-bottom:19px}
+.stats>div,article,.limits{background:linear-gradient(152deg,#16283e 0%,#122034 100%);border:1px solid #294563;box-shadow:0 9px 26px #02091622;border-radius:14px}
+.stats>div{padding:19px 21px;min-height:103px}
+.stats small{font-size:12px;color:#afc5d9}
+.stats strong{font-size:clamp(20px,2vw,27px);font-weight:800;letter-spacing:-.35px;margin-top:7px}
+.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:16px}
+.grid>article{grid-column:span 4;padding:23px 23px 24px;min-width:0}
+.grid>article:nth-child(2){grid-column:span 8}
+.grid>article:nth-child(6){grid-column:span 12}
+article{transition:border-color .18s ease,box-shadow .18s ease}
+article:focus-within{border-color:#39809a;box-shadow:0 0 0 1px #39809a55,0 9px 26px #02091622}
+article h2{font-size:19px;line-height:1.32;margin:10px 0 11px;letter-spacing:-.45px}
+article p,.limits p{font-size:13px;line-height:1.65;margin:0 0 13px;color:#a9bed4}
+.step{display:inline-block;background:#0c3544;border:1px solid #236678;color:#68e1e5;border-radius:6px;padding:5px 9px;font-size:10.5px;letter-spacing:.9px}
+.actions{margin:13px 0 6px}
+button,.btn,.actions a{border-radius:9px;min-height:39px;padding:10px 13px;font-size:12.5px;transition:filter .15s ease,transform .15s ease}
+button:focus-visible,.btn:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid #87e9ff;outline-offset:3px}
+button:disabled{opacity:.55;cursor:progress}
+input,select{font:inherit;min-height:42px;background:#0a1a2c;border:1px solid #395774;border-radius:8px;padding:10px 12px;margin:7px 0 12px}
+input:hover,select:hover{border-color:#5b829e}
+label{color:#bfd2e4;font-size:12.5px;font-weight:600}
+.scrollbox{background:#0d1b2e;border-color:#2c4761;border-radius:9px;line-height:1.65;padding:14px;font-size:12.5px}
+.scrollbox hr{border:0;border-top:1px solid #30445b;margin:11px 0}
+.election-analysis{margin-top:15px;padding-top:18px;border-top:1px solid #31506c}
+.election-analysis label{font-size:12.5px}
+.election-analysis #analysisResults{max-height:440px;background:#0b1a2b;overflow:auto}
+.election-analysis #analysisResults p{font-size:11.7px;color:#a9c2d7;margin:6px 0 10px}
+.analysis-bar-head{font-size:12px}
+.analysis-table th{position:sticky;top:-14px;background:#172c42;color:#a9dcf0}
+.analysis-table td{color:#d9e7f2}
+.limits{padding:24px 25px;margin-top:18px}
+.limits h2{margin:0 0 13px}
+.limits a{text-decoration:none;border-bottom:1px dotted #6ce2f5}
+footer{border-top:1px solid #233953;background:#0a1424;letter-spacing:.5px}
+@media(max-width:1150px){.grid>article{grid-column:span 6}.grid>article:nth-child(2){grid-column:span 6}.grid>article:nth-child(6){grid-column:span 6}}
+@media(max-width:800px){header{padding:24px 18px;align-items:flex-start}.warning{padding:12px 18px}main{padding:19px 16px 36px}.grid>article,.grid>article:nth-child(2),.grid>article:nth-child(6){grid-column:span 12}.stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.stats>div{padding:16px}}
+@media(max-width:540px){header{display:block}header .btn{margin-top:15px;display:inline-flex}.stats strong{font-size:21px}.grid>article{padding:19px 18px}.limits{padding:19px 18px}.warning{font-size:11.7px}.election-analysis #analysisResults{max-height:380px}}

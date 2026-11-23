@@ -1,0 +1,15 @@
+{
+  "newsroom_original_tests": 60,
+  "workbench_original_tests": 44,
+  "project1_integration_tests": 17,
+  "total_test_assertions_sets": 121,
+  "network_browser_test": "blocked_by_administrator",
+  "offline_dom_browser": "legacy_V1_passed_using_ASGI_test_client_bridge",
+  "v11_browser_visual_qa": "blocked_by_runtime_chromium_socket_permissions",
+  "v11_javascript_syntax": "passed",
+  "windows_machine": "user_reported_page_displayed_and_executed; full_acceptance_pending",
+  "official_live_feed": "not_connected",
+  "real_election_facts_verified": false,
+  "new_video_created": false,
+  "github_push": false
+}

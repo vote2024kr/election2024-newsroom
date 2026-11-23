@@ -1,0 +1,374 @@
+[
+  {
+    "method": "quality",
+    "name": "결측·중복·자료형 진단",
+    "file": "sample_air.csv",
+    "options": {},
+    "summary": {
+      "전체 행": 280,
+      "열 수": 7,
+      "중복 행": 0,
+      "총 결측 셀": 0
+    },
+    "chart_type": "bar",
+    "result_rows": 7,
+    "first_result_row": {
+      "열": "source_mode",
+      "결측": 0,
+      "비결측": 280,
+      "고유값": 1
+    }
+  },
+  {
+    "method": "summary",
+    "name": "기술통계·사분위수",
+    "file": "sample_air.csv",
+    "options": {
+      "x": "pm10"
+    },
+    "summary": {
+      "유효 관측": 280,
+      "제외/필터 후 행": 280,
+      "평균": 32.295,
+      "중앙값": 32.25,
+      "표준편차(표본)": 12.8335069,
+      "최솟값": 0.0,
+      "Q1": 23.85,
+      "Q3": 40.95,
+      "최댓값": 77.2
+    },
+    "chart_type": "bar",
+    "result_rows": 10,
+    "first_result_row": {
+      "구간": "0.00~7.72",
+      "건수": 6
+    }
+  },
+  {
+    "method": "frequency",
+    "name": "빈도·비율",
+    "file": "sample_sales.csv",
+    "options": {
+      "group": "category"
+    },
+    "summary": {
+      "전체 행": 550,
+      "범주 수": 4,
+      "표시 범주": 4
+    },
+    "chart_type": "bar",
+    "result_rows": 4,
+    "first_result_row": {
+      "범주": "생활",
+      "건수": 158,
+      "비율(%)": 28.727
+    }
+  },
+  {
+    "method": "group_summary",
+    "name": "집단별 합계·평균·중앙값",
+    "file": "sample_sales.csv",
+    "options": {
+      "x": "amount",
+      "group": "region",
+      "aggregation": "sum"
+    },
+    "summary": {
+      "비교 집단 수": 5,
+      "유효 자료": 550,
+      "계산 기준": "합계"
+    },
+    "chart_type": "bar",
+    "result_rows": 5,
+    "first_result_row": {
+      "집단": "서울",
+      "건수": 114,
+      "합계": 5461400,
+      "평균": 47907.0175439,
+      "중앙값": 27000.0
+    }
+  },
+  {
+    "method": "histogram",
+    "name": "도수분포·히스토그램",
+    "file": "sample_air.csv",
+    "options": {
+      "x": "pm10",
+      "bins": 8
+    },
+    "summary": {
+      "유효 관측": 280,
+      "평균": 32.295,
+      "중앙값": 32.25,
+      "표준편차(표본)": 12.8335069,
+      "최솟값": 0.0,
+      "Q1": 23.85,
+      "Q3": 40.95,
+      "최댓값": 77.2
+    },
+    "chart_type": "bar",
+    "result_rows": 8,
+    "first_result_row": {
+      "구간": "0.00~9.65",
+      "건수": 10
+    }
+  },
+  {
+    "method": "timeseries",
+    "name": "시간별 추세·이동평균",
+    "file": "sample_air.csv",
+    "options": {
+      "x": "pm10",
+      "date": "day",
+      "window": 7
+    },
+    "summary": {
+      "시계열 점": 70,
+      "유효 행": 280,
+      "이동평균 창": 7,
+      "시간 단위": "D"
+    },
+    "chart_type": "line",
+    "result_rows": 70,
+    "first_result_row": {
+      "날짜": "2026-01-01",
+      "집계값": 33.05,
+      "이동평균": null
+    }
+  },
+  {
+    "method": "correlation",
+    "name": "Pearson·Spearman 상관",
+    "file": "sample_air.csv",
+    "options": {
+      "x": "pm10",
+      "y": "pm25"
+    },
+    "summary": {
+      "관측 쌍": 280,
+      "Pearson r": 0.8787434,
+      "Spearman ρ": 0.8664064
+    },
+    "chart_type": "scatter",
+    "result_rows": 280,
+    "first_result_row": {
+      "pm10": 47.9,
+      "pm25": 24.8
+    }
+  },
+  {
+    "method": "regression",
+    "name": "단순 선형회귀",
+    "file": "sample_air.csv",
+    "options": {
+      "x": "pm10",
+      "y": "pm25"
+    },
+    "summary": {
+      "관측 쌍": 280,
+      "Pearson r": 0.8787434,
+      "Spearman ρ": 0.8664064,
+      "기울기": 0.5658835,
+      "절편": -0.36235,
+      "설명력 R²(같은 자료)": 0.77219,
+      "p값": 0.0
+    },
+    "chart_type": "scatter",
+    "result_rows": 280,
+    "first_result_row": {
+      "pm10": 47.9,
+      "pm25": 24.8
+    }
+  },
+  {
+    "method": "welch",
+    "name": "Welch 독립표본 t 검정",
+    "file": "sample_sales.csv",
+    "options": {
+      "x": "amount",
+      "group": "channel"
+    },
+    "summary": {
+      "검정 통계량 t": -1.2988742,
+      "p값": 0.1945473,
+      "평균 차이(A-B)": -5256.0729736
+    },
+    "chart_type": "bar",
+    "result_rows": 2,
+    "first_result_row": {
+      "집단": "오프라인",
+      "표본수": 281,
+      "평균": 39115.3024911,
+      "표준편차": 44534.8974
+    }
+  },
+  {
+    "method": "chi_square",
+    "name": "카이제곱 독립성 검정",
+    "file": "sample_sales.csv",
+    "options": {
+      "x": "category",
+      "group": "channel"
+    },
+    "summary": {
+      "χ² 통계량": 1.1461405,
+      "자유도": 3,
+      "p값": 0.7659489,
+      "기대빈도 5 미만 셀": 0
+    },
+    "chart_type": "bar",
+    "result_rows": 4,
+    "first_result_row": {
+      "범주": "생활",
+      "오프라인": 86,
+      "온라인": 72
+    }
+  },
+  {
+    "method": "bootstrap",
+    "name": "부트스트랩 평균 신뢰구간",
+    "file": "sample_air.csv",
+    "options": {
+      "x": "pm10",
+      "repeats": 500,
+      "seed": 42
+    },
+    "summary": {
+      "유효 표본": 280,
+      "반복 횟수": 500,
+      "원본 평균": 32.295,
+      "95% 하한": 30.8712321,
+      "95% 상한": 33.7257411
+    },
+    "chart_type": "bar",
+    "result_rows": 16,
+    "first_result_row": {
+      "구간": "30.32~30.59",
+      "건수": 4
+    }
+  },
+  {
+    "method": "kmeans",
+    "name": "KMeans 군집 분석",
+    "file": "sample_air.csv",
+    "options": {
+      "features": [
+        "pm10",
+        "pm25",
+        "temperature"
+      ],
+      "clusters": 3
+    },
+    "summary": {
+      "유효 행": 280,
+      "군집 수": 3,
+      "특성 수": 3
+    },
+    "chart_type": "scatter",
+    "result_rows": 280,
+    "first_result_row": {
+      "pm10": 47.9,
+      "pm25": 24.8,
+      "temperature": 2.8,
+      "군집": 2
+    }
+  },
+  {
+    "method": "pca",
+    "name": "PCA 주성분 분석",
+    "file": "sample_air.csv",
+    "options": {
+      "features": [
+        "pm10",
+        "pm25",
+        "temperature"
+      ]
+    },
+    "summary": {
+      "유효 행": 280,
+      "특성 수": 3,
+      "PC1 설명분산율": 0.6282553,
+      "PC2 설명분산율": 0.3314265
+    },
+    "chart_type": "scatter",
+    "result_rows": 280,
+    "first_result_row": {
+      "PC1": 1.3498417,
+      "PC2": -1.2963108
+    }
+  },
+  {
+    "method": "text_frequency",
+    "name": "단어 빈도·텍스트 전처리",
+    "file": "sample_news.jsonl",
+    "options": {
+      "text": "title"
+    },
+    "summary": {
+      "분석 행": 150,
+      "서로 다른 토큰": 14,
+      "추출 토큰": 1050
+    },
+    "chart_type": "bar",
+    "result_rows": 14,
+    "first_result_row": {
+      "단어": "데이터",
+      "빈도": 150
+    }
+  },
+  {
+    "method": "election_votes",
+    "name": "선거 후보별 최신 집계 득표율",
+    "file": "sample_election.csv",
+    "options": {},
+    "summary": {
+      "최신 단계 대상 선거구": 34,
+      "표수 합계": 205971,
+      "후보 수": 3
+    },
+    "chart_type": "bar",
+    "result_rows": 3,
+    "first_result_row": {
+      "후보": "가상 후보 B",
+      "득표수": 71501,
+      "득표율(%)": 34.7141
+    }
+  },
+  {
+    "method": "election_margin",
+    "name": "선거구별 1·2위 격차",
+    "file": "sample_election.csv",
+    "options": {},
+    "summary": {
+      "비교 선거구": 34,
+      "평균 격차(%p)": 7.6472647
+    },
+    "chart_type": "bar",
+    "result_rows": 34,
+    "first_result_row": {
+      "선거구": "강원-모의-02",
+      "1위": "가상 후보 C",
+      "2위": "가상 후보 A",
+      "격차(표)": 1240,
+      "격차(%p)": 27.753
+    }
+  },
+  {
+    "method": "election_progress",
+    "name": "집계표수 / 선거인 수 비율(교육용)",
+    "file": "sample_election.csv",
+    "options": {},
+    "summary": {
+      "분석 단계": 12,
+      "마지막 단계 선거인 대비 집계표 비율(%)": 94.0005
+    },
+    "chart_type": "line",
+    "result_rows": 12,
+    "first_result_row": {
+      "단계": 1,
+      "집계 표수": 17163,
+      "선거인 수": 219117,
+      "선거인 대비 집계표 비율(%)": 7.8328
+    }
+  }
+]

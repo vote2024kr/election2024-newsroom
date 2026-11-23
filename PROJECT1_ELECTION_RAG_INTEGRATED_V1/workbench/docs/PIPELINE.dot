@@ -1,0 +1,14 @@
+digraph G {
+ graph [rankdir=LR,bgcolor="white",nodesep=.5,ranksep=.5,fontname="Noto Sans CJK KR"];
+ node [shape=box,style="rounded,filled", fillcolor="#ebf8f8", color="#1a8ea8",fontname="Noto Sans CJK KR",fontsize=12,margin="0.18"];
+ A [label="원본 데이터\nCSV·XLSX·JSON·JSONL"];
+ B [label="크기·헤더·인코딩 검사\n자료형·결측 프로필"];
+ C [label="분야·기법 선택\n17종 카탈로그"];
+ D [label="필터·변수·가공\n집계·결측 정책"];
+ E [label="조건 검사\n수치·날짜·표본 수"];
+ F [label="통계 계산\n원본 불변"];
+ G [label="그래프·표·요약\n근거/주의 표시"];
+ H [label="CSV·JSON 결과 저장\n조건별 실행 기록"];
+ X [label="검사 실패 안내\n계산 차단",fillcolor="#fff3ed",color="#c98d6b"];
+ A->B->C->D->E->F->G->H;E->X [label="조건 미충족"];
+}

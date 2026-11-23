@@ -1,0 +1,23 @@
+digraph FutureERD {
+  graph [rankdir=TB, bgcolor="white", fontname="DejaVu Sans", label="PROJECT 1 | TO-BE ERD PROPOSAL (NOT IMPLEMENTED)", labelloc=t, fontsize=16,pad=.3,ranksep=.45,nodesep=.25];
+  node [shape=record, style="rounded,filled", fillcolor="#f7f6e8", color="#ab965c", fontname="DejaVu Sans", fontsize=10];
+  edge [color="#9d8756",fontname="DejaVu Sans",fontsize=9];
+  src [label="{SOURCE | source_id PK | kind, url, sha256 | collected_at, verified }"];
+  el [label="{ELECTION | election_id PK | type, date, stage }"];
+  reg [label="{REGION | region_id PK | election_id FK | name }"];
+  dist [label="{DISTRICT | district_id PK | region_id FK | code, name }"];
+  cand [label="{CANDIDATE | candidate_id PK | district_id FK | name, party_id }"];
+  snap [label="{SNAPSHOT | snapshot_id PK | district_id FK, source_id FK | stage, observed_at }"];
+  votes [label="{VOTE_COUNT | snapshot_id FK | candidate_id FK | votes | UNIQUE(snapshot, candidate) }"];
+  doc [label="{DOCUMENT | document_id PK | source_id FK | title, publication_date }"];
+  chunk [label="{RAG_CHUNK | chunk_id PK | document_id FK | text, embedding_version }"];
+  art [label="{ARTICLE | article_id PK | snapshot_id FK | text, status, version }"];
+  cite [label="{ARTICLE_EVIDENCE | article_id FK | chunk_id FK | sentence_id }"];
+  check [label="{VALIDATION | validation_id PK | article_id FK | passed, errors, checked_at }"];
+  review [label="{EDITOR_REVIEW | review_id PK | article_id FK | editor_id, decision, reason }"];
+  audit [label="{AUDIT_EVENT | event_id PK | actor_id | entity, action, timestamp }"];
+  src -> el;src -> snap;src -> doc;
+  el -> reg -> dist;dist -> cand;dist -> snap;snap -> votes;cand -> votes;
+  doc -> chunk;chunk -> cite;art -> cite;
+  snap -> art;art -> check;art -> review;review -> audit;check -> audit;
+}

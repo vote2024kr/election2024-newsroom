@@ -1,0 +1,20 @@
+﻿원문 프로젝트1 요구사항,검증 상태,구현 경로 또는 증거,제약·다음 단계
+선거 범위·지역·후보 ID,구현(모의),newsroom/engine.py,17시도/254가상 선거구. 실제 공식 획정 명단 아님
+원자료 수집·보존,부분 구현,/api/official/import; official_results.py,사용자 제공 CSV 분석. 원본을 별도 원장/보존소에 영구 저장하지 않음
+출처·원본 기준시각·파일 지문,부분 구현,/api/official/status,업로드 CSV의 sha256·출처 입력·시각. 원천 기관과 독립 대조 미실시
+WebSocket 실시간 개표,구현(모의),/ws; /api/control,2초 주기 난수 모의 데이터. 실제 선거 실시간 API 아님
+전국→시도→선거구 대시보드,구현(모의),/; newsroom/static,교육용 합성 선거구 선택·지역별 득표 표시
+통계기법·조건 필터·그래프·표,구현(분석),/workbench; /api/project1/transfer-final-result,17개 기법 선택 가능. 선거에 맞지 않는 기법은 자료 조건 검사 필요
+문서 청크·근거 ID 검색,부분 구현,/api/project1/rag/search,교육용 5문서 TF-IDF 희소 벡터 검색. 실제 공약·발언 문서 미연결
+LangChain+LLM RAG 답변 생성,미구현,project1_sparse_retrieval.py,문서 검색만 구현. LangChain/LLM 생성과 교차검증은 미실행
+근거 ID 붙인 기사 초안,부분 구현,/api/articles/draft; /api/project1/drill,교육용 난수 집계 기반 규칙 템플릿. 실제 선거 기사/LLM 자동 생성 아님
+수치·지역·후보·근거 ID 규칙 검사,구현(모의),newsroom/engine.py::validate_draft,"템플릿 완전 일치 검사, 실제 외부 팩트체크 아님"
+카오스 오류·자동 승인 차단,구현(모의),/api/project1/drill; /api/project1/approve,지역·표수·근거 ID 오류와 기준 단계 변경을 HTTP 409로 차단
+편집자 검수·승인,부분 구현,/api/project1/approve,사유·식별자·시각 기록. 사용자 인증·역할별 권한 미구현
+감사·검증 기록,부분 구현,data/project1_events.sqlite3,통합 시험 이벤트 SQLite 지속; 기존 뉴스룸 기사·승인 메모리 상태는 재시작 시 초기화
+실제 공식 선거 당일 실시간 피드,미구현,/api/project1/status,선거당일 공인 제공방식과 권한 확보 전 미연결
+공약·정정자료 RAG 입력,미구현,newsroom/data/mock_documents.json,교육용 내부 문서 5건만 포함. 외부 공약·정정자료 없음
+약 20분 FHD 선거뉴스 MP4,사용자 지시로 보류,newsroom/static/docs/20minute_storyboard.csv,장면표·대본 기존 자료만 보존. 영상 새 제작 없음
+영상/CG 신규 제작,사용자 지시로 보류,newsroom/static/media,"기존 이미지·메뉴 유지, 새 영상/CG 제작 없음"
+테스트·README·ERD·기획서,구현,"tests/, docs/, README.md",NEWSROOM 60 / WORKBENCH 44 / PROJECT1 9 회귀 테스트
+GitHub 소스 업로드,사용자 지시로 보류,로컬 ZIP 전용,GitHub 커밋·업로드 없음

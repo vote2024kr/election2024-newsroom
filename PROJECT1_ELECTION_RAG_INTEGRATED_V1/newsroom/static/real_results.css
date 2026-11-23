@@ -1,0 +1,78 @@
+/* V1.2 additive historical mode. All original classes/components remain intact. */
+.real-mode-switch{padding:10px 8px 13px}.real-mode-switch .menu-label{margin-bottom:9px}
+.real-mode-btn{display:block;width:100%;padding:11px 9px;margin:7px 0;border-radius:7px;text-align:left;background:#172d47;border:1px solid #36526f;color:#bcd4eb;cursor:pointer;font-size:11px;font-weight:750}
+.real-mode-btn.selected{background:#175476;color:#e5fdff;border-color:#3fd7e6;box-shadow:inset 3px 0 #3fe2ea}
+.real-mode-switch small{display:block;padding:5px;color:#8aabc4;font-size:10px}
+.real-mode .control-panel{display:none}
+.real-mode .sidebar-foot .status-tag{color:#7ce4c7}.real-mode .sidebar-foot .status-tag:after{content:' · 2024 최종 개표'}
+.real-mode #view-articles>.article-layout,.real-mode #view-articles>.panel:not(#realArticles){display:none}
+.real-mode #view-analytics>:not(.page-heading):not(#realAnalytics){display:none}
+[data-real-only]{display:none}
+.real-mode [data-real-only]{display:block}
+.real-mode .stat-note-sim{display:none}
+.real-mode .footerline span:last-child{font-size:0}
+.real-mode .footerline span:last-child:after{content:'2024 확정 결과 · 시각별 기록 없음 · 출처 교차검증 필요';font-size:11px}
+.real-mode .simulation-pill{background:#17382f!important;color:#8de6c9!important;border-color:#3c7a63!important}
+.real-mode .ticker-label{background:#0e977f}
+.real-mode .liveDot{background:#32cda5!important;box-shadow:none!important}
+.real-mode .sidebar .reset{opacity:.5}
+.real-panels{margin-top:18px}
+#realArticles.real-panels{margin:0 0 17px}
+#realAnalytics.real-panels{margin:0 0 17px}
+.real-qa-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:16px}
+.real-qa-grid .panel{min-width:0}
+.real-body{padding:15px 20px 22px;font-size:12px;color:#d0e0ef;line-height:1.75}
+.real-note{font-size:11px;line-height:1.8;color:#a9c5de;margin:7px 0 17px}
+.real-filter-row{display:flex;gap:14px;align-items:end;padding:15px 20px;flex-wrap:wrap;border-bottom:1px solid #304860}
+.real-filter-row label{display:flex;flex-direction:column;gap:7px;font-size:11px;color:#acc6de;flex:1;min-width:170px}
+.real-filter-row select,.real-filter-row input{background:#172b43;border:1px solid #3b5c7f;border-radius:7px;padding:10px;color:#edf7ff;width:100%;min-width:0}
+.real-filter-row .primary-small{flex:0 0 auto}
+.real-suggestions{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:17px}
+.real-suggestions button{padding:8px 10px;border:1px solid #3b637e;background:#1b3e5a;border-radius:7px;color:#c7edff;font-size:11px;cursor:pointer}
+.real-answer{margin-top:14px;padding:19px;background:#182b45;border-radius:8px;border:1px solid #42617b;line-height:1.85;min-height:120px;white-space:pre-wrap}
+.real-evidence{margin-top:10px;border-top:1px solid #395674;padding-top:8px;color:#9fcde1;font-size:11px}
+.real-evidence a{color:#4ad5ee;text-decoration:underline}
+#realDraftText{width:100%;min-height:200px;resize:vertical;border:1px solid #476485;border-radius:8px;background:#1a304c;color:#ebf4ff;padding:13px;font-size:12px;line-height:1.8}
+.real-qa-grid .rag-input-row{margin:10px 0}
+.real-qa-grid .rag-input-row input{min-width:0;flex:1;background:#1b314e;color:#eef8ff;border:1px solid #466a85;border-radius:5px;padding:12px}
+.real-qa-grid .rag-input-row button{white-space:nowrap}
+.real-chart-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:16px 0}
+.real-chart-card{min-width:0;overflow:hidden}
+.real-chart-card .panel-head{padding-bottom:12px}
+.real-bar-list{padding:9px 20px 18px;max-height:420px;overflow:auto}
+.real-bar-list .real-bar-row{display:grid;grid-template-columns:minmax(88px,1.05fr) minmax(80px,2fr) minmax(70px,.85fr);gap:12px;align-items:center;padding:8px 2px;font-size:11px}
+.real-bar-row .real-bar-name{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#dbecff}
+.real-bar-row .real-bar-track{height:12px;background:#253b53;overflow:hidden;border-radius:12px}
+.real-bar-row .real-bar-fill{height:100%;border-radius:12px}
+.real-bar-row .real-bar-number{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums;color:#edfaff}
+.real-chart-note{padding:13px 20px 17px;color:#9cb7d2;font-size:11px;border-top:1px solid #344960;line-height:1.7}
+.real-section-subtitle{font-size:12px;color:#97cce2;padding:12px 20px 0;font-weight:700}
+.real-national-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 13px}
+.real-national-grid .real-bar-list{padding:8px 12px}
+.real-national-grid .real-bar-list .real-bar-row{grid-template-columns:minmax(85px,1fr) minmax(50px,1.6fr) minmax(45px,.8fr);gap:5px}
+.real-seats-total{display:flex;gap:14px;justify-content:space-between;padding:10px 18px;font-size:12px;color:#83dce4}
+.real-tabset{display:flex;gap:8px;padding:0 18px 12px;align-items:center}
+.real-tabset button{background:#1c3b54;border:1px solid #3c6884;color:#d1ebf6;border-radius:5px;padding:9px 13px;cursor:pointer;font-size:11px}
+.real-tabset button.selected{background:#17698a;border-color:#2ed5e6}
+.real-caption{color:#95b9d5;font-size:11px;margin:0 18px 13px;line-height:1.7}
+.real-winner{margin:15px 18px;background:#153d4c;border:1px solid #35a18d;border-radius:8px;padding:13px;color:#aaf6dd;font-size:13px}
+.real-winner b{color:white}
+.real-source-label{font-size:11px;color:#9bc4db;margin:10px 18px 0}
+.real-copy-status{color:#8ce0bd;font-size:11px}
+@media(max-width:1300px){.real-qa-grid,.real-chart-grid,.real-national-grid{grid-template-columns:1fr}}
+@media(max-width:700px){.real-qa-grid,.real-chart-grid{grid-template-columns:1fr}.real-bar-list .real-bar-row{grid-template-columns:95px minmax(60px,1fr) 64px;gap:6px}}
+
+.real-legacy-notice{margin-bottom:15px;padding:12px 18px;background:#423522;border:1px solid #8c6f40;border-radius:8px;color:#ffd9a6;font-size:12px;line-height:1.85}
+
+/* PG initial-load clarity. Preserve existing simulation when explicitly selected. */
+.real-load-status{display:none;margin:0 0 16px;padding:15px 18px;border:1px solid #3d6380;border-radius:8px;background:#182f48;color:#d6efff;font-size:13px;line-height:1.7;align-items:center;gap:12px;justify-content:space-between}
+.real-mode .real-load-status:not([hidden]){display:flex}
+.real-load-status.is-error{background:#40262c;color:#ffe1e4;border-color:#c46e7e}
+.real-load-retry{border:1px solid #72c5ed;border-radius:6px;background:#155574;color:#fff;padding:9px 14px;cursor:pointer;font-weight:bold;white-space:nowrap}
+.real-load-retry[hidden]{display:none}
+.real-mode:not(.real-data-ready) #view-dashboard .metrics,
+.real-mode:not(.real-data-ready) #view-dashboard .main-grid,
+.real-mode:not(.real-data-ready) #view-dashboard .regional-panel,
+.real-mode:not(.real-data-ready) #view-district .district-layout,
+.real-mode:not(.real-data-ready) #view-district #realProportionalDistrict,
+.real-mode:not(.real-data-ready) #view-analytics #realAnalytics{visibility:hidden}

@@ -1,0 +1,18 @@
+{
+  "newsroom": {
+    "unchanged_files": 94,
+    "patched_ui_paths": [
+      "static/index.html",
+      "static/style.css"
+    ],
+    "missing": []
+  },
+  "workbench": {
+    "unchanged_files": 38,
+    "patched_ui_paths": [
+      "app/static/index.html",
+      "app/static/app.js"
+    ],
+    "missing": []
+  }
+}

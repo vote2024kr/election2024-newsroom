@@ -1,0 +1,13 @@
+﻿필드,자료형,필수,설명,검증
+source_url,string,Y,파일 제공처 링크,공식 사이트 주소형식·실제 원본 대조 별도
+election_name,string,Y,선거 종류·회차,지역구/비례/재보궐 구분 필수
+source_sha256,hex,Y,업로드 파일 해시,"원본 대조용, 해시만으로 진위확인 불가"
+region,string,Y,시도명,원본 표기 보존/표준화 매핑 별도
+district,string,Y,선거구명,시도+선거구 조합으로 식별
+neighborhood,string,N,읍면동명,중복키 구성에 사용
+poll,string,N,투표구명,중복키 구성에 사용
+candidate,string,Y,후보자명,전국 합산 금지/동명이인 가능
+votes,integer,Y,후보 득표수,음수·소수·중복·과대값 거부
+official_count_time,datetime,N,공식 기준 개표 시각,현재 최종 CSV에는 이력 없음
+ingested_at,datetime,Y,로컬 가져오기 시각,선거 데이터 시각과 분리
+status,enum,Y,USER_UPLOADED_UNVERIFIED 등,수치와 공식인증을 혼동하지 않음

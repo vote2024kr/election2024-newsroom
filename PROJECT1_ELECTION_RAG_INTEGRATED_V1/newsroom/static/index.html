@@ -1,0 +1,160 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>선거방송 개표상황실 | 2024 총선 확정 결과</title><link rel="icon" type="image/svg+xml" href="/static/favicon.svg"/>
+<link rel="stylesheet" href="/static/style.css"/><link rel="stylesheet" href="/static/real_results.css"/><!-- NEC2024_VERIFIED_PATCH_V2 --><link rel="stylesheet" href="/api/v2/patch.css?v=20261114"></head>
+<body>
+<header class="topbar"><div class="brand"><div class="brandMark">N<span>:</span></div><div><strong>NEWSROOM <span>LAB</span></strong><small>ELECTION CONTROL CENTER</small></div></div>
+<div class="header-middle"><span class="liveDot"></span><b>2024 총선 · 자료 확인 중</b><span class="sep"></span><span id="clock">PostgreSQL 자료 확인 중</span></div>
+<div class="top-actions"><span class="simulation-pill">● 2024년 확정 결과 · 실시간 아님</span><button class="ghost icon-only" id="fullscreen" title="전체 화면">⛶</button></div></header>
+<div class="ticker"><div class="ticker-label">DATA LOADING</div><div id="tickerText">2024년 총선 최종 개표·투표율 데이터를 불러오는 중입니다.</div><span id="connectStatus" class="connection">● 자료 조회 중</span></div>
+<div class="app-shell">
+<aside class="sidebar"><div class="menu-label">BROADCAST DESK</div>
+<a class="project1-integrated-link" href="/project1">✦ 프로젝트 1 · 통합 운영실 <small>NEW</small></a>
+<button class="nav active" data-view="dashboard"><span>▦</span> 전국 개표 종합 <small>01</small></button>
+<button class="nav" data-view="district"><span>◎</span> 지역·선거구 탐색 <small>02</small></button>
+<button class="nav" data-view="articles"><span>▤</span> RAG 기사 · 검증 <small>03</small></button>
+<button class="nav" data-view="studio"><span>▣</span> 방송 CG · 대본 <small>04</small></button>
+<button class="nav" data-view="analytics"><span>▥</span> 통계 · 그래프 <small>05</small></button>
+<button class="nav" data-view="official"><span>▤</span> 공식 결과 CSV 분석 <small>06</small></button>
+<button class="nav" data-view="training"><span>▣</span> 보도자료 · 학습데이터 <small>07</small></button>
+<button class="nav" data-view="media"><span>▧</span> 사진 · 영상 자료 <small>08</small></button>
+<div class="sidebar-divider"></div>
+<div class="real-mode-switch"><div class="menu-label">데이터 표시 모드</div><button id="realModeBtn" class="real-mode-btn selected">✓ 2024 총선 확정 결과</button><button id="mockModeBtn" class="real-mode-btn">▸ 교육용 모의 개표</button><small>기존 화면·모의 기능 모두 보존</small></div>
+<div class="sidebar-divider"></div><div class="menu-label">시뮬레이션 조정</div>
+<div class="control-panel"><div class="control-label">개표 데이터 업데이트</div><div class="control-row"><button id="pauseBtn" class="primary-small">Ⅱ 일시정지</button><button id="tickBtn" class="secondary-small">↻ 1단계 진행</button></div><label for="speed">자동 갱신 주기</label><select id="speed"><option value="1">1초마다</option><option value="2" selected>2초마다</option><option value="5">5초마다</option><option value="10">10초마다</option></select><button class="reset" id="resetBtn">⟲ 초기 상태로 재시작</button></div>
+<div class="sidebar-foot"><div class="status-tag"><i></i> DEMO MODE ONLY</div><p>공식 개표 결과와 연결되지 않습니다.<br/>가상의 후보와 난수로 생성한 데이터입니다.</p><div class="version">AI NEWSROOM · EDUCATION V0.7</div></div></aside>
+<main class="workspace">
+<section id="view-dashboard" class="view active">
+ <div class="page-heading"><div><div class="eyebrow">2024 · FINAL RESULTS · LOADING</div><h1>전국 개표 종합상황</h1><p>지역구·비례대표 개표 결과 및 투표율 데이터를 불러오고 있습니다.</p></div><div class="heading-right"><span class="data-source"><span>◈</span> PostgreSQL 자료 조회 중</span><span class="step-count" id="stepHeader">업데이트 0회</span></div></div>
+ <div id="realLoadStatus" class="real-load-status" role="status" aria-live="polite"><div class="real-load-message">PostgreSQL에서 2024년 개표·투표율 자료를 읽고 있습니다…</div><button id="realLoadRetry" class="real-load-retry" type="button" hidden>다시 시도</button></div>
+ <div class="metrics"><div class="metric"><span>전국 모의 개표율</span><strong id="metricProgress">0.00<em>%</em></strong><div class="metric-foot"><div class="mini-line"><div id="progressFill"></div></div><small id="metricProgressSub">254개 모의 선거구</small></div></div><div class="metric"><span>집계된 모의 표수</span><strong id="metricCounted">0</strong><div class="metric-foot"><small>실시간 시뮬레이션 누적값</small><b class="metric-up">↗ 갱신 중</b></div></div><div class="metric"><span>전국 선두 후보</span><strong class="leader" id="metricLeader">모의 후보 A</strong><div class="metric-foot"><small id="metricLead">2위와 격차 계산 중</small></div></div><div class="metric"><span>현재 집계 상황</span><strong id="metricConstituency">17 <em>시·도</em></strong><div class="metric-foot"><small>254개 가상 선거구</small><span class="mini-live"><i></i> 실시간</span></div></div></div>
+ <div class="main-grid"><div class="panel panel-national"><div class="panel-head"><div><span class="panel-kicker">NATIONAL COUNT</span><h2>전국 후보별 득표 현황</h2></div><span class="panel-timestamp" id="nationalUpdated">기준 시각 —</span></div><div class="national-votes" id="nationalVotes"></div><div class="panel-note">* 모든 후보와 수치는 교육용 가상 데이터입니다. 예측·당선 판정이 아닙니다.</div></div>
+ <div class="panel map-panel"><div class="panel-head"><div><span class="panel-kicker">REGIONAL MAP</span><h2>전국 17개 시·도</h2></div><span class="hint">지역을 선택하세요 ↗</span></div><div class="region-tiles" id="regionTiles"></div><div class="map-foot">전국 → 시·도 → 모의 선거구 순으로 상세 보기</div></div></div>
+ <div class="panel regional-panel"><div class="panel-head"><div><span class="panel-kicker">REGIONAL SCOREBOARD</span><h2>시·도별 개표 현황</h2></div><div class="panel-actions"><a class="link-action" href="/api/export/districts.csv" download>CSV 내보내기 ↓</a><button class="link-action" id="goDistrict">전체 선거구 보기 →</button></div></div><div class="table-wrap"><table><thead><tr><th>지역</th><th>모의 선거구</th><th>개표율</th><th>선두 후보</th><th>표 차이</th><th></th></tr></thead><tbody id="regionRows"></tbody></table></div></div>
+</section>
+<section id="view-district" class="view">
+ <div class="page-heading"><div><div class="eyebrow">DISTRICT DEEP DIVE</div><h1>지역·선거구 개표 현황</h1><p>시·도를 선택하고 해당 지역의 개별 모의 선거구를 비교합니다.</p></div><button id="allRegionsBtn" class="outline-btn">전국 17개 지역</button></div>
+ <div class="district-layout"><div class="panel district-list-panel"><div class="panel-head"><div><span class="panel-kicker">SELECT AREA</span><h2>선거구 탐색</h2></div><span id="districtCountLabel" class="count-label">254개</span></div><div class="filter-bar"><select id="regionSelect" aria-label="지역 선택"><option value="">전국 전체</option></select><input type="search" id="districtSearch" placeholder="지역·선거구 검색" aria-label="지역·선거구 검색"/></div><div id="districtList" class="district-list"></div></div>
+ <div class="panel district-detail-panel"><div class="panel-head"><div><span class="panel-kicker">DISTRICT COUNT REPORT</span><h2 id="districtTitle">모의 선거구 선택</h2></div><span class="region-badge" id="districtRegion">교육용 데모</span></div><div class="district-hero"><div><small>선택 선거구 개표율</small><div class="big-pct" id="districtProgress">--%</div></div><div class="round-counter"><span>현재 집계 표수</span><strong id="districtTotal">—</strong><small>표 · 모의 집계</small></div></div><div class="big-progress"><div id="districtBar"></div></div><div class="district-candidate-votes" id="districtVotes"></div><button class="primary-btn" id="draftDistrict">이 선거구로 기사 초안 생성 →</button><div class="subtle-box">모의 모드에서는 가상의 결과만 보여줍니다. 실제 모드에서는 2024년 최종 확정 개표자료를 보여줍니다.</div></div></div>
+<div data-real-only id="realProportionalDistrict" class="panel real-panels"><div class="panel-head"><div><span class="panel-kicker">PROPORTIONAL RESULTS · 2024</span><h2>비례대표 정당별 득표 (구·시·군)</h2></div></div>
+<div class="real-note">비례대표 개표자료는 구·시·군 기준입니다. 지역구 선거구와 행정구역이 반드시 일치하는 것은 아닙니다.</div>
+<div class="real-filter-row"><label>비례대표 지역 <select id="realPrRegion"></select></label><label>구·시·군 <select id="realPrArea"></select></label></div><div id="realPrDistrictChart" class="real-bar-list"></div></div>
+</section>
+<section id="view-articles" class="view">
+ <div class="page-heading"><div><div class="eyebrow">EVIDENCE & EDITORIAL CONTROL</div><h1>RAG 기사 · 팩트체크 · 승인</h1><p>근거 ID가 연결된 모의 기사 초안을 만들고, 불일치가 있으면 승인을 차단합니다.</p></div><span class="workflow-tag">DRAFT → CHECK → HUMAN APPROVAL</span></div>
+<div data-real-only id="realArticles" class="real-panels"><div class="real-qa-grid">
+<div class="panel"><div class="panel-head"><div><span class="panel-kicker">SOURCE-BASED Q&A</span><h2>선관위 투표율 보고서·개표결과 질문</h2></div></div>
+<div class="real-body"><p class="real-note">자료에 있는 내용만 답합니다. 출처 PDF 쪽수·엑셀 행을 함께 표시합니다. 현재는 LLM을 사용하지 않는 규칙·검색 기반 질의응답입니다.</p>
+<div class="real-suggestions"><button data-real-question="20대 후반 남녀 투표율 차이는?">20대 후반 남녀 격차</button><button data-real-question="사전투표는 전수조사인가?">사전투표 조사방법</button><button data-real-question="선거일 투표율 51.8%는 무슨 기준인가?">선거일 투표율 기준</button><button data-real-question="비례대표 정당별 득표는?">비례대표 득표</button></div>
+<div class="rag-input-row"><input id="realQaQuestion" placeholder="예: 비례대표 정당별 전국 득표는?"/><button class="primary-small" id="realQaAsk">근거 질문하기</button></div><div id="realQaOutput" class="real-answer">질문을 입력하면 첨부한 공식 자료에서 근거를 찾습니다.</div></div></div>
+<div class="panel"><div class="panel-head"><div><span class="panel-kicker">EVIDENCE-GROUNDED DRAFT</span><h2>실제 결과 기사 초안</h2></div></div><div class="real-body"><div class="real-filter-row"><label>기사 종류<select id="realDraftType"><option value="district">지역구 결과</option><option value="proportional">비례대표 전국 결과</option><option value="turnout">투표율 분석</option></select></label><button id="realMakeDraft" class="primary-small">실제 데이터로 초안 생성</button></div><textarea id="realDraftText" rows="12" placeholder="기사 초안이 이곳에 생성됩니다. 승인·출고하지 않습니다."></textarea><div id="realDraftEvidence" class="real-note">검증 전 초안 · 반드시 사람의 원문 대조 필요</div><button id="realCopyDraft" class="outline-btn">기사 초안 복사</button></div></div>
+</div></div>
+ <div class="article-layout"><div class="panel article-main"><div class="panel-head"><div><span class="panel-kicker">EVIDENCE-GROUNDED STORY</span><h2>모의 개표 기사 초안</h2></div><span class="source-tag">SIMULATION SOURCE</span></div><div class="article-toolbar"><select id="articleScope"><option value="national">전국 모의 합계</option><option value="region">선택한 시·도</option><option value="district">선택한 선거구</option></select><button class="primary-small" id="makeDraft">+ 새 기사 초안</button></div><div id="articleEmpty" class="empty-state">왼쪽에서 범위를 선택한 후 기사 초안을 생성하세요.<br/>수치·지역·근거 ID가 자동으로 연결됩니다.</div><div id="articleEditor" class="hidden"><div class="article-id"><span id="articleId">NEWS-0001</span><span id="articleStatus" class="status-draft">초안</span></div><textarea id="articleText" rows="9" aria-label="기사 초안 편집"></textarea><div class="article-actions"><button id="checkArticle" class="outline-btn">✓ 규칙 검사</button><button id="approveArticle" class="primary-small">편집자 승인</button></div><div id="validationBox" class="validation"></div></div></div>
+ <div class="panel evidence-panel"><div class="panel-head"><div><span class="panel-kicker">SOURCE LEDGER</span><h2>근거 검증 원장</h2></div></div><div class="source-notice">이 화면의 데이터는 **실제 공식 자료가 아닌 모의 개표 데이터**입니다. 외부 사실 검증을 통과한 기사로 사용하지 않습니다.</div><div id="evidenceDetails" class="evidence-details"><div class="empty-mini">기사 생성 후 근거 ID와 생성 시각, 계산 값을 표시합니다.</div></div><div class="rag-mini"><h3>RAG 근거 검색 · 오프라인 데모</h3><div class="rag-input-row"><input id="ragQuery" placeholder="예: 기사 승인 조건은?"/><button id="ragButton">근거 찾기</button></div><div id="ragResults" class="rag-results">질문을 입력하면 교육용 근거 문서에서 검색해요.</div></div><div class="approval-policy"><b>승인 규칙</b><p>지역·후보·수치·근거 ID가 원본과 다르거나 출처가 누락되면 자동 승인하지 않습니다. 교육용 사람 승인 결과는 이 세션의 기록입니다.</p></div></div></div>
+ <div class="panel"><div class="panel-head"><div><span class="panel-kicker">AUDIT TRAIL</span><h2>검수·승인 기록</h2></div><button class="link-action" id="refreshAudit">기록 새로고침</button></div><div id="auditList" class="audit-list"><span class="muted">아직 기록이 없습니다.</span></div></div>
+</section>
+<section id="view-studio" class="view"><div class="real-legacy-notice" data-real-only>이 메뉴는 기존 교육용 <b>가상 개표 방송 CG</b>입니다. 실제 2024년 개표결과 CG는 아직 연결하지 않았습니다. 실제 최종 득표·의석은 1·2·5번 메뉴에서 확인하세요.</div><div class="page-heading"><div><div class="eyebrow">BROADCAST GRAPHICS STUDIO</div><h1>방송 CG · 앵커 대본</h1><p>검증된 모의 개표 숫자로 FHD 화면 구성을 연습합니다.</p></div><span class="workflow-tag">16:9 FHD LAYOUT</span></div><div class="studio-layout"><div class="panel studio-panel"><div class="panel-head"><div><span class="panel-kicker">ON AIR PREVIEW</span><h2>방송용 CG 미리보기</h2></div><button id="fullscreenCG" class="outline-btn">⛶ CG 전체 화면</button></div><div class="cg-screen" id="cgScreen"><div class="cg-top"><div class="cg-logo">N<span>:</span> 2026 ELECTION LAB</div><div class="cg-demo">교육용 모의 개표 · 실제 선거 아님</div></div><div class="cg-live"><span>COUNTING</span><strong>전국 모의 개표 현황</strong><small id="cgTime">시뮬레이션 기준</small></div><div class="cg-rank" id="cgRanks"></div><div class="cg-bottom"><span>전국 17개 시·도 / 모의 254개 선거구</span><strong id="cgPct">개표율 0.0%</strong></div></div><div class="panel-note">이 장면은 방송 연습용 화면입니다. 전체 20분 MP4는 아직 미제작입니다.</div><div class="studio-media-banner"><img src="/static/media/studio_photo.jpg" alt="AI 생성 가상 앵커 스튜디오 사진" loading="lazy"/><span>사진 · CG 제작 완료 / 영상 제작은 추후 진행</span></div></div><div class="panel studio-script"><div class="panel-head"><div><span class="panel-kicker">ANCHOR SCRIPT</span><h2>자동 대본 초안</h2></div></div><p class="script-label">실시간 모의 수치 반영</p><blockquote id="anchorScript">현재 전국 모의 개표 집계가 진행되고 있습니다.</blockquote><div class="script-note">표시 수치는 인지하기 쉽도록 반올림되지만, 임의 수정하지 않습니다. 뉴스 송출 전 사람 검수가 필요합니다.</div><button id="copyScript" class="primary-btn">대본 복사</button></div></div></section>
+
+<section id="view-analytics" class="view">
+ <div class="page-heading"><div><div class="eyebrow">ELECTION DATA · STATISTICAL CHART LAB</div>
+ <h1>통계 · 그래프 분석실</h1><p>모의 개표 원본 스냅샷을 읽어서 차트와 표를 재계산합니다. 전국 → 시도 → 모의 선거구별로 비교하세요.</p></div>
+ <span class="workflow-tag">SIMULATION STATISTICS · NO FORECAST</span></div>
+<div data-real-only id="realAnalytics" class="real-panels">
+<div class="real-filter-row"><label>분석 구분<select id="realChartGroup"><option value="overview">핵심 3대 지표</option><option value="ages">연령·성별 투표율</option><option value="early">사전투표·선거일 분석</option><option value="regional">시·도 투표율</option><option value="pr">비례대표 득표 분석</option><option value="seats">지역구·비례 의석 비교</option></select></label><label>비례대표 지역<select id="realChartRegion"></select></label><span class="workflow-tag">선관위 원본 데이터 · 실시간 아님</span></div>
+<div class="real-chart-grid" id="realChartGrid"></div><div class="panel"><div class="panel-head"><div><span class="panel-kicker">TRANSPARENT METHODOLOGY</span><h2>자료 출처와 조사방법</h2></div></div><div class="real-body" id="realMethodsNote"></div></div></div>
+ <div class="stat-notice"><strong>교육용 모의 개표 분석 · 실제 선거 결과와 무관</strong><br/>
+  후보 A/B/C와 표수는 서버 난수 데이터입니다. 당선 확률·실제 투표 행동·정당 지지 예측을 하지 않습니다.</div>
+ <div class="panel stat-control-panel"><div class="panel-head"><div><span class="panel-kicker">ANALYSIS CONDITIONS</span>
+ <h2>범위·기법·집계 조건 선택</h2></div><span id="statStep" class="count-label">기준 단계 —</span></div>
+ <div class="stat-controls">
+ <label>분석 범위<select id="statScope"><option value="national">전국</option><option value="region">시·도</option><option value="district">모의 선거구</option></select></label>
+ <label>시·도<select id="statRegion" disabled><option value="">지역 선택</option></select></label>
+ <label>선거구<select id="statDistrict" disabled><option value="">선거구 선택</option></select></label>
+ <label>통계기법<select id="statMethod"><option value="vote_share">후보별 득표율</option><option value="progress_compare">지역·선거구 개표율</option><option value="lead_margin">선두 후보 격차</option><option value="progress_distribution">개표율 분포</option><option value="progress_trend">개표율 변화 추이</option><option value="candidate_trend">후보별 누적 득표 추이</option><option value="increment_trend">단계별 추가 표수</option><option value="progress_margin_scatter">개표율·격차 산점도</option></select></label>
+ <label>이력 조회<select id="statWindow"><option value="15">최근 15단계</option><option value="30" selected>최근 30단계</option><option value="60">최근 60단계</option><option value="120">최근 120단계</option></select></label>
+ </div>
+ <div class="stat-actions"><button class="primary-small" id="statRefresh">↻ 조건 재계산</button><a class="outline-btn" id="statExport" href="/api/analytics/export.csv" download>CSV 데이터 내려받기</a><span>업데이트마다 자동으로 재계산 · 최종 기사 보도 전 검수 필수</span></div>
+ </div>
+ <div class="stat-figures"><div class="panel stat-graph-panel"><div class="panel-head"><div><span class="panel-kicker">REPRODUCIBLE CHART</span><h2 id="statTitle">통계 그래프</h2></div><span class="hint" id="statSub">데이터 연결 중</span></div><div id="statChart" class="stat-chart" role="img" aria-label="모의 선거 통계 그래프"></div><p id="statCaveat" class="stat-caveat"></p></div>
+ <div class="panel stat-kpi-panel"><div class="panel-head"><div><span class="panel-kicker">SUMMARY STATS</span><h2>조건별 요약 통계</h2></div></div><div id="statSummary" class="stat-summary"></div><div class="stat-explain"><h3>해석할 때 확인할 점</h3><p>전국 개표율은 선거구별 집계표수 합계 ÷ 목표 모의 투표수 합계로 계산합니다. 단순 평균과 다를 수 있습니다. 그래프는 난수 변화의 시각화이지 미래 예측이 아닙니다.</p></div></div></div>
+ <div class="panel stat-table-panel"><div class="panel-head"><div><span class="panel-kicker">EVIDENCE TABLE</span><h2>실제 계산에 사용된 데이터 표</h2></div><span id="statRowCount" class="count-label">—</span></div><div class="table-wrap"><table><thead id="statTableHead"></thead><tbody id="statTableBody"></tbody></table></div><div class="panel-note">화면에는 처음 40행을 보여줍니다. CSV 내려받기는 해당 분석의 전체 행을 포함합니다. 데이터 출처는 모의 난수 생성기입니다.</div></div>
+</section>
+<section id="view-media" class="view">
+<div class="page-heading"><div><div class="eyebrow">PHOTO · VIDEO · EDITORIAL ASSETS</div><h1>사진·영상 자료실</h1><p>가상 앵커 사진과 개표 CG를 확인하고, 이후 영상 제작에 필요한 자료를 준비합니다. 모든 자료는 교육용입니다.</p></div><span class="workflow-tag">DEMO MEDIA ONLY</span></div>
+<div class="media-ethics">⚠ AI 생성 앵커 사진은 실제 인물·방송사 촬영 자료가 아닙니다. 이번 단계에서는 사진·CG·기획 자료만 제공하며 선거 영상은 제작하지 않습니다.</div>
+<div class="media-layout">
+<div class="panel"><div class="panel-head"><div><span class="panel-kicker">STORY CLIP LIBRARY</span><h2>사진 · 그래픽 원본</h2></div><span id="mediaCount" class="count-label">불러오는 중</span></div><div id="mediaGallery" class="media-gallery"></div></div>
+<div class="panel media-preview-panel"><div class="panel-head"><div><span class="panel-kicker">FUTURE VIDEO PRODUCTION</span><h2>뉴스 영상 제작 · 보류</h2></div></div>
+<div class="video-deferred" role="status"><div class="video-deferred-icon">▣</div><strong>영상은 아직 제작하지 않습니다</strong><p>현재는 사진·그래픽 원본, 20분 뉴스 장면표, 앵커 대본과 출처·권리 원장만 준비합니다. 향후 영상 제작 시 이곳에 플레이어를 연결할 수 있습니다.</p></div>
+<div class="media-local"><h3>내 파일로 화면 미리보기</h3><p>내 PC의 사진을 선택해 화면에서만 확인해요. 기존 로컬 영상 미리보기 기능도 유지하지만, 이번 버전에는 제작한 영상 파일이 없습니다. 서버에 전송하거나 저장하지 않습니다.</p><input type="file" id="mediaLocalFile" accept="image/png,image/jpeg,image/webp,video/mp4,video/webm"/><div id="mediaLocalPreview"></div><button class="secondary-small" id="mediaLocalClear">미리보기 닫기</button></div>
+</div></div>
+<div class="panel media-docs"><div class="panel-head"><div><span class="panel-kicker">PRODUCTION RECORDS</span><h2>방송 제작·권리·검수 자료</h2></div></div><div class="doc-links"><a href="/static/docs/20minute_storyboard.csv" download>20분 종합뉴스 장면표 CSV</a><a href="/static/docs/media_rights_ledger.csv" download>사진·CG 권리 원장 CSV</a><a href="/static/docs/anchor_script.md" target="_blank" rel="noopener">앵커 대본 초안</a><a href="/static/docs/production_checklist.md" target="_blank" rel="noopener">지침서 기반 제작 체크리스트</a></div><div class="panel-note">영상은 이번 단계에서 제작하지 않습니다. 20분 프로그램 구성안·대본 초안만 제공합니다. RAG 실검색·공식 개표·실존 인물 합성은 미실행입니다.</div></div>
+</section>
+
+<section id="view-official" class="view"><div data-real-only class="real-legacy-notice">이 메뉴의 기본 CSV 샘플은 기존 <b>가상 실습자료</b>입니다. 새로 반영한 2024년 공식 결과는 1·2·3·5번 메뉴에 표시됩니다. 기존 수동 CSV 업로드 기능은 그대로 보존했습니다.</div>
+  <div class="page-heading"><div><div class="eyebrow">OFFICIAL RESULTS · IMPORTED FILES ONLY</div>
+    <h1>공식 결과 파일 분석실</h1><p>선관위 공개 자료를 직접 내려받아 CSV를 불러오세요. 출처가 표시된 과거 확정 결과를 집계합니다.</p></div>
+    <span class="workflow-tag">실시간 개표 아님 · 재생은 가상</span></div>
+  <div class="panel official-alert"><strong>교육용 가상 선거 샘플 기본 표시 · 실제 개표 결과 아님</strong><p>처음 접속하면 지역 17개·가상 선거구 68개를 연습 자료로 표시합니다. 실제 선관위 CSV를 불러오면 해당 파일 분석 결과로 교체됩니다. 두 자료는 합산하지 않습니다.</p><strong>엄격한 출처 구분</strong><p>업로드 CSV는 공식 사이트에서 받은 파일이어도 앱이 원본과 독립 대조하지 않았습니다. 출처 URL 입력만으로 '검증 완료'가 되지 않습니다. 최신 선거 당일 실시간 API 기능이 아닙니다. 모의 개표 데이터와 절대 합치지 않습니다.</p></div>
+  <div class="panel stat-control-panel"><div class="panel-head"><div><span class="panel-kicker">IMPORT & PROVENANCE</span><h2>실제 선거 결과 CSV 가져오기</h2></div></div>
+    <div class="stat-controls official-controls">
+      <label>CSV 파일 (35MiB 이하)<input type="file" accept=".csv,text/csv" id="ofFile"/></label>
+      <label>선거명<input id="ofName" value="제22대 국회의원선거 지역구 최종 개표결과 (2024)"/></label>
+      <label>원본 기관 주소<input id="ofUrl" value="https://www.data.go.kr/data/15025527/fileData.do"/></label>
+      <div><button class="primary-small" id="ofImport">CSV 분석하기</button><button class="outline-btn" id="ofDemo" type="button">17개 시·도 샘플 다시 보기</button><p class="of-mini">파일은 로컬 서버 메모리에서만 분석, 원본 파일 변경 없음</p></div>
+    </div>
+    <p class="of-status" id="ofStatus">교육용 가상 선거 데이터 표시 준비 중 · 실제 선거 결과 아님</p>
+    <div class="of-link-line"><a href="/api/official/demo.csv" download>교육용 가상 샘플 CSV 다운로드</a> · <a href="https://www.data.go.kr/data/15025527/fileData.do" target="_blank" rel="noopener">2024 지역구 공식 결과 다운로드</a> · <a href="https://www.data.go.kr/data/15144273/fileData.do" target="_blank" rel="noopener">2024 비례대표</a> · <a href="https://www.data.go.kr/data/15162716/fileData.do" target="_blank" rel="noopener">2026 국회의원 재·보궐 결과</a></div>
+  </div>
+  <div class="panel stat-control-panel"><div class="panel-head"><div><span class="panel-kicker">METHODS & FILTERS</span><h2>조건·분석기법 변경</h2></div></div>
+    <div class="stat-controls official-controls">
+      <label>시도<select id="ofRegion"><option value="">전국</option></select></label>
+      <label>선거구<select id="ofDistrict"><option value="">전체 선거구</option></select></label>
+      <label>기법<select id="ofMethod">
+        <option value="region_votes">시도별 후보 득표수 합계</option>
+        <option value="district_votes">선거구별 후보 득표수 합계</option>
+        <option value="candidate_share">개별 선거구 후보 득표율</option>
+        <option value="lead_margin">선거구별 1·2위 격차</option>
+        <option value="candidate_count">선거구별 후보자 수</option>
+        <option value="vote_distribution">선거구별 득표 합계 분포</option>
+        <option value="region_district_count">시도별 선거구 수</option>
+        <option value="region_avg_votes">시도별 선거구 평균 득표수</option>
+        <option value="candidate_vote_distribution">후보자·투표구 득표수 분포</option>
+        <option value="margin_distribution">선거구 선두 격차 분포</option>
+        <option value="close_races">경합 선거구 격차순</option>
+        <option value="district_leader_share">선거구별 1위 득표율</option>
+      </select></label>
+      <div><button class="primary-small" id="ofRun">그래프·표 계산</button></div>
+    </div>
+    <div class="of-explain" id="ofMethodGuide">기법을 고르면 데이터 조건과 계산식을 표시합니다.</div>
+    <div class="of-explain">전국·시도 차원에서는 **각 선거구의 후보자 득표수 합계**를 분석합니다. 서로 다른 선거구의 동일한 이름 후보를 합쳐 전국 후보 순위로 표시하지 않습니다. 투표율·실제 개표율·득표 추이 등 원본에 없는 지표는 계산하지 않습니다.</div>
+  </div>
+  <div class="stat-figures"><div class="panel stat-graph-panel"><div class="panel-head"><div><span class="panel-kicker">SELECTED CSV DATA CHART</span><h2 id="ofTitle">샘플 데이터 준비 중</h2></div><span id="ofRowsCount" class="hint"></span></div><div id="ofChart" class="stat-chart" aria-label="업로드된 선거 결과 그래프"></div><p class="stat-caveat" id="ofCaveat"></p></div>
+    <div class="panel stat-kpi-panel"><div class="panel-head"><div><span class="panel-kicker">VALIDATION</span><h2>데이터 출처·검증 상태</h2></div></div><div id="ofSummary" class="stat-summary">교육용 샘플 준비 중</div></div></div>
+  <div class="panel stat-table-panel"><div class="panel-head"><div><span class="panel-kicker">RESULT TABLE</span><h2>집계 결과 표</h2></div><button class="outline-btn" id="ofDownload">현재 표 CSV 다운로드</button></div>
+    <div class="table-wrap"><table><thead><tr><th>구분</th><th>값</th><th>단위</th></tr></thead><tbody id="ofTable"></tbody></table></div></div>
+  <div class="panel stat-control-panel"><div class="panel-head"><div><span class="panel-kicker">OPTIONAL EDUCATION REPLAY</span><h2>최종 결과의 단계별 가상 재생</h2></div><span class="workflow-tag">실제 개표 시간표 아님</span></div>
+    <p class="of-explain">사용자가 선거구 하나를 선택하고 버튼을 누르면 **최종 표수를 가상의 순서로 나눈 연습용 증가 그래프**가 나옵니다. 당시 실제 표수 변화나 개표 시각을 복원하는 기능은 아닙니다.</p>
+    <div class="official-replay-actions"><button class="outline-btn" id="ofReplay">선택 선거구 가상 재생</button><button class="outline-btn" id="ofReplayStop">재생 중지</button><span id="ofReplayStage">아직 재생하지 않았습니다.</span></div><div id="ofReplayChart" class="stat-chart"></div></div>
+</section>
+
+<section id="view-training" class="view">
+ <div class="page-heading"><div><div class="eyebrow">WEB TO DATASET · SOURCE & HUMAN REVIEW</div><h1>보도자료 수집·정제 실습실</h1><p>첨부 교재의 수집 → 정제 → 리드 초안 → 검수 → JSONL 과정을 로컬 자료로 재현합니다.</p></div><span class="workflow-tag">로컬 자료 · 검수 전 학습 금지</span></div>
+ <div class="td-notice"><strong>주의: 실제 선거 개표 데이터와 분리된 기사 텍스트 학습 자료실입니다.</strong><br>샘플은 100% 가상 보도자료이며 실제 언론사·선관위 발표가 아닙니다. 외부 사이트를 자동 크롤링하거나 AI 모델을 호출하지 않습니다. 공개 CSV/API를 우선 확보하고 robots.txt·약관·권리부터 확인하세요.</div>
+ <div class="panel"><div class="panel-head"><div><span class="panel-kicker">1 · LOAD & CLEAN</span><h2>교육용 자료 불러오기 · 정제</h2></div></div>
+  <div class="td-control"><button class="primary-small" id="tdSample">교육용 샘플 12건 불러오기</button><label>내 보도자료 HTML 또는 CSV<input type="file" id="tdFile" accept=".csv,.html,.htm,text/csv,text/html" /></label><label>입력 형식<select id="tdKind"><option value="csv">CSV</option><option value="html">HTML (연습 선택자)</option><option value="sample">교육용 샘플</option></select></label><button class="outline-btn" id="tdClean">자료 정제·초안 생성</button></div>
+  <p class="td-status" id="tdStatus">먼저 '교육용 샘플 12건 불러오기'를 누르세요. 실습 파일 12개 기록 중 정상·중복·짧은 자료를 구분합니다.</p>
+  <div id="tdSummary" class="td-stats"></div>
+ </div>
+ <div class="panel"><div class="panel-head"><div><span class="panel-kicker">2 · REVIEW RECORDS</span><h2>수집·정제된 자료와 기사 리드 초안</h2></div><span class="count-label">200~2500자 · 중복 제거</span></div>
+  <div class="td-table-wrap"><table class="td-table"><thead><tr><th>근거 ID · 출처</th><th>제목 / 본문 요약</th><th>규칙 기반 리드 초안 · 직접 수정</th><th>검수 여부</th></tr></thead><tbody id="tdRows"></tbody></table></div>
+  <div class="td-foot"><button class="outline-btn" id="tdCsv">초안 CSV 내려받기</button><button class="outline-btn" id="tdDraftJsonl">미검수 JSONL 예시 내려받기</button><small>검수 전 JSONL은 학습용 최종본이 아닙니다. API를 사용하지 않는 규칙 기반 임시 초안이며 사람의 사실 확인과 편집이 필요합니다.</small></div>
+ </div>
+ <div class="panel"><div class="panel-head"><div><span class="panel-kicker">3 · EDITORIAL GATE</span><h2>사람 검수·권리 확인 후 JSONL 내보내기</h2></div></div>
+  <div class="td-control td-approve"><label>검수 담당자<input type="text" id="tdReviewer" placeholder="검수자 이름 또는 식별자" maxlength="60" /></label><label><input type="checkbox" id="tdRights"/> 이 자료의 재사용·AI 학습 권리를 직접 확인했습니다.</label><button class="primary-small" id="tdReviewed">표시한 자료만 검수 JSONL 받기</button></div><p class="td-rules">본문 수정·해시 불일치, 권리 미확인, 검수 미표시 시 내보내기를 차단합니다. 버튼 누름 자체는 실제 내용의 정확성을 보증하지 않습니다.</p>
+ </div>
+ <div class="panel"><div class="panel-head"><div><span class="panel-kicker">QUALITY LOG</span><h2>제외된 자료·출처 장부</h2></div></div><div class="td-rejections" id="tdRejected">아직 분석하지 않았습니다.</div><div class="doc-links" style="padding:0 20px 22px"><a href="/static/training/press_sample_DEMO.html" download>로컬 크롤링 연습 HTML</a><a href="/static/training/press_raw_DEMO.csv" download>원본 가상 보도자료 CSV</a><a href="/static/training/lead_draft_UNREVIEWED.jsonl" download>검수 전 JSONL</a></div></div>
+</section>
+</main></div>
+<div class="footerline"><span>© 교육용 선거방송 제작 실습 · AI 데이터저널리즘 과정</span><span>NO REAL VOTES · NO OFFICIAL API · NO PREDICTIONS</span></div>
+<div class="toast" id="toast"></div>
+<script>window.REAL_NEWSROOM_ACTIVE=true;document.body.classList.add("real-mode");</script><script src="/static/app.js"></script><script src="/static/official.js"></script><script src="/static/training.js"></script><script src="/static/real_results.js?v=20261123_3"></script><script src="/api/v2/patch.js?v=20261123_3"></script></body></html>

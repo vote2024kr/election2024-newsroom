@@ -1,0 +1,13 @@
+digraph P1 { graph [rankdir=LR bgcolor="white" fontname="Noto Sans CJK KR" nodesep=.40 ranksep=.80];node [shape=box style="rounded,filled" fontname="Noto Sans CJK KR" fillcolor="#e9f3ff" color="#50739c" fontsize=12]; edge [color="#50739c"];mock [label="모의 개표 생성기
+난수·가상 선거구"];ws [label="WebSocket
+주기별 스냅샷"];news [label="NEWSROOM LAB
+전국·시도·선거구"];csv [label="사용자 최종 CSV
++ 출처·해시"];parser [label="중복/합계 검증
+원본 공식성 미인증"];stats [label="통계 워크벤치
+17종 기법·그래프"];docs [label="교육용 근거 문서
+DEMO-Gxx"];rag [label="TF-IDF 희소 벡터
+근거 ID 검색"];draft [label="근거 연결
+템플릿 기사"];check [label="수치·지역·ID
+일치 검사"];approval [label="사람 승인
+로컬 실습용"];audit [label="SQLite
+드릴 감사 기록"];mock->ws->news;csv->parser->stats;news->draft;docs->rag->draft;draft->check->approval;check->audit;approval->audit;parser->stats; }

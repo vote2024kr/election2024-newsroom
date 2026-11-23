@@ -1,0 +1,27 @@
+# Windows / Python local environments
+.venv/
+.venv_pg/
+venv/
+__pycache__/
+.pytest_cache/
+*.pyc
+*.pyo
+*.log
+*.tmp
+*.bak
+*.sqlite
+*.sqlite3
+*.db
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+*.pfx
+*.p12
+# runtime files
+.newsroom_ko_server.pid
+newsroom/workbench.db
+# IDE
+.vscode/
+.idea/

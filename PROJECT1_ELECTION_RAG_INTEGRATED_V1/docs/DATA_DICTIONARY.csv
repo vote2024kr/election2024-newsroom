@@ -1,0 +1,23 @@
+﻿엔터티,필드,자료형,용도,생성/출처,주의
+SIM_SNAPSHOT,step,int,"모의 개표 단계, 0 이상",서버 난수 시뮬레이션,실제 시각별 개표 기록 아님
+SIM_SNAPSHOT,updated_at,ISO8601 KST,모의 계산 시각,newsroom/engine.py,실제 선거기관 기준시각 아님
+SIM_DISTRICT,id,text,모의 선거구 고유값,서울-001 등,공식 선거구 코드 아님
+SIM_DISTRICT,region,text,가상 선거구의 시도,17개 시도,시도명만 현실 지명 사용
+SIM_DISTRICT,counted,int,모의 누적 표수,난수,가공 결과
+SIM_DISTRICT,target_votes,int,시뮬레이션 목표 투표수,난수,실제 선거인수/투표수 아님
+SIM_DISTRICT,votes,array[int],가상 후보 A/B/C 누적 득표수,난수,3명 가상 후보만 포함
+OFFICIAL_DATASET,sha256,sha256,업로드 파일 해시,원본 CSV bytes,공식성 검증 의미 없음
+OFFICIAL_DATASET,source_url,https URL,사용자 입력한 공개기관 주소,사용자 입력,URL과 파일 내용 독립 대조되지 않음
+OFFICIAL_DATASET,mode,enum,SYNTHETIC_SAMPLE_NOT_OFFICIAL / USER_UPLOADED_FINAL_RESULT,파서,LIVE 아님
+OFFICIAL_VOTE,region,text,원본의 시도명,CSV 필수열,원본 표준화 규칙 필요
+OFFICIAL_VOTE,district,text,원본 선거구명,CSV 필수열,경계 이력 별도
+OFFICIAL_VOTE,candidate,text,원본 후보명,CSV 필수열,동명 후보 전국 합산 금지
+OFFICIAL_VOTE,votes,int,후보별 득표수 합계,CSV 필수열,"합계/비후보 행 제외, 중복 키 검사"
+RAG_DOCUMENT,id,text,교육용 문서 근거 ID,newsroom/data/mock_documents.json,공식 자료 아님
+RAG_DOCUMENT,publisher,text,자료 발행자,내부 실습 프로젝트,외부 교차검증 없음
+ARTICLE,evidence.id,text,SIM-N/R/D-... 근거 ID,snapshot 단위,모의 스냅샷과 연결
+ARTICLE,text,text,템플릿 기사 문장,정형 문장,AI 생성 문장 아님
+ARTICLE,validation,dict,형식/수치/근거 일치 검사,newsroom/engine.py,외부 사실판단 아님
+AUDIT_EVENT,event_id,integer PK,실습 검증 이력 ID,SQLite,새 통합시험만 지속
+AUDIT_EVENT,article_id,text,기사 초안 ID,NEWS-0001 등,서버 reset 시 번호 재사용 가능
+ANALYSIS_DATASET,dataset_id,random id,통계툴 인메모리 데이터셋,workbench/app/server.py,재시작 시 삭제

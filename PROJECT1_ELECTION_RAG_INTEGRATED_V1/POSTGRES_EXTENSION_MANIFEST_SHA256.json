@@ -1,0 +1,32 @@
+{
+  "base_archive": "PROJECT1_ELECTION_RAG_정리본.zip",
+  "change_mode": "additive_postgresql_runtime_no_removal",
+  "changed_files": [
+    "requirements.txt",
+    "newsroom/real_data_api.py",
+    "newsroom/static/real_results.js"
+  ],
+  "added_files": [
+    "newsroom/postgres_data.py",
+    "postgres_start.py",
+    "RUN_POSTGRES_NEWSROOM.cmd",
+    "00_PostgreSQL_처음실행.md",
+    "tests/test_postgres_adapter.py"
+  ],
+  "sha256": {
+    "requirements.txt": "bc7a98a06f297840c7bcfe0d0a0bc6ef4c9efea5e90abaca562192277bd9a24b",
+    "newsroom/real_data_api.py": "de619e29f8eea4122af1225ae1eeb2e270075d1f9269da1e6dd00d72b544e3fe",
+    "newsroom/static/real_results.js": "c766b2b600802cc5433526e06ab5ff1539c6a4d1446c336107ce7d07597abeb7",
+    "newsroom/postgres_data.py": "6e377c45e6c598400796e6dcccfd84764468b3d179fbdf77acedfe86abcb1c8d",
+    "postgres_start.py": "b203c6ea8d8e34355355a671915cee9320159dfe0f80911fff5a17b336ae65ee",
+    "RUN_POSTGRES_NEWSROOM.cmd": "5838a1778b45e8a3e857bdb5a0b5b8fc973d8da87d4956e24b892cff2302383a",
+    "00_PostgreSQL_처음실행.md": "f40ad56ca9e47b06e62d73f5d2ed013201bd87ce9823af9a4b49b441135028ac",
+    "tests/test_postgres_adapter.py": "7a38e028149bd90054966790558054d7bb5172706ba4e6436c9b71caed149458"
+  },
+  "testing": {
+    "existing_tests": 125,
+    "added_sql_adapter_tests": 4,
+    "all_passed": true,
+    "live_windows_postgresql_connection_tested": false
+  }
+}

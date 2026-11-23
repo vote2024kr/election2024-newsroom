@@ -1,0 +1,22 @@
+digraph LogicFlow {
+ graph [rankdir=TB,bgcolor="white",fontname="DejaVu Sans",fontsize=16,label="Election Newsroom V1.1 | Verified vs Deferred Flows",labelloc=t,nodesep=.32,ranksep=.48];
+ node [shape=box,style="rounded,filled",fillcolor="#eaf2ff",color="#5888b7",fontname="DejaVu Sans",fontsize=11];
+ edge[color="#546f92",fontname="DejaVu Sans",fontsize=10];
+ sim [label="SIMULATION ONLY\nWebSocket /ws"];
+ sample [label="Final CSV\ndemo or user upload\nNOT verified official feed"];
+ live_stats [label="Curated 4 live methods\nvote share / margin / trend / delta"];
+  broadcast [label="ON AIR demo studio\n3 candidates / region status / ticker"];
+ final_stats [label="Curated 6 final methods\ndistrict / candidate / region / distribution"];
+ ui [label="PROJECT1 analysis UI\nchart + source warning"];
+ template [label="Snapshot + template\narticle draft"];
+ verify [label="Exact text / region / votes\nevidence ID / stage checks"];
+ approve [label="Local human review\n409 if invalid or stale"];
+ sqlite [label="SQLite audit event\nTRAINING ONLY",fillcolor="#e3f5e9",color="#5b9a75"];
+ docs [label="5 DEMO documents\nTF-IDF search only"];
+ future [label="Official live data + LLM RAG\nidentity-based editor approval\nNOT IMPLEMENTED",fillcolor="#ffecec",color="#ad6161"];
+ sim -> live_stats -> ui;sim -> broadcast;sample -> final_stats -> ui;
+ sim -> template -> verify -> approve -> sqlite;
+ docs -> ui [label="separate search"];
+ docs -> future [style=dotted];future -> template [style=dotted];
+ final_stats -> sqlite [label="analysis history"];
+}

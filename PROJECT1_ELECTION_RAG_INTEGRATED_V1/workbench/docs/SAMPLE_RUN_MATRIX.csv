@@ -1,0 +1,18 @@
+﻿기법,샘플 파일,조건,그래프,결과 행,상태
+결측·중복·자료형 진단,sample_air.csv,{},bar,7,실행 성공
+기술통계·사분위수,sample_air.csv,"{""x"": ""pm10""}",bar,10,실행 성공
+빈도·비율,sample_sales.csv,"{""group"": ""category""}",bar,4,실행 성공
+집단별 합계·평균·중앙값,sample_sales.csv,"{""x"": ""amount"", ""group"": ""region"", ""aggregation"": ""sum""}",bar,5,실행 성공
+도수분포·히스토그램,sample_air.csv,"{""x"": ""pm10"", ""bins"": 8}",bar,8,실행 성공
+시간별 추세·이동평균,sample_air.csv,"{""x"": ""pm10"", ""date"": ""day"", ""window"": 7}",line,70,실행 성공
+Pearson·Spearman 상관,sample_air.csv,"{""x"": ""pm10"", ""y"": ""pm25""}",scatter,280,실행 성공
+단순 선형회귀,sample_air.csv,"{""x"": ""pm10"", ""y"": ""pm25""}",scatter,280,실행 성공
+Welch 독립표본 t 검정,sample_sales.csv,"{""x"": ""amount"", ""group"": ""channel""}",bar,2,실행 성공
+카이제곱 독립성 검정,sample_sales.csv,"{""x"": ""category"", ""group"": ""channel""}",bar,4,실행 성공
+부트스트랩 평균 신뢰구간,sample_air.csv,"{""x"": ""pm10"", ""repeats"": 500, ""seed"": 42}",bar,16,실행 성공
+KMeans 군집 분석,sample_air.csv,"{""features"": [""pm10"", ""pm25"", ""temperature""], ""clusters"": 3}",scatter,280,실행 성공
+PCA 주성분 분석,sample_air.csv,"{""features"": [""pm10"", ""pm25"", ""temperature""]}",scatter,280,실행 성공
+단어 빈도·텍스트 전처리,sample_news.jsonl,"{""text"": ""title""}",bar,14,실행 성공
+선거 후보별 최신 집계 득표율,sample_election.csv,{},bar,3,실행 성공
+선거구별 1·2위 격차,sample_election.csv,{},bar,34,실행 성공
+집계 단계별 개표율 변화,sample_election.csv,{},line,12,실행 성공

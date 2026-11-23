@@ -1,0 +1,11 @@
+﻿data_kind,method,label,value,unit
+SYNTHETIC_SAMPLE_NOT_OFFICIAL,candidate_vote_distribution,0~303표,0,후보자-투표구 행
+SYNTHETIC_SAMPLE_NOT_OFFICIAL,candidate_vote_distribution,304~607표,1,후보자-투표구 행
+SYNTHETIC_SAMPLE_NOT_OFFICIAL,candidate_vote_distribution,608~911표,3,후보자-투표구 행
+SYNTHETIC_SAMPLE_NOT_OFFICIAL,candidate_vote_distribution,912~1215표,14,후보자-투표구 행
+SYNTHETIC_SAMPLE_NOT_OFFICIAL,candidate_vote_distribution,1216~1519표,33,후보자-투표구 행
+SYNTHETIC_SAMPLE_NOT_OFFICIAL,candidate_vote_distribution,1520~1823표,54,후보자-투표구 행
+SYNTHETIC_SAMPLE_NOT_OFFICIAL,candidate_vote_distribution,1824~2127표,50,후보자-투표구 행
+SYNTHETIC_SAMPLE_NOT_OFFICIAL,candidate_vote_distribution,2128~2431표,26,후보자-투표구 행
+SYNTHETIC_SAMPLE_NOT_OFFICIAL,candidate_vote_distribution,2432~2735표,19,후보자-투표구 행
+SYNTHETIC_SAMPLE_NOT_OFFICIAL,candidate_vote_distribution,2736~3039표,4,후보자-투표구 행

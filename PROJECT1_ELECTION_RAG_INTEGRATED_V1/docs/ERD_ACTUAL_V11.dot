@@ -1,0 +1,25 @@
+digraph ActualERD {
+  graph [rankdir=TB, bgcolor="white", fontname="DejaVu Sans", label="PROJECT 1 V1.1 | AS-IS DATA MODEL (SQLite + runtime objects)", labelloc=t, fontsize=17, pad=.3];
+  node [shape=record, fontname="DejaVu Sans", fontsize=10, style="rounded,filled", color="#476481", fillcolor="#eaf2fa"];
+  edge [fontname="DejaVu Sans", fontsize=9, color="#527590", style=dashed];
+  subgraph cluster_memory {
+    label="IN-MEMORY / LOCAL FILES (NOT SQL TABLES)";color="#b9cadb";style=rounded;
+    sim [label="{SIMULATION_STATE | district objects | step, seed, running | vote counts, history (max 120) }"];
+    evidence [label="{SNAPSHOT_EVIDENCE | evidence_id | region/district label | stage, counted votes | source_kind = synthetic }"];
+    article [label="{ARTICLE_DRAFT | article_id | text, status | embedded evidence | validation + manual review }"];
+    final [label="{FINAL_CSV_DATASET | source_url, sha256 | mode, verified=false | region/district/candidate/votes }"];
+    workbench [label="{WORKBENCH_DATASET | token id | dataframe, kind, origin | profile, analysis history }"];
+    docs [label="{DEMO_DOCUMENT_JSON | document id | title, publisher, text | TF-IDF search only }"];
+    sim -> evidence [label="read-only snapshot"];
+    evidence -> article [label="template / exact check"];
+    final -> workbench [label="explicit transfer"];
+  }
+  subgraph cluster_sqlite {
+    label="PERSISTED IN SQLITE | project1_events.sqlite3";color="#72a98c";style="rounded";
+    event [fillcolor="#e2f6e8",color="#428e64",label="{EVENT | event_id INTEGER PK | at TEXT NOT NULL | event_type TEXT NOT NULL | article_id TEXT NULL | scenario TEXT NULL | status TEXT NOT NULL | evidence_id TEXT NULL | detail TEXT (JSON) NOT NULL }"];
+  }
+  article -> event [label="article_id (logical only)"];
+  evidence -> event [label="evidence_id (no FK)"];
+  workbench -> event [label="analysis event (detail JSON)"];
+  docs -> article [style=dotted,color="#bc7979",label="NOT IMPLEMENTED (doc RAG grounding)"];
+}

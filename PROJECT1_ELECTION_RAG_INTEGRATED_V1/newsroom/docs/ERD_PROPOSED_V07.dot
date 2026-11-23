@@ -1,0 +1,33 @@
+digraph erd {
+	graph [bgcolor=white fontname=NanumSquare fontsize=19 label="NEWSROOM LAB · 제안 ERD (향후 DB 설계 / 현재 미구현)" labelloc=t nodesep=0.5 rankdir=TB ranksep=0.8 splines=ortho]
+	node [color="#536f8a" fillcolor="#eaf2ff" fontname=NanumSquare fontsize=13 shape=record style=filled]
+	edge [arrowsize=0.65 color="#63788b"]
+	DATA_SOURCE [label="{DATA_SOURCE|PK source_id|mode (SIMULATION / USER_UPLOAD)|source_url / sha256|verified / collected_at}" fillcolor="#daf3df"]
+	ELECTION [label="{ELECTION|PK election_id|FK source_id|name / election_date|status}" fillcolor="#e1eefa"]
+	REGION [label="{REGION|PK region_id|name / region_code}" fillcolor="#e1eefa"]
+	DISTRICT [label="{DISTRICT|PK district_id|FK region_id|FK election_id|name / boundary_version}" fillcolor="#e1eefa"]
+	CANDIDATE [label="{CANDIDATE|PK candidate_id|FK election_id|FK district_id|candidate_name}" fillcolor="#e1eefa"]
+	COUNT_SNAPSHOT [label="{COUNT_SNAPSHOT|PK snapshot_id|FK source_id|FK district_id|step / as_of|counted / target_votes}" fillcolor="#e1eefa"]
+	CANDIDATE_VOTE [label="{CANDIDATE_VOTE|PK vote_id|FK snapshot_id|FK candidate_id|votes}" fillcolor="#e1eefa"]
+	ANALYSIS_RUN [label="{ANALYSIS_RUN|PK run_id|FK source_id|method / scope / filters|executed_at / version}" fillcolor="#daf3df"]
+	ANALYSIS_ROW [label="{ANALYSIS_ROW|PK row_id|FK run_id|dimensions / metrics JSON}" fillcolor="#e1eefa"]
+	ARTICLE [label="{ARTICLE|PK article_id|FK source_id|text / status / created_at}" fillcolor="#daf3df"]
+	EVIDENCE [label="{EVIDENCE|PK evidence_id|FK article_id|FK snapshot_id nullable|source_ref / source_time}" fillcolor="#e1eefa"]
+	REVIEW_LOG [label="{REVIEW_LOG|PK review_id|FK article_id|editor / decision|reason / reviewed_at}" fillcolor="#e1eefa"]
+	IMPORT_LOG [label="{IMPORT_LOG|PK import_id|FK source_id|filename / sha256|raw_rows / rejected_rows}" fillcolor="#e1eefa"]
+	DATA_SOURCE -> ELECTION
+	DATA_SOURCE -> COUNT_SNAPSHOT
+	DATA_SOURCE -> ANALYSIS_RUN
+	DATA_SOURCE -> ARTICLE
+	DATA_SOURCE -> IMPORT_LOG
+	ELECTION -> DISTRICT
+	REGION -> DISTRICT
+	DISTRICT -> CANDIDATE
+	DISTRICT -> COUNT_SNAPSHOT
+	COUNT_SNAPSHOT -> CANDIDATE_VOTE
+	CANDIDATE -> CANDIDATE_VOTE
+	ANALYSIS_RUN -> ANALYSIS_ROW
+	ARTICLE -> EVIDENCE
+	COUNT_SNAPSHOT -> EVIDENCE
+	ARTICLE -> REVIEW_LOG
+}

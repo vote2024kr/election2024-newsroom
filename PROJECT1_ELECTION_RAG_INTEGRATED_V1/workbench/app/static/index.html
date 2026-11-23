@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>통합 통계툴 | STAT WORKBENCH</title><link rel="stylesheet" href="/workbench/static/style.css"></head>
+<body>
+<header class="app-header">
+  <div class="brand"><div class="brand-mark">∑</div><div><span class="kicker">STATISTICS · DATA WORKBENCH</span><strong>통합 통계 가공·분석 시스템</strong></div></div>
+  <div class="header-right"><span class="badge outline">로컬 전용</span><span class="badge demo" id="dataMode">데이터 준비 중</span><span class="header-clock" id="dateClock"></span></div>
+</header>
+<div class="shell">
+<aside class="side">
+ <div class="section-label">WORKFLOW / 분석 순서</div>
+ <a href="#sourceArea" class="side-nav active"><span class="step">01</span><span>데이터 가져오기<small>CSV · Excel · JSON</small></span></a>
+ <a href="#methodsArea" class="side-nav"><span class="step">02</span><span>통계기법 선택<small>총 17종 · 사용 조건 확인</small></span></a>
+ <a href="#conditionsArea" class="side-nav"><span class="step">03</span><span>조건 설정·가공<small>필터 · 결측 · 변수</small></span></a>
+ <a href="#resultsArea" class="side-nav"><span class="step">04</span><span>그래프·표·결과<small>재계산 · 결과 저장</small></span></a>
+ <div class="side-divider"></div>
+ <div class="side-small">데이터 유형</div>
+ <select id="kindSelect" class="side-select" aria-label="데이터 종류"><option value="auto">자동 분석</option><option value="general">일반 통계</option><option value="election">선거·개표</option><option value="air">대기·환경</option><option value="commerce">판매·매출</option><option value="news">뉴스·텍스트</option><option value="education">교육·실습</option></select>
+ <div class="side-help"><b>분석 원칙</b><p>원본은 변경하지 않고 조건별로 다시 계산합니다. 업로드 자료의 공식성은 자동 검증하지 않습니다.</p><span class="dot"></span> LOCAL HOST · 127.0.0.1</div>
+</aside>
+<main class="content">
+ <div class="hero"><div><span class="eyebrow">ANALYSIS CONTROL CENTER · V1.0</span><h1>데이터를 넣고, 기법을 선택하고,<br><span>조건을 바꾸며 비교하세요.</span></h1><p>분야에 관계없이 같은 분석 절차로 계산합니다. 사용 가능한 기법과 필요한 열을 먼저 확인하고, 그래프와 근거 표를 함께 만듭니다.</p></div><div class="hero-stats"><div><strong>17</strong><span>실행 가능한 기법</span></div><div><strong>7</strong><span>데이터 분야</span></div><div><strong id="heroRows">—</strong><span>현재 데이터 행</span></div></div></div>
+ <section class="panel" id="sourceArea">
+   <div class="panel-title"><div><span class="number">01</span><div><div class="eyebrow">DATA INTAKE</div><h2>데이터 가져오기</h2><p>샘플을 선택하거나 내 파일을 불러오세요. 분석 전 열 구조·결측·자료형을 확인합니다.</p></div></div><span class="tag">원본 불변</span></div>
+   <div class="source-cols">
+     <div class="source-card"><div class="card-heading">샘플 데이터 <span>즉시 실행</span></div><div class="sample-grid" id="sampleButtons"><div class="skeleton">샘플 확인 중…</div></div><div class="note">샘플에 표시된 수치는 모두 자체 생성한 <strong>가상 데이터</strong>입니다.</div></div>
+     <div class="source-card"><div class="card-heading">내 데이터 가져오기 <span>로컬 파일</span></div><form id="uploadForm"><label class="upload-drop" for="fileInput"><span class="upload-icon">⇧</span><b>파일 선택 · 가져오기</b><small>CSV · XLSX · JSON · JSONL / 12MiB 이하</small><input type="file" id="fileInput" accept=".csv,.xlsx,.xlsm,.json,.jsonl" required></label><label>출처 또는 자료 제목 <input id="sourceName" placeholder="예: 통계청 공개표 · 미검증 사용자 자료"></label><label>출처 URL (선택) <input id="sourceUrl" type="url" placeholder="https://..."></label><button class="btn primary" type="submit">데이터 검사 · 불러오기</button></form></div>
+   </div>
+   <div id="datasetInfo" class="dataset-info hidden"><div class="dataset-head"><div><span class="eyebrow">ACTIVE DATASET</span><h3 id="datasetName">선택된 데이터 없음</h3><p id="datasetSource"></p></div><div class="meta-cards" id="datasetMetrics"></div></div><div id="columnChips" class="chip-wrap"></div><details><summary>원본 데이터 미리보기 · 처음 8행</summary><div class="table-clip"><table id="sourcePreview"></table></div></details></div>
+ </section>
+ <section class="panel" id="methodsArea">
+   <div class="panel-title"><div><span class="number">02</span><div><div class="eyebrow">METHOD SELECTOR</div><h2>통계기법 선택</h2><p>기법을 선택하면 필요한 데이터 열과 검증 조건이 함께 표시됩니다.</p></div></div><span class="tag" id="methodCount">17 METHODS</span></div>
+   <div class="method-controls"><label>기법 분야 <select id="methodCategory"><option value="all">전체 분야</option></select></label><label class="search-box">기법 이름 검색 <input id="methodSearch" placeholder="예: 상관, 회귀, 개표, 시계열"></label></div>
+   <div class="method-grid" id="methodCards"></div>
+   <div class="method-detail" id="methodDetail"><div><strong id="methodTitle">기법을 선택하세요</strong><span id="methodNeeds"></span></div><p id="methodCaution"></p></div>
+ </section>
+ <section class="panel" id="conditionsArea">
+   <div class="panel-title"><div><span class="number">03</span><div><div class="eyebrow">CONDITION BUILDER</div><h2>조건 설정 · 데이터 가공</h2><p>변수·집단·기간·수치 조건을 조합하고, 조건을 바꿀 때마다 다시 계산합니다.</p></div></div><span class="tag">조건 최대 4개</span></div>
+   <div class="condition-grid">
+    <label>수치 변수 X <select id="xCol"></select></label>
+    <label>두 번째 수치 변수 Y <select id="yCol"></select></label>
+    <label>그룹/범주 열 <select id="groupCol"></select></label>
+    <label>날짜 열 <select id="dateCol"></select></label>
+    <label>텍스트 열 <select id="textCol"></select></label>
+    <label>집계 방식 <select id="aggregation"><option value="mean">평균</option><option value="sum">합계</option><option value="median">중앙값</option><option value="count">건수</option></select></label>
+    <label>결측 처리 <select id="missing"><option value="drop">유효값만 사용 (기본)</option><option value="median">수치 결측을 중앙값 대치</option><option value="zero">수치 결측을 0 대치</option></select></label>
+    <label>시계열 기간 <select id="frequency"><option value="D">일별</option><option value="W">주별</option><option value="MS">월별</option></select></label>
+    <label>이동평균 기간 <input id="window" type="number" min="2" max="90" value="3"></label>
+    <label>히스토그램 구간 <input id="bins" type="number" min="3" max="40" value="10"></label>
+    <label>군집 수 <input id="clusters" type="number" min="2" max="8" value="3"></label>
+    <label>부트스트랩 반복 <input id="repeats" type="number" min="100" max="3000" value="500"></label>
+   </div>
+   <div class="feature-panel"><span>군집·PCA 수치 변수 (2개 이상)</span><div id="featureChips" class="feature-chips"></div></div>
+   <div class="filters-head"><h3>조건 필터</h3><button class="btn subtle" id="addFilter">＋ 필터 추가</button></div>
+   <div id="filters" class="filters"></div>
+   <div class="transform-panel"><div><strong>가공한 데이터 파일 만들기</strong><p>위의 필터를 적용한 복사본을 CSV로 저장합니다. 원본은 그대로 유지돼요.</p></div><div class="transform-grid"><label>가공 결측값 <select id="transformMissing"><option value="keep">그대로 유지</option><option value="drop_empty">빈 셀이 있는 행 제거</option><option value="median">숫자형 중앙값 대치</option><option value="zero">숫자형 0 대치</option></select></label><label>새 계산 열 <select id="derivedMethod"><option value="none">만들지 않음</option><option value="sum">X + Y</option><option value="difference">X - Y</option><option value="ratio">X / Y</option><option value="percent">X / Y × 100</option></select></label><label>새 열 이름 <input id="derivedName" value="derived_value" maxlength="80"></label><label class="check"><input id="deduplicate" type="checkbox"> 완전히 중복된 행 제외</label></div><button id="exportProcessed" class="btn subtle">↓ 가공 데이터 CSV 저장</button><small id="transformStatus"></small></div>
+   <div class="action-row"><button class="btn primary large" id="runAnalysis">↻ 선택 조건으로 계산하기</button><button class="btn subtle" id="resetConditions">조건 초기화</button><span id="runStatus" role="status">샘플 선택 후 분석을 실행하세요.</span></div>
+ </section>
+ <section class="panel" id="resultsArea">
+   <div class="panel-title"><div><span class="number">04</span><div><div class="eyebrow">REPRODUCIBLE OUTPUT</div><h2>통계 그래프 · 요약 · 근거표</h2><p>같은 조건·원본에 대해 언제든 재계산하고 데이터를 내려받을 수 있습니다.</p></div></div><div class="panel-title-actions"><button class="btn subtle" id="downloadCsv" disabled>결과 CSV ↓</button><button class="btn subtle" id="downloadJson" disabled>분석 JSON ↓</button></div></div>
+   <div id="resultEmpty" class="empty-output"><span class="empty-icon">▥</span><h3>분석을 실행하면 여기에 나타납니다.</h3><p>처음 실행할 때는 샘플 데이터를 선택하세요. 그래프가 생성되지 않는다면 필요한 열과 자료 조건을 함께 안내합니다.</p></div>
+   <div id="resultContent" class="hidden"><div class="result-banner"><div><strong id="resultMethod"></strong><small id="resultSource"></small></div><div id="resultTime"></div></div>
+     <div id="summaryMetrics" class="summary-grid"></div>
+     <div class="graph-card"><div class="graph-top"><h3 id="chartTitle">분석 차트</h3><span id="chartUnit"></span></div><div class="chart-holder" id="chartView"></div></div>
+     <div class="table-head"><h3>실제 계산에 사용한 결과표</h3><span id="rowCount"></span></div><div class="table-clip result-table"><table id="resultsTable"></table></div>
+     <div id="warnings" class="warnings"></div>
+   </div>
+ </section>
+ <section class="panel history-panel"><div class="panel-title"><div><span class="number">05</span><div><div class="eyebrow">SCENARIO COMPARISON</div><h2>조건별 실행 이력</h2><p>같은 데이터에서 조건과 기법을 달리한 결과를 기록합니다. 재시작 시 기록은 초기화됩니다.</p></div></div></div><div id="historyList" class="history-list"><p class="muted">분석 이력이 없습니다.</p></div></section>
+ <footer class="footer">STAT WORKBENCH V1.0 · LOCAL ONLY · 이전 선거방송 및 통계기법 AI 소스는 별도 원본으로 보존 · 공식성 및 인과관계는 사람이 확인</footer>
+</main></div><div id="toast" role="alert" aria-live="polite"></div><script src="/workbench/static/app.js"></script></body></html>

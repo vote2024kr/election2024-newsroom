@@ -1,0 +1,15 @@
+digraph G {
+ graph [rankdir=LR, bgcolor="white", pad="0.25", nodesep="0.4", ranksep="0.6", fontname="Noto Sans CJK KR"];
+ node [shape=record, style="rounded,filled", fillcolor="#edf8fb", color="#407b97", fontname="Noto Sans CJK KR", fontsize=10, margin="0.1"];
+ edge [color="#568697", arrowhead="crow", fontsize=9, fontname="Noto Sans CJK KR"];
+ SOURCE [label="{SOURCE_REGISTER|PK source_id\lfile_name\lsource_url\lpublisher\lloaded_at\lverified_flag\llicense_note\l}"];
+ DATASET [label="{DATASET|PK dataset_id\lFK source_id\ldata_kind\lrow_count\lcolumn_count\lcreated_at\l}"];
+ COL [label="{DATA_COLUMN|PK column_id\lFK dataset_id\lcolumn_name\linferred_type\lmissing_count\l}"];
+ FILTER [label="{FILTER_CONDITION|PK filter_id\lFK analysis_run_id\lcolumn_name\loperator\lvalue\l}"];
+ METHOD [label="{STAT_METHOD|PK method_id\lcategory\lname\lrequirements\llimitations\l}"];
+ RUN [label="{ANALYSIS_RUN|PK run_id\lFK dataset_id\lFK method_id\lpreprocessing_json\lparameter_json\lstarted_at\lstatus\l}"];
+ RESULT [label="{RESULT_TABLE|PK result_id\lFK run_id\lsummary_json\lchart_json\lrows_json\llimitations\l}"];
+ HISTORY [label="{SCENARIO_HISTORY|PK scenario_id\lFK run_id\lscenario_name\lparent_scenario_id\l}"];
+ ELECTION [label="{ELECTION_STAGE (optional)|PK stage_id\lFK dataset_id\ldistrict_code\lcandidate_id\lstamp_or_step\lvotes\l}"];
+ SOURCE -> DATASET;DATASET -> COL;DATASET -> RUN;METHOD -> RUN;RUN -> FILTER;RUN -> RESULT;RUN -> HISTORY;DATASET -> ELECTION;
+}
