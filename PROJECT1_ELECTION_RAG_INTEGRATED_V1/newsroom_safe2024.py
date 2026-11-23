@@ -14,12 +14,13 @@ from fastapi import APIRouter, HTTPException
 from fastapi.responses import HTMLResponse, Response, RedirectResponse, FileResponse
 from newsroom import real_data_api as real_api, postgres_data
 from newsroom_replay2024 import replay_html, pg_replay_observation
+from newsroom_election_map import election_result_map, map_frame
 from functools import lru_cache
 
 router=APIRouter()
 
-NAV=[('home','2024 투·개표 재생'),('final','전국 확정 개표'),('district','지역·선거구 탐색'),('pr','비례대표 개표'),
-     ('turnout','투표율 분석'),('stats','통계·그래프'),('articles','기사 초안·검증'),
+NAV=[('home','2024 투개표 상황'),('final','전국 확정 개표'),('district','지역·선거구 탐색'),('pr','비례대표 개표'),
+     ('turnout','투표율 분석'),('stats','개표 분석'),('articles','기사 초안·검증'),
      ('qa','RAG 근거 질문'),('cg','방송 CG·대본'),('csv','공식 결과 CSV'),
      ('training','보도자료·학습데이터'),('media','사진·영상 자료')]
 CSS=r'''
@@ -97,7 +98,7 @@ def dashboard(d,t):
     prseats=panel('비례대표 배분 의석 (46석)',''.join(barrow(name,v,'석',v/18*100) for name,v in sorted(p['seat_allocation'].items(),key=lambda kv:-kv[1])))
     regions='<div class="regiongrid">'+''.join(f'<a href="{link("district",region=r["name"])}">{e(r["name"])}<small>{r["district_count"]}개 지역구 →</small></a>' for r in s['regions'])+'</div>'
     cards='<div class="grid4">'+metric('전국 개표 완료','100%','2024년 4월 10일 최종 집계')+metric('지역구','254석','지역구 254개 선거구')+metric('비례대표','46석',f'전국 비례대표 투표 {n(p["nation"]["ballots"])}표')+metric('전국 최종 투표율',pp(t['national']['final']),'전체 선거인 기준 · 실제 집계')+'</div>'
-    return cards+'<div class="columns">'+seats+prseats+'</div>'+panel('전국 17개 시·도 · 지역별 실제 개표 결과',regions)+ '<p class="box-note">이 화면에는 시각별 실시간 개표 기록이 없습니다. 최종 개표 결과만 표시합니다. 2024년 실제 득표 자료와 기존 교육용 가상 개표는 섞이지 않습니다.</p>'
+    return cards+'<div class="columns">'+seats+prseats+'</div>'+panel('전국 254개 지역구 확정 결과 지도',map_frame(885))+ '<p class="box-note">이 화면에는 시각별 실시간 개표 기록이 없습니다. 최종 개표 결과만 표시합니다. 2024년 실제 득표 자료와 기존 교육용 가상 개표는 섞이지 않습니다.</p>'
 
 
 def districtpage(d,region='',district=''):
@@ -128,12 +129,10 @@ def turnoutpage(t):
     panels=panel('연령별 전체 투표율 · 표본조사',''.join(barrow(a,v) for a,v in t['age'].items()),'1,505개 투표구 표본조사 · 선관위 PDF 인쇄 23쪽')+panel('성별 전체 투표율 · 표본조사',''.join(barrow(a,v) for a,v in t['sex'].items())+'<h3>사전투표율 · 전수조사</h3>'+''.join(barrow(a,v) for a,v in t['early_sex'].items()))
     region=panel('시·도별 전체 투표율',table(['시·도','실제 투표율','표본 투표율','사전투표율'],[(e(name),pp(v),pp(t['region_sample'].get(name)),pp(t['region_early'].get(name))) for name,v in t['region_actual'].items()]))
     methods='<p class="box-note">연령·성별 전체 투표율은 표본조사 결과이며 사전투표율은 통합선거인명부 전수조사 결과입니다. 표본조사 투표율 67.2%와 실제 최종 투표율 67.0%는 서로 다른 자료입니다.</p><p><a href="/safe2024/turnout-methodology.pdf" target="_blank" rel="noopener noreferrer">조사방법 확인</a></p><p><a href="/api/real/turnout-report.pdf" target="_blank">선관위 「제22대 국회의원선거 투표율 분석」 PDF 원문</a></p>'
-    return cards+'<div class="columns">'+panels+'</div>'+region+panel('자료의 분모와 조사 방법',methods)
+    return cards+turnout_cross()+'<div class="columns">'+panels+'</div>'+region+panel('자료의 분모와 조사 방법',methods)
 
 
-def statspage(d,t):
-    # Original NEC figure 15 (printed p.29) contains a complete 17-region x sex table.
-    # Never infer a region x age x sex cube: those cross-tab cells are not in this source.
+def turnout_cross():
     cross = """<style>
     .cross-guide{font-size:13px;color:#b4cbdc;line-height:1.7;margin:0 0 12px}
     .cross-toolbar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin-bottom:15px}
@@ -172,8 +171,32 @@ def statspage(d,t):
       <p class="cross-source">자료: 중앙선관위 「제22대 국회의원선거 투표율 분석」 인쇄 29쪽(그림 15) · <a href="/api/real/turnout-report.pdf#page=37" target="_blank" rel="noopener noreferrer">원자료 확인</a><br>지역별 최종 확정 투표율과 표본조사의 성별 투표율은 집계 방식이 다르므로 서로 합산하지 않습니다.</p>
     </section>
     <script src="/static/turnout_crossfilter_2024.js" defer></script>"""
-    legacy = '<div class="columns">'+panel('연령별 투표율 · 전체 선거인 표본조사',''.join(barrow(a,v) for a,v in t['age'].items()))+panel('전국 비례대표 정당 득표율 · 유효투표 기준',''.join(barrow(x['party'],x['share']) for x in d['proportional']['nation']['parties'][:10]))+'</div>'+panel('시·도별 확정 투표율 · 실제 집계',''.join(barrow(a,v) for a,v in t['region_actual'].items()))
-    return cross + legacy
+    return cross
+
+
+def statspage(d,t):
+    # Only actual vote-count results belong in the election counting analysis.
+    # Turnout's region/sex crossfilter lives exclusively in turnoutpage().
+    districts=d['constituency']['districts']
+    seats=d['constituency']['seats_by_party']
+    pr=d['proportional']['seat_allocation']
+    major=sorted(seats.items(),key=lambda kv:-kv[1])
+    cons=panel('지역구 정당별 의석 비교 · 총 254석',
+        ''.join(barrow(k,v,'석',v/254*100) for k,v in major))
+    prop=panel('비례대표 정당별 의석 비교 · 총 46석',
+        ''.join(barrow(k,v,'석',v/46*100) for k,v in sorted(pr.items(),key=lambda kv:-kv[1])))
+    close=[('1,000표 이하',lambda x:x<=1000),('1,001~5,000표',lambda x:1000<x<=5000),
+           ('5,001~10,000표',lambda x:5000<x<=10000),('10,000표 초과',lambda x:x>10000)]
+    margin=panel('지역구별 1·2위 득표차 분포 (254개 지역구)',
+        ''.join(barrow(label,sum(1 for x in districts if f(x['margin'])),'곳',
+                       sum(1 for x in districts if f(x['margin']))/254*100)
+                for label,f in close))
+    tight=sorted(districts,key=lambda x:x['margin'])[:12]
+    closest=panel('득표차가 작은 지역구 12곳',
+        table(['지역구','당선인','당선 정당','1·2위 득표차'],
+              [(e(x['region']+' '+x['district']),e(x['winner']['name']),
+                e(x['winner']['party']),n(x['margin'])+'표') for x in tight]))
+    return '<div class="columns">'+cons+prop+'</div>'+margin+closest+'<p class="note">모든 개표 데이터는 선관위 최종 결과입니다. 실시간 개표 중간 후보 득표수는 포함하지 않습니다.</p>'
 
 
 def articlepage(d,region='',district=''):
@@ -289,6 +312,16 @@ def bind_safe(app):
             return errorpage('서버의 자료 처리 오류가 발생했습니다. 실행창의 로그를 확인해 주세요.')
         subtitle=('중앙선거관리위원회 제22대 국회의원선거 최종 집계 · PostgreSQL '+postgres_data.SCHEMA+' 테이블 사용')
         return HTMLResponse(layout(page,dict(NAV)[page],subtitle,body),headers={'Cache-Control':'no-store'})
+
+    @router.get('/safe2024/map',response_class=HTMLResponse)
+    def final_map(region:str='',district:str=''):
+        if not postgres_data.active():
+            raise HTTPException(503,'최종 개표 지도는 PostgreSQL 연결이 필요합니다.')
+        try:
+            data=real_api.vote_data()
+            return HTMLResponse(election_result_map(data,region,district))
+        except ValueError as exc:
+            raise HTTPException(503,'선거구 경계와 실제 개표자료 연결을 확인해 주세요.') from exc
 
     @router.get('/safe2024/visuals/{filename}')
     def existing_visual(filename: str):
