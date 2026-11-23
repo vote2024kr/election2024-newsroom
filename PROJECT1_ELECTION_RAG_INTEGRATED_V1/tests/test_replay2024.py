@@ -20,7 +20,7 @@ def test_archive_uses_real_snapshots_only():
     assert rows[0]['time'] == '2024-04-10 07:00' and rows[0]['turnout'] == 1.8
     assert next(x for x in rows if x['time']=='2024-04-10 23:30' and x['series']=='proportional')['proportional'] == 10.6
     assert next(x for x in rows if x['time']=='2024-04-11 00:30' and x['series']=='proportional')['proportional'] == 20.56
-    assert next(x for x in rows if x['time']=='2024-04-11 01:30' and x['series']=='proportional')['proportional_display'] == '약 33%'
+    assert next(x for x in rows if x['time']=='2024-04-11 01:30' and x['series']=='proportional')['proportional_display'] == '33%'
     assert rows[6]['time'] == '2024-04-10 13:00' and rows[6]['turnout'] == 53.4
     assert rows[-1]['time'] == '2024-04-11 10:25'
     assert rows[-1]['counting'] == rows[-1]['proportional'] == 100
