@@ -55,7 +55,7 @@ def replay_html(layout):
     </div>
     <div class="replay-progress" id="replay-progress" aria-live="polite">기록 1 / {len(data['events'])}</div>
     <div class="replay-source"><span id="replay-note">당일 본투표 투표율 · 사전투표 등 미합산</span><br>기록 출처: <a id="replay-source" href="{data['turnout_source']}" rel="noopener noreferrer" target="_blank">중앙선관위 제공 기록 확인</a></div>
-    <p class="replay-caution"><strong>자료 구분:</strong> 투표율은 선관위가 발표한 시각별 수치입니다. 개표율은 당일 기사에서 확인한 <strong>일부 시점</strong>입니다. 확인되지 않은 중간 수치는 보간하거나 실제 집계로 표시하지 않았습니다. 지역구별 중간 득표수는 확보되지 않아 최종 데이터와 섞지 않습니다. 13시부터 사전투표 등을 합산합니다.</p>
+    <p class="replay-caution"><strong>자료 구분:</strong> 투표율은 선관위 발표 수치이며 개표율은 당시 보도에서 확인된 <strong>일부 시점</strong>만 표시합니다. 확인되지 않은 중간 개표율과 지역구별 중간 득표수는 임의로 만들지 않았습니다.</p>
     <p><a class="btn" href="/safe2024?page=final">PostgreSQL 최종 확정 개표 결과 보기</a> <a class="btn" href="/safe2024?page=district">254개 지역구 최종 결과</a></p>
     </section>
     <script type="application/json" id="election-replay-data">{payload}</script>
