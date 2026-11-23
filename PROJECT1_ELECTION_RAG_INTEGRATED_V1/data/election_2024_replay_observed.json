@@ -340,19 +340,35 @@
       "proportional_asof": "2024-04-11 00:11"
     },
     {
+      "id": "r16",
+      "time": "2024-04-11 00:30",
+      "phase": "counting",
+      "series": "constituency",
+      "turnout": 67,
+      "counting": 74.22,
+      "proportional": 15.7,
+      "source": "https://v.daum.net/v/3uwDOVUltf?f=p",
+      "source_label": "한국일보 · 중앙선관위 4월 11일 00:30 기준 전국 개표율 74.22%",
+      "note": "중앙선관위 00:30 개표 현황을 인용한 전국 지역구 개표율 74.22%. 당시 비례대표 개표율과 별도.",
+      "time_kind": "당시 집계 기준",
+      "counting_asof": "2024-04-11 00:30",
+      "proportional_asof": "2024-04-11 00:11",
+      "proportional_display": "15.7%"
+    },
+    {
       "id": "p07",
       "time": "2024-04-11 00:30",
       "phase": "counting",
       "series": "proportional",
       "turnout": 67,
-      "counting": 60.09,
+      "counting": 74.22,
       "proportional": 20.56,
       "source": "https://www.yna.co.kr/view/AKR20240410087200001",
       "source_label": "연합뉴스 · 선관위 00:30 기준",
       "note": "11일 00:30 기준 비례대표 선거 개표율 20.56%",
       "time_kind": "당시 개표 기준",
       "proportional_display": "20.56%",
-      "counting_asof": "2024-04-10 23:20",
+      "counting_asof": "2024-04-11 00:30",
       "proportional_asof": "2024-04-11 00:30"
     },
     {
