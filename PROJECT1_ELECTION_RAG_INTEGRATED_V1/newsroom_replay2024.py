@@ -32,6 +32,7 @@ def replay_html(layout):
     .replay-meter{background:#152943;border:1px solid #345674;padding:20px;border-radius:12px}
     .replay-meter b{display:block;font-size:36px;margin:8px 0}
     .replay-meter small{color:#b1c6de;font-size:12px}
+    .replay-early-vote-guide{margin:0 0 12px;color:#bce7dc;font-size:12px;line-height:1.6;font-weight:600}
     .replay-meter .track{height:16px;margin:15px 0 5px}
     .replay-progress{font-size:12px;color:#b9cfdf}
     .replay-source{padding:12px;background:#132e3f;border-left:3px solid #4fc1d6;margin:15px 0;font-size:13px}
@@ -43,7 +44,7 @@ def replay_html(layout):
     <h2 style="margin-top:16px">시각별 전국 투표율·지역구 개표율</h2>
     <p class="sub" id="replay-time">2024-04-10 07:00</p>
     <div class="replay-meters">
-      <div class="replay-meter"><small>전국 투표율</small><b id="replay-turnout">1.8%</b><div class="track"><div class="fill" id="replay-turnout-bar" style="width:1.8%;background:#3cc4a3"></div></div><small id="replay-turnout-note">당일 본투표 집계 · 사전투표 미포함</small></div>
+      <div class="replay-meter"><small>전국 투표율</small><b id="replay-turnout">1.8%</b><p id="replay-early-vote-guide" class="replay-early-vote-guide" role="note" hidden>※ 13시부터 사전투표 등이 합산되어 투표율이 크게 상승합니다.</p><div class="track"><div class="fill" id="replay-turnout-bar" style="width:1.8%;background:#3cc4a3"></div></div><small id="replay-turnout-note">당일 본투표 집계 · 사전투표 미포함</small></div>
       <div class="replay-meter"><small>전국 <strong>지역구</strong> 개표율</small><b id="replay-counting">집계 전</b><div class="track"><div class="fill" id="replay-count-bar" style="width:0%"></div></div><small>비례대표 개표율과 구분</small></div>
     </div>
     <div class="replay-tools">
@@ -72,6 +73,7 @@ REPLAY_JS=r"""
     $('replay-time').textContent=evt.time;
     $('replay-turnout').textContent=Number(evt.turnout).toFixed(1)+'%';
     $('replay-turnout-bar').style.width=evt.turnout+'%';
+    $('replay-early-vote-guide').hidden = !(evt.phase==='turnout' && evt.time >= '2024-04-10 13:00');
     $('replay-turnout-note').textContent=evt.phase==='turnout' && evt.time<='2024-04-10 12:00'?'당일 본투표 집계 · 사전투표 미포함':'사전·거소·선상·재외투표 등 포함';
     const counted=evt.counting!==null;
     $('replay-counting').textContent=counted?Number(evt.counting).toFixed(evt.phase==='final'?0:2)+'%':'개표 전';
