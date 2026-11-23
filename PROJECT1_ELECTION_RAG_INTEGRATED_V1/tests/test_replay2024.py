@@ -13,11 +13,12 @@ from newsroom.real_data_api import _local_vote_data
 
 def test_archive_uses_real_snapshots_only():
     rows = _validated_rows()
-    assert len(rows) == 40
+    assert len(rows) == 41
     assert sum(x['phase'] == 'turnout' for x in rows) == 12
     assert sum(x['series'] == 'constituency' for x in rows) == 15
-    assert sum(x['series'] == 'proportional' for x in rows) == 12
+    assert sum(x['series'] == 'proportional' for x in rows) == 13
     assert rows[0]['time'] == '2024-04-10 07:00' and rows[0]['turnout'] == 1.8
+    assert next(x for x in rows if x['time']=='2024-04-10 23:30' and x['series']=='proportional')['proportional'] == 10.6
     assert next(x for x in rows if x['time']=='2024-04-11 00:30' and x['series']=='proportional')['proportional'] == 20.56
     assert next(x for x in rows if x['time']=='2024-04-11 01:30' and x['series']=='proportional')['proportional_display'] == '약 33%'
     assert rows[6]['time'] == '2024-04-10 13:00' and rows[6]['turnout'] == 53.4
@@ -96,7 +97,7 @@ def test_map_geometry_matches_254_real_district_ids():
 
 
 def test_invalid_sequence_rejected():
-    for n in (-1, 40, 9999):
+    for n in (-1, 41, 9999):
         try:
             pg_replay_observation(n)
         except HTTPException as exc:
