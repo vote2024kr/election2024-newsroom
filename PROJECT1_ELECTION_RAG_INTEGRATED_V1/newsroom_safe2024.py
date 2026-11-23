@@ -19,7 +19,7 @@ from functools import lru_cache
 
 router=APIRouter()
 
-NAV=[('home','2024 투개표 상황'),('final','전국 확정 개표'),('district','지역·선거구 탐색'),('pr','비례대표 개표'),
+NAV=[('home','2024 투·개표 상황'),('final','전국 확정 개표'),('district','지역·선거구 탐색'),('pr','비례대표 개표'),
      ('turnout','투표율 분석'),('stats','개표 분석'),('articles','기사 초안·검증'),
      ('qa','RAG 근거 질문'),('cg','방송 CG·대본'),('csv','공식 결과 CSV'),
      ('training','보도자료·학습데이터'),('media','사진·영상 자료')]
