@@ -48,7 +48,7 @@ def replay_html(layout):
     <div class="replay-meters">
       <div class="replay-meter"><small>전국 투표율</small><b id="replay-turnout">1.8%</b><p id="replay-early-vote-guide" class="replay-early-vote-guide" role="note" hidden>※ 13시부터 사전투표 등이 합산되어 투표율이 크게 상승합니다.</p><div class="track"><div class="fill" id="replay-turnout-bar" style="width:1.8%;background:#3cc4a3"></div></div><small id="replay-turnout-note">당일 본투표 집계 · 사전투표 미포함</small></div>
       <div class="replay-meter"><small>전국 지역구 개표율</small><b id="replay-counting">집계 전</b><div class="track"><div class="fill" id="replay-count-bar" style="width:0%"></div></div><small id="replay-counting-asof">기록 없음</small></div>
-      <div class="replay-meter"><small>전국 비례대표 개표율</small><b id="replay-pr">집계 전</b><div class="track"><div class="fill" id="replay-pr-bar" style="width:0%;background:#da8053"></div></div><small id="replay-pr-asof">기록 없음</small></div>
+      <div class="replay-meter"><small>전국 비례대표 개표율</small><b id="replay-pr">개표 전</b><div class="track"><div class="fill" id="replay-pr-bar" style="width:0%;background:#da8053"></div></div><small id="replay-pr-asof">기록 없음</small></div>
     </div>
     <div class="replay-tools">
       <button type="button" id="replay-play">일시정지</button>
@@ -85,7 +85,7 @@ REPLAY_JS=r"""
     $('replay-count-bar').style.width=counted?evt.counting+'%':'0%';
     $('replay-counting-asof').textContent=evt.counting_asof?'마지막 확인 시점: '+evt.counting_asof:'당시 기록 미확인';
     const prop=evt.proportional!=null;
-    $('replay-pr').textContent=prop?Number(evt.proportional).toFixed(evt.phase==='final'?0:2)+'%':'기록 전';
+    $('replay-pr').textContent=prop?(evt.proportional_display||Number(evt.proportional).toFixed(evt.phase==='final'?0:2)+'%'):'개표 전';
     $('replay-pr-bar').style.width=prop?evt.proportional+'%':'0%';
     $('replay-pr-asof').textContent=evt.proportional_asof?'마지막 확인 시점: '+evt.proportional_asof:'당시 기록 미확인';
     const completed=evt.phase==='final'&&evt.counting===100&&evt.proportional===100;
@@ -213,6 +213,10 @@ def pg_replay_observation(index):
             row=cur.fetchone()
     if row is None:
         raise HTTPException(503,detail='PostgreSQL 재생 기록이 없습니다. 최신 V5 실행기를 사용해 주세요.')
+    # Preserve the source's displayed precision (e.g. 29.1% or 약 33%) without changing SQL values.
+    original=_validated_rows()[index]
+    if row[0]!=original['id'] or (None if row[6] is None else float(row[6]))!=original['proportional']:
+        raise HTTPException(503,detail='DB 재생 기록과 검증된 원본 시점이 다릅니다. 최신 V5 실행기를 사용해 주세요.')
     return {
         'id':row[0],'time':row[1],'phase':row[2],'series':row[3],
         'turnout':float(row[4]),
@@ -220,5 +224,6 @@ def pg_replay_observation(index):
         'proportional':None if row[6] is None else float(row[6]),
         'counting_asof':row[7],'proportional_asof':row[8],
         'source':row[9],'source_label':row[10],'note':row[11],
-        'time_kind':row[12]
+        'time_kind':row[12],
+        'proportional_display':original.get('proportional_display')
     }
