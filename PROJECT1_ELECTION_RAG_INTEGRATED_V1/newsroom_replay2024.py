@@ -29,7 +29,7 @@ def replay_html(layout):
     .replay-tools label{font-size:13px;color:#c0d6e9}
     .replay-tools select{max-width:110px}
     .replay-meters{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:16px}
-    .replay-finale[hidden]{display:none}.replay-finale{margin:18px 0 0}
+    .replay-finale[hidden],.replay-final-cta[hidden]{display:none}.replay-finale{margin:18px 0 0}
     .replay-finale iframe{width:100%;height:830px;border:1px solid #315174;border-radius:12px;background:#101e32}
     .replay-meter{background:#152943;border:1px solid #345674;padding:20px;border-radius:12px}
     .replay-meter b{display:block;font-size:36px;margin:8px 0}
@@ -59,7 +59,8 @@ def replay_html(layout):
     <div class="replay-progress" id="replay-progress" aria-live="polite">기록 1 / {len(data['events'])}</div>
     <div class="replay-source"><span id="replay-note">당일 본투표 투표율 · 사전투표 등 미합산</span><br>기록 출처: <a id="replay-source" href="{data['turnout_source']}" rel="noopener noreferrer" target="_blank">중앙선관위 제공 기록 확인</a></div>
     <p class="replay-caution"><strong>자료 구분:</strong> 투표율은 선관위 발표 수치이며 개표율은 당시 보도에서 확인된 <strong>일부 시점</strong>만 표시합니다. 확인되지 않은 중간 개표율과 지역구별 중간 득표수는 임의로 만들지 않았습니다.</p>
-    <section id="replay-final-map" class="replay-finale" hidden><h2>2024.04.11 10:25 | 전국 개표 완료 100%</h2><p class="sub">지역구 254개 최종 결과 · 10:25는 당시 보도에 근거한 재현용 시각이며 중앙선관위의 분 단위 공식 종료 인증 시각은 아닙니다.</p><a class="btn" href="#replay-final-map" id="replay-map-scroll">최종 개표 결과 보기</a><iframe id="replay-map-frame" title="최종 전국 지도 · 시도 및 선거구 탐색" loading="lazy"></iframe></section>
+    <p id="replay-final-cta" class="replay-final-cta" hidden><button type="button" id="replay-map-scroll" class="btn">최종 개표 결과 보기</button></p>
+    <section id="replay-final-map" class="replay-finale" hidden><h2>2024.04.11 10:25 | 전국 개표 완료 100%</h2><p class="sub">지역구 254개 최종 결과 · 10:25는 당시 보도에 근거한 재현용 시각이며 중앙선관위의 분 단위 공식 종료 인증 시각은 아닙니다.</p><iframe id="replay-map-frame" title="최종 전국 지도 · 시도 및 선거구 탐색" loading="lazy"></iframe></section>
     <p><a class="btn" href="/safe2024?page=final">최종 지도·확정 개표 보기</a> <a class="btn" href="/safe2024?page=district">지역구 상세 목록</a></p>
     </section>
     <script type="application/json" id="election-replay-data">{payload}</script>
@@ -89,6 +90,7 @@ REPLAY_JS=r"""
     $('replay-pr-asof').textContent=evt.proportional_asof?'마지막 확인 시점: '+evt.proportional_asof:'당시 기록 미확인';
     const completed=evt.phase==='final'&&evt.counting===100&&evt.proportional===100;
     $('replay-final-map').hidden=!completed;
+    $('replay-final-cta').hidden=!completed;
     if(completed && !$('replay-map-frame').getAttribute('src')) $('replay-map-frame').src='/safe2024/map';
     if(!completed) $('replay-map-frame').removeAttribute('src');
     $('replay-note').textContent=evt.note;
