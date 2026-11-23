@@ -13,15 +13,19 @@ from newsroom.real_data_api import _local_vote_data
 
 def test_archive_uses_real_snapshots_only():
     rows = _validated_rows()
-    assert len(rows) == 39
+    assert len(rows) == 40
     assert sum(x['phase'] == 'turnout' for x in rows) == 12
     assert sum(x['series'] == 'constituency' for x in rows) == 15
-    assert sum(x['series'] == 'proportional' for x in rows) == 11
+    assert sum(x['series'] == 'proportional' for x in rows) == 12
     assert rows[0]['time'] == '2024-04-10 07:00' and rows[0]['turnout'] == 1.8
     assert next(x for x in rows if x['time']=='2024-04-10 23:30' and x['series']=='proportional')['proportional'] == 10.6
     assert next(x for x in rows if x['time']=='2024-04-11 00:30' and x['series']=='proportional')['proportional'] == 20.56
     assert next(x for x in rows if x['time']=='2024-04-11 01:30' and x['series']=='proportional')['proportional_display'] == '33%'
     assert next(x for x in rows if x['time']=='2024-04-11 02:33' and x['series']=='proportional')['proportional'] == 48.75
+    reported=next(x for x in rows if x['id']=='p14')
+    assert reported['time']=='2024-04-11 03:37' and reported['proportional']==59.18
+    assert reported['time_kind'].startswith('기사 입력시각')
+    assert reported['proportional_asof'].endswith('(기사 보도 기준)')
     assert not any(x['time'] in ('2024-04-11 00:55','2024-04-11 02:30') for x in rows)
     assert rows[6]['time'] == '2024-04-10 13:00' and rows[6]['turnout'] == 53.4
     assert rows[-1]['time'] == '2024-04-11 10:25'
@@ -99,7 +103,7 @@ def test_map_geometry_matches_254_real_district_ids():
 
 
 def test_invalid_sequence_rejected():
-    for n in (-1, 39, 9999):
+    for n in (-1, 40, 9999):
         try:
             pg_replay_observation(n)
         except HTTPException as exc:
