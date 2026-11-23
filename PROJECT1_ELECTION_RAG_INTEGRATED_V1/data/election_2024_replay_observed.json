@@ -413,9 +413,9 @@
       "proportional": 33,
       "source": "https://v.daum.net/v/20240411045610267?sicode=01",
       "source_label": "스포츠경향 · 선관위 01:30 기준",
-      "note": "11일 01:30 기준 비례대표 개표율 약 33% · 보도는 정수 33%로 제시",
+      "note": "11일 오전 1시30분 기준 33% 진행된 중앙선거관리위원회의 비례대표 개표 현황을 보면",
       "time_kind": "당시 개표 기준",
-      "proportional_display": "약 33%",
+      "proportional_display": "33%",
       "counting_asof": "2024-04-11 01:00",
       "proportional_asof": "2024-04-11 01:30"
     },
