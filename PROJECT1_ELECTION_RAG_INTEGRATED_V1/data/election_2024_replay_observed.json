@@ -356,22 +356,6 @@
       "proportional_asof": "2024-04-11 00:30"
     },
     {
-      "id": "p08",
-      "time": "2024-04-11 00:55",
-      "phase": "counting",
-      "series": "proportional",
-      "turnout": 67,
-      "counting": 60.09,
-      "proportional": 25.06,
-      "source": "https://www.mk.co.kr/news/politics/10987291",
-      "source_label": "매일경제 · 선관위 00:55 기준",
-      "note": "11일 00:55 기준 비례대표 개표율 25.06%",
-      "time_kind": "당시 개표 기준",
-      "proportional_display": "25.06%",
-      "counting_asof": "2024-04-10 23:20",
-      "proportional_asof": "2024-04-11 00:55"
-    },
-    {
       "id": "c07",
       "phase": "counting",
       "time": "2024-04-11 01:00",
@@ -382,10 +366,10 @@
       "note": "전국 지역구 개표 진행률(확인된 시점) · 비례대표 개표율과 별도",
       "series": "constituency",
       "time_kind": "당시 집계 기준",
-      "proportional": 25.06,
+      "proportional": 20.56,
       "counting_asof": "2024-04-11 01:00",
-      "proportional_asof": "2024-04-11 00:55",
-      "proportional_display": "25.06%"
+      "proportional_asof": "2024-04-11 00:30",
+      "proportional_display": "20.56%"
     },
     {
       "id": "p09",
@@ -450,22 +434,6 @@
       "counting_asof": "2024-04-11 02:21",
       "proportional_asof": "2024-04-11 02:15",
       "proportional_display": "44.31%"
-    },
-    {
-      "id": "p12",
-      "time": "2024-04-11 02:30",
-      "phase": "counting",
-      "series": "proportional",
-      "turnout": 67,
-      "counting": 90.7,
-      "proportional": 48.2,
-      "source": "https://www.kmib.co.kr/article/view.asp?arcid=0019985737",
-      "source_label": "국민일보 · MBC 방송 02:30 기준",
-      "note": "11일 02:30 기준 MBC 방송 개표율 48.2% 인용 보도",
-      "time_kind": "당시 개표 기준",
-      "proportional_display": "48.2%",
-      "counting_asof": "2024-04-11 02:21",
-      "proportional_asof": "2024-04-11 02:30"
     },
     {
       "id": "p02",
