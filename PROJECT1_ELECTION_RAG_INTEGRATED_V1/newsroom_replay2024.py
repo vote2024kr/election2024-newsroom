@@ -25,12 +25,19 @@ def replay_html(layout):
     css=r"""
     .replay-mark {display:inline-block;color:#0e1b24;background:#72dcea;border-radius:5px;padding:5px 9px;font-size:12px;font-weight:800;margin-right:8px}
     .replay-tools{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:15px 0}
+    .replay-stage{display:grid;grid-template-columns:minmax(300px,.9fr) minmax(360px,1.4fr);gap:14px;align-items:stretch}
+    .replay-stage-right{background:#102238;border:1px solid #345674;border-radius:12px;padding:17px;min-width:0}
+    .replay-stage-right h3{margin:0 0 8px}.replay-stage-right svg{width:100%;height:auto;max-height:390px}
+    .replay-count-placeholder{display:grid;place-items:center;min-height:320px;color:#a9c2d5;text-align:center;border:1px dashed #355875;border-radius:10px}
+    .replay-count-placeholder[hidden],.replay-trend[hidden]{display:none}
+    .replay-trend grid-line{stroke:#34516a}
+    @media(max-width:1030px){.replay-stage{grid-template-columns:1fr}}
     .replay-tools button{background:#19688c;color:#fff;border:1px solid #388bad;border-radius:7px;padding:10px 14px;font-weight:700}
     .replay-tools label{font-size:13px;color:#c0d6e9}
     .replay-tools select{max-width:110px}
-    .replay-meters{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:16px}
+    .replay-meters{display:grid;grid-template-columns:1fr;gap:12px;margin-top:0}
     .replay-finale[hidden],.replay-final-cta[hidden]{display:none}.replay-finale{margin:18px 0 0}
-    .replay-finale iframe{width:100%;height:830px;border:1px solid #315174;border-radius:12px;background:#101e32}
+    .replay-finale iframe{width:100%;height:1180px;border:1px solid #315174;border-radius:12px;background:#101e32}
     .replay-meter{background:#152943;border:1px solid #345674;padding:20px;border-radius:12px}
     .replay-meter b{display:block;font-size:36px;margin:8px 0}
     .replay-meter small{color:#b1c6de;font-size:12px}
@@ -45,11 +52,15 @@ def replay_html(layout):
     <div><span class="replay-mark">2024년 시간대별 기록</span><span class="sub">실시간 연결 아님 · 2024년 당시 공개된 수치</span></div>
     <h2 style="margin-top:16px">전국 투표율·지역구·비례대표 개표율</h2>
     <p class="sub" id="replay-time">2024-04-10 07:00</p>
-    <div class="replay-meters">
+    <div class="replay-stage"><div class="replay-meters">
       <div class="replay-meter"><small>전국 투표율</small><b id="replay-turnout">1.8%</b><p id="replay-early-vote-guide" class="replay-early-vote-guide" role="note" hidden>※ 13시부터 사전투표 등이 합산되어 투표율이 크게 상승합니다.</p><div class="track"><div class="fill" id="replay-turnout-bar" style="width:1.8%;background:#3cc4a3"></div></div><small id="replay-turnout-note">당일 본투표 집계 · 사전투표 미포함</small></div>
       <div class="replay-meter"><small>전국 지역구 개표율</small><b id="replay-counting">집계 전</b><div class="track"><div class="fill" id="replay-count-bar" style="width:0%"></div></div><small id="replay-counting-asof">기록 없음</small></div>
       <div class="replay-meter"><small>전국 비례대표 개표율</small><b id="replay-pr">개표 전</b><div class="track"><div class="fill" id="replay-pr-bar" style="width:0%;background:#da8053"></div></div><small id="replay-pr-asof">기록 없음</small></div>
     </div>
+    <div class="replay-stage-right">
+      <div id="replay-trend" class="replay-trend"><h3>시간별 전국 투표율 변화</h3><p class="sub">당시 선관위 발표에서 확인된 시점만 표시</p><svg id="replay-line" viewBox="0 0 660 380" role="img" aria-label="시간대별 투표율 꺾은선 그래프"></svg></div>
+      <div id="replay-count-placeholder" class="replay-count-placeholder" hidden><div><h3>전국 개표 진행 중</h3><p>지역구·비례대표 최종 당선 지도와 의석수는<br>개표 완료 100% 이후에만 공개됩니다.</p></div></div>
+    </div></div>
     <div class="replay-tools">
       <button type="button" id="replay-play">일시정지</button>
       <button type="button" id="replay-restart">처음부터</button>
@@ -74,11 +85,37 @@ REPLAY_JS=r"""
   const events=JSON.parse(document.getElementById('election-replay-data').textContent);
   let position=0,delay=5,playing=true,timer=null;
   const $=(id)=>document.getElementById(id);
+  // 13:00 annotation is attached only to the actually observed 13:00 sample.
+  function drawTurnoutLine(evt){
+    const ticks=events.filter(x=>x.phase==='turnout' && x.time<=evt.time);
+    const sx=h=>58+(h-7)/11*556,sy=v=>312-(v/70)*254;
+    let body='';
+    for(let v=0;v<=70;v+=10){
+       const y=sy(v);body+='<line x1="58" x2="615" y1="'+y+'" y2="'+y+'" stroke="#33536a"/>'+
+       '<text x="47" y="'+(y+4)+'" fill="#aac4d9" text-anchor="end" font-size="12">'+v+'%</text>';
+    }
+    for(let h=7;h<=18;h+=2)body+='<text x="'+sx(h)+'" y="342" text-anchor="middle" fill="#aac4d9" font-size="12">'+h+'시</text>';
+    const points=ticks.map(e=>({x:sx(Number(e.time.slice(11,13))),y:sy(e.turnout)}));
+    if(points.length>1)body+='<polyline fill="none" stroke="#42d8c0" stroke-width="4" stroke-linejoin="round" points="'+points.map(p=>p.x.toFixed(1)+','+p.y.toFixed(1)).join(' ')+'"/>';
+    for(const p of points)body+='<circle cx="'+p.x+'" cy="'+p.y+'" r="5" fill="#e6fbf6" stroke="#148d90" stroke-width="2"/>';
+    const midday=ticks.find(x=>x.time==='2024-04-10 13:00');
+    if(midday){
+       const x=sx(13),y=sy(midday.turnout),bx=x+57,by=y+54;
+       body+='<defs><marker id="early-arrow" markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 Z" fill="#ffc76a"/></marker></defs>'+
+       '<path d="M'+bx+','+by+' Q'+(x+38)+','+(y+37)+' '+(x+6)+','+(y+6)+'" fill="none" stroke="#ffc76a" stroke-width="2.6" marker-end="url(#early-arrow)"/>'+
+       '<rect x="'+(bx-8)+'" y="'+(by-8)+'" width="194" height="38" rx="7" fill="#4a351f" stroke="#ffc76a"/>'+
+       '<text x="'+(bx+89)+'" y="'+(by+16)+'" text-anchor="middle" fill="#ffedc4" font-size="14" font-weight="700">13시 · 사전투표율 포함됨</text>';
+    }
+    $('replay-line').innerHTML=body;
+  }
   const show=(evt)=>{
     $('replay-time').textContent=evt.time;
     $('replay-turnout').textContent=Number(evt.turnout).toFixed(1)+'%';
     $('replay-turnout-bar').style.width=evt.turnout+'%';
     $('replay-early-vote-guide').hidden = !(evt.phase==='turnout' && evt.time >= '2024-04-10 13:00');
+    $('replay-trend').hidden=evt.phase!=='turnout';
+    $('replay-count-placeholder').hidden=evt.phase==='turnout';
+    if(evt.phase==='turnout') drawTurnoutLine(evt);
     $('replay-turnout-note').textContent=evt.phase==='turnout' && evt.time<='2024-04-10 12:00'?'당일 본투표 집계 · 사전투표 미포함':'사전·거소·선상·재외투표 등 포함';
     const counted=evt.counting!=null;
     $('replay-counting').textContent=counted?Number(evt.counting).toFixed(evt.phase==='final'?0:2)+'%':'개표 전';
@@ -91,7 +128,7 @@ REPLAY_JS=r"""
     const completed=evt.phase==='final'&&evt.counting===100&&evt.proportional===100;
     $('replay-final-map').hidden=!completed;
     $('replay-final-cta').hidden=!completed;
-    if(completed && !$('replay-map-frame').getAttribute('src')) $('replay-map-frame').src='/safe2024/map';
+    if(completed && !$('replay-map-frame').getAttribute('src')) $('replay-map-frame').src='/safe2024/final-embed';
     if(!completed) $('replay-map-frame').removeAttribute('src');
     $('replay-note').textContent=evt.note;
     $('replay-source').setAttribute('href',evt.source);

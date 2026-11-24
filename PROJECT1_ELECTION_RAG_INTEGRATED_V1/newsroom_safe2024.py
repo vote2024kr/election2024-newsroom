@@ -15,6 +15,7 @@ from fastapi.responses import HTMLResponse, Response, RedirectResponse, FileResp
 from newsroom import real_data_api as real_api, postgres_data
 from newsroom_replay2024 import replay_html, pg_replay_observation
 from newsroom_election_map import election_result_map, map_frame
+from newsroom_election_layout_v2 import nationwide_overview, district_explorer
 from functools import lru_cache
 
 router=APIRouter()
@@ -92,24 +93,13 @@ def get_data():
 
 
 def dashboard(d,t):
-    s,p=d['constituency'],d['proportional']
-    top=sorted(s['seats_by_party'].items(),key=lambda kv:-kv[1])
-    seats=panel('지역구 당선 의석 (254석)', ''.join(barrow(name,v,'석',v/161*100) for name,v in top))
-    prseats=panel('비례대표 배분 의석 (46석)',''.join(barrow(name,v,'석',v/18*100) for name,v in sorted(p['seat_allocation'].items(),key=lambda kv:-kv[1])))
-    regions='<div class="regiongrid">'+''.join(f'<a href="{link("district",region=r["name"])}">{e(r["name"])}<small>{r["district_count"]}개 지역구 →</small></a>' for r in s['regions'])+'</div>'
-    cards='<div class="grid4">'+metric('전국 개표 완료','100%','2024년 4월 10일 최종 집계')+metric('지역구','254석','지역구 254개 선거구')+metric('비례대표','46석',f'전국 비례대표 투표 {n(p["nation"]["ballots"])}표')+metric('전국 최종 투표율',pp(t['national']['final']),'전체 선거인 기준 · 실제 집계')+'</div>'
-    return cards+'<div class="columns">'+seats+prseats+'</div>'+panel('전국 254개 지역구 확정 결과 지도',map_frame(885))+ '<p class="box-note">이 화면에는 시각별 실시간 개표 기록이 없습니다. 최종 개표 결과만 표시합니다. 2024년 실제 득표 자료와 기존 교육용 가상 개표는 섞이지 않습니다.</p>'
+    """Final nationwide result summary; not a duplicate explorer."""
+    return nationwide_overview(d,t)
 
 
-def districtpage(d,region='',district=''):
-    ds=d['constituency']['districts'];regions=d['constituency']['regions'];filtered=[x for x in ds if not region or x['region']==region]
-    if not filtered:filtered=ds;region=''
-    active=next((x for x in filtered if x['id']==district),filtered[0])
-    opts='<a class="btn '+('selected' if not region else '')+'" href="'+link('district')+'">전국</a>'+''.join('<a class="btn '+('selected' if region==x['name'] else '')+'" href="'+link('district',region=x['name'])+'">'+e(x['name'])+'</a>' for x in regions)
-    lst=table(['시·도','지역구','당선 후보','정당','득표율','상세'],[(e(x['region']),e(x['district']),e(x['winner']['name']),e(x['winner']['party']),pp(x['winner']['share']),f'<a href="{link("district",region=x["region"],district=x["id"])}">보기</a>') for x in filtered])
-    votes=table(['후보','정당','득표수','득표율'],[(e(c['name']),e(c['party']),n(c['votes']),f'{c["share"]:.2f}%') for c in active['candidates']])
-    detail=panel(f'{active["region"]} {active["district"]} · 최종 개표',f'<p class="box-note">당선: <b>{e(active["winner"]["name"])} ({e(active["winner"]["party"])})</b> · 최종 득표 {n(active["winner"]["votes"])}표 · 1·2위 격차 {n(active["margin"])}표</p>'+votes+f'<p class="note">유효투표 {n(active["valid"])}표 · 무효투표 {n(active["invalid"])}표 · 선관위 개표결과.xlsx 지역구 시트 {n(active["excel_row"])}행</p>')
-    return panel('지역 선택',opts)+detail+panel(f'지역구 전체 목록 · {len(filtered)}개',lst)
+def districtpage(d,t,region='',district='',area='',q=''):
+    """Nationwide → province → city/county → constituency drilldown."""
+    return district_explorer(d,t,region,district,area,q)
 
 
 def prpage(d,region='',area=''):
@@ -295,7 +285,7 @@ def bind_safe(app):
             d,t=get_data()
             pages={
                 'final':lambda:dashboard(d,t),
-                'district':lambda:districtpage(d,region,district),
+                'district':lambda:districtpage(d,t,region,district,area,q),
                 'pr':lambda:prpage(d,region,area),
                 'turnout':lambda:turnoutpage(t),
                 'stats':lambda:statspage(d,t),
@@ -312,6 +302,16 @@ def bind_safe(app):
             return errorpage('서버의 자료 처리 오류가 발생했습니다. 실행창의 로그를 확인해 주세요.')
         subtitle=('중앙선거관리위원회 제22대 국회의원선거 최종 집계 · PostgreSQL '+postgres_data.SCHEMA+' 테이블 사용')
         return HTMLResponse(layout(page,dict(NAV)[page],subtitle,body),headers={'Cache-Control':'no-store'})
+
+    @router.get('/safe2024/final-embed',response_class=HTMLResponse)
+    def replay_final_embedded():
+        """Only fetched after both counts reach 100% in the replay."""
+        d,t=get_data()
+        return HTMLResponse('<!doctype html><html lang="ko"><head><meta charset="utf-8">'
+                            '<meta name="viewport" content="width=device-width,initial-scale=1">'
+                            '<style>'+CSS+'</style></head><body>'
+                            '<main style="max-width:1800px">'+nationwide_overview(d,t)+'</main></body></html>',
+                            headers={'Cache-Control':'no-store'})
 
     @router.get('/safe2024/map',response_class=HTMLResponse)
     def final_map(region:str='',district:str=''):
