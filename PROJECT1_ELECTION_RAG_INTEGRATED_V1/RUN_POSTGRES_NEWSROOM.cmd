@@ -11,7 +11,7 @@ if not exist "%PY%" (
   if errorlevel 1 goto failed
 )
 echo [2/3] Checking Python packages...
-"%PY%" -c "import pypdf,fastapi,pandas,sklearn,bs4,tzdata,uvicorn,httpx,pytest,multipart,scipy,openpyxl,psycopg" 2>nul
+"%PY%" -c "import fastapi,pandas,sklearn,bs4,tzdata,uvicorn,httpx,pytest,multipart,scipy,openpyxl,psycopg" 2>nul
 if errorlevel 1 (
   echo Installing packages. Internet connection is required.
   "%PY%" -m pip install -r requirements.txt

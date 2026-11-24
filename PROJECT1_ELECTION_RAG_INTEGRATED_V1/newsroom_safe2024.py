@@ -14,8 +14,9 @@ from fastapi import APIRouter, HTTPException
 from fastapi.responses import HTMLResponse, Response, RedirectResponse, FileResponse
 from newsroom import real_data_api as real_api, postgres_data
 from newsroom_replay2024 import replay_html, pg_replay_observation
-from newsroom_election_map import election_result_map, map_frame
-from newsroom_election_layout_v2 import nationwide_overview, district_explorer
+from newsroom_district_explorer2024 import final_summary, district_explorer
+from newsroom_visuals2024 import (seat_charts,donut_svg,_legend,seat_semicircle_svg,
+        map_html,map_iframe,turnout_regions_html,turnout_crossfilter_html,_winner_margin_chart,STYLE as VISUAL_CSS)
 from functools import lru_cache
 
 router=APIRouter()
@@ -54,8 +55,32 @@ input[type=text]{min-width:min(100%,330px)}button[type=submit]{background:#16829
 article{line-height:1.85;white-space:pre-wrap;background:#111f31;padding:20px;border:1px solid #36516a;border-radius:9px}
 footer{font-size:12px;color:#7f9db7;border-top:1px solid #30445f;margin-top:32px;padding:18px 0}
 .gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.gallery img{display:block;width:100%;border-radius:7px}
+.latest-media-gallery{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.latest-media-item{margin:0;background:#142b43;border:1px solid #345575;border-radius:12px;overflow:hidden}
+.latest-media-item img{width:100%;aspect-ratio:16/9;object-fit:cover;object-position:top;border-radius:0}
+.latest-media-item figcaption{padding:13px;display:flex;flex-direction:column;align-items:flex-start;gap:7px;font-size:13px}
+.latest-media-item figcaption strong{font-size:14px}.latest-media-item figcaption small{color:#a6c1d7}
+@media(max-width:800px){.latest-media-gallery{grid-template-columns:1fr}}
+
 @media(max-width:900px){.layout{grid-template-columns:1fr}nav{border:0;padding:10px;display:flex;flex-wrap:wrap}nav a{padding:8px}nav .sidetitle{width:100%}nav .extra{width:100%}.grid4,.columns{grid-template-columns:repeat(2,minmax(0,1fr))}.regiongrid{grid-template-columns:repeat(3,minmax(0,1fr))}main{padding:20px}}
 @media(max-width:530px){.grid4,.columns,.regiongrid,.gallery{grid-template-columns:1fr}.barrow{grid-template-columns:90px 1fr 70px}header{height:auto;padding:14px}}
+.vcat-grid{display:flex;flex-wrap:wrap;gap:8px}.vcat-item{min-width:90px;flex:1;display:flex;flex-direction:column;gap:8px;align-items:center;border:1px solid #315875;background:#17354c;padding:12px 6px;border-radius:8px;color:#dbf6ff;cursor:pointer}
+.vcat-item span:first-child{font-size:12px}.vcat-item b{font-size:16px}.vcat-line{height:8px;max-width:95%;background:#37bdd3;border-radius:8px}.vcat-item.vcat-dim{opacity:.24}.vcat-item:hover{border-color:#60dff5}
+.closest-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.margin-buckets{display:grid;gap:12px}.margin-buckets>div{display:grid;grid-template-columns:140px 1fr 50px;gap:10px;align-items:center}
+.margin-bucket-track{height:13px;background:#2c4b60;overflow:hidden;border-radius:11px}.margin-bucket-track i{height:100%;display:block;background:#49cad2}
+.pr-standalone>svg{max-height:210px;display:block;margin:auto}@media(max-width:830px){.closest-grid{grid-template-columns:1fr}}
+
+.explore-provinces{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px;margin-top:10px}
+.explore-provinces a{border:1px solid #335c75;background:#173b57;border-radius:6px;font-size:12px;text-align:center;text-decoration:none;padding:7px;color:#d3f4fc}
+.explore-provinces a.selected,.explore-provinces a:hover{background:#15839c;border-color:#83eaf2;color:white}
+.party-sw{display:inline-block;width:11px;height:11px;vertical-align:middle;margin-right:7px;border-radius:3px}
+.final-headline{display:flex;align-items:center;flex-wrap:wrap;gap:16px;background:#132c46;border:1px solid #305a73;border-radius:11px;padding:15px 20px;margin:16px 0}
+.final-headline .final-badge{font-size:12px;background:#195345;color:#a5f6c7;border-radius:18px;padding:6px 10px}
+.final-headline strong{font-size:20px}.final-headline span:last-child{color:#b5d5e6;font-size:13px}
+.final-total th,.final-total td{background:#1b3b54;font-weight:bold}
+.explore-center{background:#142b44}
+@media(max-width:1050px){main{padding:18px 15px}}
+
 '''
 
 
@@ -78,8 +103,9 @@ def layout(page,title,subtitle,content,status='PostgreSQL DB 조회 성공'):
     is_replay = page=='home'
     state_note = '과거 기록 자동 재생 / 실시간 아님' if is_replay else '최종 확정자료 / 실시간 아님'
     eyebrow = '2024 · HISTORICAL REPLAY' if is_replay else '2024 · FINAL RESULTS · SERVER-RENDERED'
-    footer_note = '확인된 과거 시점의 투표율·전국 지역구 개표율을 재생합니다. 브라우저의 작은 시간재생 기능만 사용하며 모의개표 프로그램은 실행하지 않습니다.' if is_replay else '중앙선거관리위원회 제22대 국회의원선거 최종 개표자료 및 투표율 분석자료 · PostgreSQL 조회 · 기존 모의 개표 미실행'
-    return f'''<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Cache-Control" content="no-store"><title>{e(title)} | 22대 총선 데이터 상황실</title><style>{CSS}</style></head>
+    footer_note = '2024년 제22대 총선 당시 확인된 투표율·지역구·비례대표 개표율을 재생합니다. 확인되지 않은 시각은 임의로 만들지 않습니다.' if is_replay else '중앙선거관리위원회 제22대 국회의원선거 최종 개표자료 및 투표율 분석자료 · PostgreSQL 조회 · 기존 모의 개표 미실행'
+    return f'''<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Cache-Control" content="no-store"><title>{e(title)} | 22대 총선 데이터 상황실</title><style>{CSS}
+{VISUAL_CSS}</style></head>
 <body><header><div><strong>▣ 22대 총선 데이터 상황실</strong><br><small>2024년 제22대 국회의원선거 · 과거 기록 재현</small></div><div class="hstatus">● {e(status)} · {e(state_note)}</div></header>
 <div class="layout"><nav><p class="sidetitle">BROADCAST DESK</p>{menu}</nav>
 <main><div class="eyebrow">{e(eyebrow)}</div><h1>{e(title)}</h1><p class="sub">{e(subtitle)}</p>{content}<footer>{e(footer_note)}</footer></main></div></body></html>'''
@@ -93,12 +119,12 @@ def get_data():
 
 
 def dashboard(d,t):
-    """Final nationwide result summary; not a duplicate explorer."""
-    return nationwide_overview(d,t)
+    """전국 확정 개표: 확정 254석 지도 + 46석·300석 의석 요약만."""
+    return final_summary(d,t)
 
 
 def districtpage(d,t,region='',district='',area='',q=''):
-    """Nationwide → province → city/county → constituency drilldown."""
+    """지역·선거구 탐색: 시·도→시·군→실제 선거구→후보별 상세."""
     return district_explorer(d,t,region,district,area,q)
 
 
@@ -111,82 +137,34 @@ def prpage(d,region='',area=''):
     info='전국 정당별 비례대표 득표율' if not region else region+(' '+area if active else ' 시·도 합계')
     rows=table(['정당','득표수','득표율'],[(e(x['party']),n(x['votes']),f'{x["share"]:.2f}%') for x in parties])
     choices2=''.join(f'<a class="btn '+('selected' if active and active['area']==a['area'] else '')+'" href="'+link('pr',region=region,area=a['area'])+'">'+e(a['area'])+'</a>' for a in areas)
-    return '<div class="grid4">'+metric('전국 비례대표 유효투표',n(ps['valid']))+metric('정당별 투표수 합계',n(ps['ballots']))+metric('비례대표 의석','46석')+metric('전국 정당 수',n(len(ps['parties'])))+'</div>'+panel('지역 선택',choices)+(panel('구·시·군 선택',choices2) if region else '')+panel(info,rows)
+    return panel('비례대표 46석 정당별 구성', '<div class="vis-card pr-standalone">'+donut_svg(sorted(p['seat_allocation'].items(),key=lambda x:-x[1]),46,'비례대표 46석')+_legend(sorted(p['seat_allocation'].items(),key=lambda x:-x[1]))+'</div>')+'<div class="grid4">'+metric('전국 비례대표 유효투표',n(ps['valid']))+metric('정당별 투표수 합계',n(ps['ballots']))+metric('비례대표 의석','46석')+metric('전국 정당 수',n(len(ps['parties'])))+'</div>'+panel('지역 선택',choices)+(panel('구·시·군 선택',choices2) if region else '')+panel(info,rows)
 
 
-def turnoutpage(t):
-    na=t['national'];cards='<div class="grid4">'+metric('전국 실제 최종 투표율',pp(na['final']),'실제 집계')+metric('전국 표본 투표율',pp(na['sample']),'전체 선거인 10.1% 표본')+metric('사전투표율',pp(na['early']),'통합선거인명부 전수조사')+metric('선거일 투표율',pp(t['election_day']['all']),'선거일 투표 대상 표본 기준')+'</div>'
-    panels=panel('연령별 전체 투표율 · 표본조사',''.join(barrow(a,v) for a,v in t['age'].items()),'1,505개 투표구 표본조사 · 선관위 PDF 인쇄 23쪽')+panel('성별 전체 투표율 · 표본조사',''.join(barrow(a,v) for a,v in t['sex'].items())+'<h3>사전투표율 · 전수조사</h3>'+''.join(barrow(a,v) for a,v in t['early_sex'].items()))
-    region=panel('시·도별 전체 투표율',table(['시·도','실제 투표율','표본 투표율','사전투표율'],[(e(name),pp(v),pp(t['region_sample'].get(name)),pp(t['region_early'].get(name))) for name,v in t['region_actual'].items()]))
-    methods='<p class="box-note">연령·성별 전체 투표율은 표본조사 결과이며 사전투표율은 통합선거인명부 전수조사 결과입니다. 표본조사 투표율 67.2%와 실제 최종 투표율 67.0%는 서로 다른 자료입니다.</p><p><a href="/safe2024/turnout-methodology.pdf" target="_blank" rel="noopener noreferrer">조사방법 확인</a></p><p><a href="/api/real/turnout-report.pdf" target="_blank">선관위 「제22대 국회의원선거 투표율 분석」 PDF 원문</a></p>'
-    return cards+turnout_cross()+'<div class="columns">'+panels+'</div>'+region+panel('자료의 분모와 조사 방법',methods)
-
-
-def turnout_cross():
-    cross = """<style>
-    .cross-guide{font-size:13px;color:#b4cbdc;line-height:1.7;margin:0 0 12px}
-    .cross-toolbar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin-bottom:15px}
-    .cross-toolbar button{border:1px solid #4787aa;color:#e1faff;background:#194660;border-radius:6px;padding:8px 12px}
-    .cross-toolbar button:disabled{opacity:.4;cursor:default}
-    .cross-grid{display:grid;grid-template-columns:minmax(0,1.8fr) minmax(270px,1fr);gap:14px}
-    .cross-box{background:#102238;border:1px solid #34536e;border-radius:9px;padding:17px;min-width:0}
-    .cross-box h3{font-size:15px;margin:0 0 12px}
-    .cross-reg-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
-    .cross-reg-item{min-width:0}
-    .cross-reg-btn{width:100%;text-align:left;color:#e3f5ff;background:#182d47;border:1px solid #2d4a65;border-radius:6px;padding:6px 8px;cursor:pointer}
-    .cross-reg-btn:hover,.cross-reg-btn.is-selected{outline:2px solid #60dff5;background:#204b60}
-    .cross-reg-name{display:block;font-size:12px;margin-bottom:4px}
-    .cross-reg-contents{display:flex;flex-direction:column;gap:3px}
-    .cross-reg-bar{height:19px;border-radius:3px;position:relative;min-width:56px;display:block}
-    .cross-reg-bar span{display:block;white-space:nowrap;color:#fff;font-size:11px;line-height:19px;padding-left:6px;text-shadow:0 1px 2px #001}
-    .is-male{background:#1877da}.is-female{background:#db6643}
-    .cross-sex-btn{display:grid;grid-template-columns:35px 1fr 65px;align-items:center;gap:8px;width:100%;padding:11px;background:#182d47;border:1px solid #344c66;border-radius:6px;color:white;margin-bottom:9px;cursor:pointer;text-align:left}
-    .cross-sex-btn.is-selected,.cross-sex-btn:hover{outline:2px solid #60dff5}
-    .cross-sex-track{height:16px;overflow:hidden;border-radius:3px;background:#2b4057}
-    .cross-sex-fill{display:block;height:100%}
-    .cross-sex-btn strong{text-align:right;font-size:14px}
-    .cross-status{background:#142e41;padding:11px;border-radius:5px;color:#c9e6ee;line-height:1.6;font-size:13px}
-    .cross-source{margin-top:14px;font-size:12px;color:#acc3dc}
-    @media(max-width:850px){.cross-grid{grid-template-columns:1fr}}
-    @media(max-width:550px){.cross-reg-list{grid-template-columns:1fr}}
-    </style>
-    <section class="panel" data-turnout-crossfilter>
-      <h2>지역·성별 투표율 교차 분석</h2>
-      <p class="cross-guide">지역 또는 성별 그래프의 막대를 클릭하면 다른 그래프도 함께 변경됩니다. 원자료: 전체 선거인 표본조사(전국 1,505개 투표구).</p>
-      <div class="cross-toolbar"><strong id="cross-selection">지역: 전체 · 성별: 전체</strong><button type="button" id="cross-reset" disabled>선택 초기화</button></div>
-      <div class="cross-grid">
-        <div class="cross-box"><h3>시·도별 남녀 투표율 비교</h3><p class="note">지역을 클릭하면 오른쪽에 해당 지역 남녀 투표율이 표시됩니다.</p><div id="cross-region-bars" class="cross-reg-list" aria-label="시도별 성별 투표율"></div></div>
-        <div class="cross-box"><h3 id="cross-sex-title">전국 성별 투표율</h3><p class="note">남성 또는 여성 막대를 클릭하면 왼쪽 지역별 자료가 해당 성별로 바뀝니다.</p><div id="cross-sex-bars" aria-label="남녀 투표율"></div><p id="cross-message" class="cross-status" aria-live="polite">원본 데이터를 불러오는 중입니다.</p></div>
-      </div>
-      <p class="cross-source">자료: 중앙선관위 「제22대 국회의원선거 투표율 분석」 인쇄 29쪽(그림 15) · <a href="/api/real/turnout-report.pdf#page=37" target="_blank" rel="noopener noreferrer">원자료 확인</a><br>지역별 최종 확정 투표율과 표본조사의 성별 투표율은 집계 방식이 다르므로 서로 합산하지 않습니다.</p>
-    </section>
-    <script src="/static/turnout_crossfilter_2024.js" defer></script>"""
-    return cross
+def turnoutpage(t,region=""):
+    na=t['national']
+    cards='<div class="grid4">'+metric('전국 실제 최종 투표율',pp(na['final']),'선관위 확정 집계')+metric('사전투표율',pp(na['early']),'통합선거인명부 전수조사')+metric('선거일 투표율',pp(t['election_day']['all']),'선거일 대상 표본조사')+metric('비교 대상','17개 시·도','최종 지역별 투표율')+'</div>'
+    # Emphasize only selected bar, fade other ages/genders; exact numbers remain visible.
+    def category_chart(values,label):
+        return '<div class="vcat-grid" aria-label="'+e(label)+'">'+''.join(
+          f'<button type="button" class="vcat-item" onclick="document.querySelectorAll(\'.vcat-item\').forEach(e=>e.classList.toggle(\'vcat-dim\',e!==this))"><span>{e(name)}</span><span class="vcat-line" style="width:{max(5,float(v))}%"></span><b>{v:.1f}%</b></button>'
+          for name,v in values.items())+'</div>'
+    age=panel('연령별 전체 투표율 · 표본조사',category_chart(t['age'],'연령별 전체 투표율'),
+              '중앙선관위 1,505개 투표구 표본조사 · 막대를 선택하면 나머지 흐리게 표시')
+    sex=panel('성별 전체 투표율 · 표본조사',category_chart(t['sex'],'성별 투표율')+
+              '<h3 style="margin-top:20px">성별 사전투표율 · 전수조사</h3>'+category_chart(t['early_sex'],'성별 사전투표율'))
+    methods='<p class="box-note">연령·성별 전체 투표율은 표본조사 결과이며 사전투표율은 통합선거인명부 전수조사 결과입니다. 표본조사 투표율 67.2%와 실제 최종 투표율 67.0%는 서로 다른 자료입니다.</p><p><a href="/safe2024/turnout-methodology.pdf" target="_blank">조사방법 확인 (원본 PDF 발췌)</a> · <a href="/api/real/turnout-report.pdf" target="_blank">중앙선관위 원문 PDF 전체</a></p>'
+    return cards+panel('전국 시·도별 실제 투표율',turnout_regions_html(t,region))+panel('성별·시도별 투표율 교차 분석 · 표본조사',turnout_crossfilter_html())+'<div class="columns">'+age+sex+'</div>'+panel('조사방법과 분모 확인',methods)
 
 
 def statspage(d,t):
-    # Only actual vote-count results belong in the election counting analysis.
-    # Turnout's region/sex crossfilter lives exclusively in turnoutpage().
     districts=d['constituency']['districts']
-    seats=d['constituency']['seats_by_party']
-    pr=d['proportional']['seat_allocation']
-    major=sorted(seats.items(),key=lambda kv:-kv[1])
-    cons=panel('지역구 정당별 의석 비교 · 총 254석',
-        ''.join(barrow(k,v,'석',v/254*100) for k,v in major))
-    prop=panel('비례대표 정당별 의석 비교 · 총 46석',
-        ''.join(barrow(k,v,'석',v/46*100) for k,v in sorted(pr.items(),key=lambda kv:-kv[1])))
-    close=[('1,000표 이하',lambda x:x<=1000),('1,001~5,000표',lambda x:1000<x<=5000),
-           ('5,001~10,000표',lambda x:5000<x<=10000),('10,000표 초과',lambda x:x>10000)]
-    margin=panel('지역구별 1·2위 득표차 분포 (254개 지역구)',
-        ''.join(barrow(label,sum(1 for x in districts if f(x['margin'])),'곳',
-                       sum(1 for x in districts if f(x['margin']))/254*100)
-                for label,f in close))
-    tight=sorted(districts,key=lambda x:x['margin'])[:12]
-    closest=panel('득표차가 작은 지역구 12곳',
-        table(['지역구','당선인','당선 정당','1·2위 득표차'],
-              [(e(x['region']+' '+x['district']),e(x['winner']['name']),
-                e(x['winner']['party']),n(x['margin'])+'표') for x in tight]))
-    return '<div class="columns">'+cons+prop+'</div>'+margin+closest+'<p class="note">모든 개표 데이터는 선관위 최종 결과입니다. 실시간 개표 중간 후보 득표수는 포함하지 않습니다.</p>'
+    margin_ranges=[('1천 표 이하',lambda x:x<=1000),('1천~5천 표',lambda x:1000<x<=5000),
+                   ('5천~1만 표',lambda x:5000<x<=10000),('1만 표 초과',lambda x:x>10000)]
+    bars='<div class="margin-buckets">'+''.join(f'<div><b>{e(label)}</b><span class="margin-bucket-track"><i style="width:{sum(1 for x in districts if pred(x["margin"]))/254*100:.1f}%"></i></span><strong>{sum(1 for x in districts if pred(x["margin"]))}곳</strong></div>' for label,pred in margin_ranges)+'</div>'
+    closest=sorted(districts,key=lambda x:x['margin'])[:12]
+    closecharts=''.join('<div class="vis-card"><h4>'+e(x['region']+' '+x['district'])+'</h4>'+_winner_margin_chart(x)+'</div>' for x in closest)
+    return seat_charts(d)+panel('지역구 1·2위 득표차 분포',bars)+panel('접전 지역구 12곳 · 실제 후보별 득표수',
+        '<div class="closest-grid">'+closecharts+'</div>')+'<p class="note">득표차와 득표수는 2024년 최종 집계만 사용하며 과거 중간 득표수는 생성하지 않습니다.</p>'
 
 
 def articlepage(d,region='',district=''):
@@ -236,38 +214,29 @@ def trainingpage():
 
 
 def mediapage():
-    # Existing screenshots of the project's real-data dashboard; not fictional
-    # polling-place photographs and not videos.
-    media=[
-        ('dashboard_actual.png','2024년 실제 개표 결과 화면','실제 확정 개표 데이터로 구성한 프로젝트 대시보드'),
-        ('analytics_actual.png','투표율 분석 화면','중앙선관위 원자료 기반 통계 분석 결과'),
-        ('district_actual.png','지역구 개표 결과 화면','실제 선거구별 후보 및 득표 자료 조회 화면'),
-        ('articles_actual.png','근거 기반 기사 초안 화면','확정 결과에 대한 검수 전 기사 작성 화면'),
+    """Only CG illustrations calculated from the current verified NEC dataset."""
+    current=[
+        ('v5_r3_final_overview.png','전국 확정 개표 · 지역구 및 비례대표 의석 도넛', '2024년 확정 의석수로 제작한 데이터 CG'),
+        ('v5_r3_district_detail.png','지역·선거구 탐색 · 수원시정 득표 비교', '실제 후보별 득표수·투표수로 제작한 데이터 CG'),
+        ('v5_r3_turnout_analysis.png','투표율 분석 · 17개 시·도 명암 비교 CG', '실제 최종 투표율 · 색상 타일은 지도가 아님'),
+        ('v5_r3_count_analysis.png','개표 분석 · 표차가 작은 8개 지역구', '실제 1·2위 득표차로 제작한 데이터 CG'),
+        ('v5_r3_replay_13.png','시간대별 투표율 CG · 13시 사전투표 합산 주석', '실제 시간별 발표 투표율로 제작한 데이터 CG'),
+        ('v5_r3_replay_final.png','최종 재생 CG · 지역구·비례대표 100% 동시 공개', '10:25 보도 기반 재현 시각 · 확정 의석 300석'),
     ]
-    cards=''.join(
-        f'<div class="panel" style="margin:0"><a href="/safe2024/visuals/{filename}" target="_blank" rel="noopener noreferrer"><img alt="{e(label)}" src="/safe2024/visuals/{filename}" loading="lazy" style="width:100%;height:auto;border-radius:7px"></a><h3 style="margin-top:13px">{e(label)}</h3><p class="note">{e(desc)}</p><p><a href="/safe2024/visuals/{filename}" target="_blank" rel="noopener noreferrer">원본 이미지 열기</a></p></div>'
-        for filename,label,desc in media)
-    return panel('선거 데이터 시각자료','<p class="note">프로젝트의 실제 선거 데이터 화면 캡처입니다. 개표 현장을 촬영한 사진은 아니며 출처 및 이용권한이 확인되지 않은 현장 사진은 포함하지 않았습니다.</p><div class="gallery" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr))">'+cards+'</div><p class="note">영상은 추후 제작 후 추가합니다. 기존 교육용 이미지 파일은 삭제하지 않고 프로젝트 내부에 보존했습니다.</p>')
+    gallery='<div class="gallery latest-media-gallery">'+''.join(
+        '<figure class="latest-media-item"><a href="/safe2024/visuals/'+name+'" target="_blank" rel="noopener">'
+        '<img loading="lazy" alt="'+e(title)+'" src="/safe2024/visuals/'+name+'"></a>'
+        '<figcaption><strong>'+e(title)+'</strong><small>'+e(source)+'</small>'
+        '<a class="btn" href="/safe2024/visuals/'+name+'" target="_blank" rel="noopener">큰 화면으로 보기</a></figcaption></figure>'
+        for name,title,source in current)+'</div>'
+    return (panel('V5 최신 데이터 CG · 6종',gallery,
+        '2024년 선관위 확정 개표 및 당시 투표율 기록으로 제작 · 구버전 캡처와 교육용 예시 이미지 제외')
+        +'<p class="box-note">실제 선거 데이터로 새로 제작한 정적 CG 이미지이며 웹사이트 화면 전체 캡처는 아닙니다. 동영상은 현재 등록돼 있지 않습니다. '
+         '완성된 개표방송 영상이나 방송사 공식 화면으로 오인하지 마세요. 실시간 개표도 아닙니다.</p>')
 
 
 def errorpage(message):
     return HTMLResponse(layout('home','DB 조회 확인 필요','PostgreSQL 조회 중 문제가 발생했습니다.',f'<section class="panel"><h2>데이터를 표시하지 못했습니다</h2><p>{e(message)}</p><p class="note">PostgreSQL에 직접 연결되는 안전 화면입니다. 오류가 있으면 기존 JSON으로 자동 전환하지 않습니다.</p></section>',status='DB 조회 오류'),status_code=503)
-
-
-@lru_cache(maxsize=1)
-def extract_methodology_pdf():
-    """Original NEC turnout-analysis PDF pages 12-14, not the 190-page original."""
-    from pypdf import PdfReader, PdfWriter
-    source=real_api.DATA/'turnout_report_2024.pdf'
-    reader=PdfReader(str(source))
-    if len(reader.pages)<14:
-        raise ValueError('원본 PDF에서 조사방법 12~14페이지를 확인할 수 없습니다.')
-    writer=PdfWriter()
-    for page_index in (11,12,13):
-        writer.add_page(reader.pages[page_index])
-    out=io.BytesIO()
-    writer.write(out)
-    return out.getvalue()
 
 
 def bind_safe(app):
@@ -287,7 +256,7 @@ def bind_safe(app):
                 'final':lambda:dashboard(d,t),
                 'district':lambda:districtpage(d,t,region,district,area,q),
                 'pr':lambda:prpage(d,region,area),
-                'turnout':lambda:turnoutpage(t),
+                'turnout':lambda:turnoutpage(t,region),
                 'stats':lambda:statspage(d,t),
                 'articles':lambda:articlepage(d,region,district),
                 'qa':lambda:qapage(app,q),
@@ -303,44 +272,40 @@ def bind_safe(app):
         subtitle=('중앙선거관리위원회 제22대 국회의원선거 최종 집계 · PostgreSQL '+postgres_data.SCHEMA+' 테이블 사용')
         return HTMLResponse(layout(page,dict(NAV)[page],subtitle,body),headers={'Cache-Control':'no-store'})
 
-    @router.get('/safe2024/final-embed',response_class=HTMLResponse)
-    def replay_final_embedded():
-        """Only fetched after both counts reach 100% in the replay."""
-        d,t=get_data()
-        return HTMLResponse('<!doctype html><html lang="ko"><head><meta charset="utf-8">'
-                            '<meta name="viewport" content="width=device-width,initial-scale=1">'
-                            '<style>'+CSS+'</style></head><body>'
-                            '<main style="max-width:1800px">'+nationwide_overview(d,t)+'</main></body></html>',
-                            headers={'Cache-Control':'no-store'})
-
     @router.get('/safe2024/map',response_class=HTMLResponse)
-    def final_map(region:str='',district:str=''):
-        if not postgres_data.active():
-            raise HTTPException(503,'최종 개표 지도는 PostgreSQL 연결이 필요합니다.')
-        try:
-            data=real_api.vote_data()
-            return HTMLResponse(election_result_map(data,region,district))
-        except ValueError as exc:
-            raise HTTPException(503,'선거구 경계와 실제 개표자료 연결을 확인해 주세요.') from exc
+    def election_map(region:str='',district:str='',mode:str='results',compact:int=0):
+        if mode not in {'results','outline'}:raise HTTPException(422,'지원하지 않는 지도 표시 방식')
+        if not postgres_data.active():raise HTTPException(503,'PostgreSQL 연결 필요')
+        d,_=get_data()
+        content=map_html(d,region=region,district=district,mode=mode,embed=bool(compact))
+        compact_css=(' .vmap-aside{display:none}.vmap-layout{grid-template-columns:1fr}.vmap-body{padding:5px;border:0}'
+                     '.vmap-body h3{display:none}.vmap-back{display:none}' if compact else '')
+        if mode=='outline':
+            # During the replay no winner names or colors appear in the output.
+            content=map_html(d,mode='outline',embed=True)
+        return HTMLResponse('<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>body{background:#0c2035;color:#e5f5ff;font-family:Malgun Gothic,Arial,sans-serif;margin:0;padding:8px}'+VISUAL_CSS+compact_css+'</style></head><body>'+content+'</body></html>')
 
-    @router.get('/safe2024/visuals/{filename}')
-    def existing_visual(filename: str):
-        allowed={'dashboard_actual.png','analytics_actual.png','district_actual.png','articles_actual.png'}
-        if filename not in allowed:
-            raise HTTPException(404,'등록된 선거 시각자료가 아닙니다.')
-        return FileResponse(real_api.ROOT.parent/'screenshots_2024'/filename,media_type='image/png',headers={'Cache-Control':'public, max-age=3600'})
+    @router.get('/safe2024/seats-snippet',response_class=HTMLResponse)
+    def final_seats_snippet():
+        if not postgres_data.active():raise HTTPException(503,'PostgreSQL 연결 필요')
+        d,_=get_data()
+        return HTMLResponse(seat_charts(d),headers={'Cache-Control':'no-store'})
 
     @router.get('/safe2024/turnout-methodology.pdf')
-    def methodology_pdf():
-        """Serve only source PDF pages 12-14 (report printed pages 4-6)."""
-        try:
-            content=extract_methodology_pdf()
-        except (OSError, ValueError, ImportError) as exc:
-            raise HTTPException(503, '조사방법 PDF 3쪽을 생성하지 못했습니다. 실행환경과 원본을 확인해 주세요.') from exc
-        return Response(content,media_type='application/pdf',headers={
-            'Content-Disposition':'inline; filename="turnout_methodology_2024.pdf"',
-            'Cache-Control':'public, max-age=3600',
-        })
+    def turnout_method():
+        from pathlib import Path
+        source=Path(__file__).resolve().parent/'newsroom'/'real_data'/'turnout_methodology_excerpt.pdf'
+        if not source.exists():raise HTTPException(404,'조사방법 발췌 PDF가 없습니다.')
+        return FileResponse(source,media_type='application/pdf',filename='2024_turnout_methodology.pdf',content_disposition_type='inline')
+
+    @router.get('/safe2024/visuals/{filename}')
+    def visual_screenshot(filename:str):
+        from pathlib import Path
+        permitted={'v5_r3_final_overview.png','v5_r3_district_detail.png','v5_r3_turnout_analysis.png','v5_r3_count_analysis.png','v5_r3_replay_13.png','v5_r3_replay_final.png'}
+        if filename not in permitted:raise HTTPException(404,'등록되지 않은 검증 캡처')
+        path=Path(__file__).resolve().parent/'screenshots_2024'/filename
+        if not path.exists():raise HTTPException(404,'검증 캡처 원본 없음')
+        return FileResponse(path,media_type='image/png')
 
     @router.get('/safe2024/api/replay/{index}')
     def replay_tick(index: int):
